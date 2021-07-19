@@ -1,8 +1,38 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useState } from 'react'
 import { vectorLogin } from '../../assets'
 import { illusLogin } from '../../assets'
+import Swal from 'sweetalert2'
+// import withReactContent from 'sweetalert2-react-content'
 
 const Login = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const onSubmit = () => {
+        console.log(email);
+        console.log(password);
+
+        const data = new FormData();
+        data.append('email', email)
+        data.append('password', password)
+
+        axios.post('https://inventorylab.herokuapp.com/user/login/', data, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            }
+        })
+        .then(res => {
+            console.log(res);
+            Swal.fire('Success', 'Anda berhasil login', 'success')
+        })
+        .catch(err => {
+            console.log('login gagal', err);
+            Swal.fire('Error', 'Anda gagal login', 'error')
+        })
+    }
+
+
     return (
         <div className="h-screen font-poppins">
             <div className="container mx-auto px-5 lg:px-20 h-full relative">
@@ -15,10 +45,10 @@ const Login = () => {
                         <div className="rounded-md justify-center">
                             <span className="text-left text-gray-800 font-semibold text-3xl">Login</span>
                             <div className="pt-10">
-                                <input type="text" className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email" />
+                                <input value={email} onChange={(e) => setEmail(e.target.value)} className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email" />
                             </div>
                             <div className="pt-10">
-                                <input type="password" className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Password" />
+                                <input value={password} onChange={(e) => setPassword(e.target.value)} className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Password" />
                             </div>
                             <div className="pt-10">
                                 <div className="flex">
@@ -33,15 +63,15 @@ const Login = () => {
                                 </div>
                             </div>
                             <div className="pt-10">
-                                <button className="bg-blue-500 hover:bg-blue-600 px-7 py-2 rounded-md" >
+                                <button className="bg-blue-500 hover:bg-blue-600 px-7 py-2 rounded-md" onClick={onSubmit}>
                                     <span className="text-white font-semibold">Login</span>
                                 </button>
                             </div>
                             <div className="pt-5">
-                                <a href="#" className="text-gray-700 font-medium hover:text-gray-800">Forgot password?</a>
+                                <a href="/" className="text-gray-700 font-medium hover:text-gray-800">Forgot password?</a>
                             </div>
                             <div className="pt-5">
-                                <a href="#" className="text-gray-700 font-medium hover:text-gray-800">Dont Have account?</a>
+                                <a href="/" className="text-gray-700 font-medium hover:text-gray-800">Dont Have account?</a>
                             </div>
                         </div>
                     </div>
