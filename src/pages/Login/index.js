@@ -1,35 +1,37 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { vectorLogin } from '../../assets'
 import { illusLogin } from '../../assets'
-import Swal from 'sweetalert2'
-// import withReactContent from 'sweetalert2-react-content'
+import Alert from '../../components/Alert'
+
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const onSubmit = () => {
+    const onSubmit = (event) => {
+        event.preventDefault();
         console.log(email);
         console.log(password);
 
-        const data = new FormData();
-        data.append('email', email)
-        data.append('password', password)
+        const myHeader = new Headers();
+        myHeader.append('Content-Type', 'application/x-www-form-urlencoded')
 
-        axios.post('https://inventorylab.herokuapp.com/user/login/', data, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            }
-        })
-        .then(res => {
-            console.log(res);
-            Swal.fire('Success', 'Anda berhasil login', 'success')
-        })
-        .catch(err => {
-            console.log('login gagal', err);
-            Swal.fire('Error', 'Anda gagal login', 'error')
-        })
+        const urlEncoded = new URLSearchParams();
+        urlEncoded.append('email', email);
+        urlEncoded.append('password', password);
+
+        const reqOptions = {
+            method: 'POST',
+            headers: myHeader,
+            body: urlEncoded,
+            redirect: 'follow',
+        };
+
+        fetch('https://inventorylab.herokuapp.com/user/login/', reqOptions)
+            .then(response => response.json())
+            .then(result => Alert(result.Status, result.message))
+            .catch(error => console.log('error', error))            
+        
     }
 
 
@@ -41,14 +43,14 @@ const Login = () => {
                     <div className="w-1/3 md:w-1/2 justify-center hidden md:flex">
                         <img src={vectorLogin} className="w-full md:w-2/3" alt="Login Vector" />
                     </div>
-                    <div className="w-full md:w-1/2 lg:w-1/3 py-10 px-10 rounded-xl shadow-md md:rounded-none md:shadow-none">
+                    <form action="" className="w-full md:w-1/2 lg:w-1/3 py-10 px-10 rounded-xl shadow-md md:rounded-none md:shadow-none">
                         <div className="rounded-md justify-center">
                             <span className="text-left text-gray-800 font-semibold text-3xl">Login</span>
                             <div className="pt-10">
-                                <input value={email} onChange={(e) => setEmail(e.target.value)} className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email" />
+                                <input type="text" onChange={(e) => setEmail(e.target.value)} className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email" />
                             </div>
                             <div className="pt-10">
-                                <input value={password} onChange={(e) => setPassword(e.target.value)} className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Password" />
+                                <input type="password" onChange={(e) => setPassword(e.target.value)} className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Password" />
                             </div>
                             <div className="pt-10">
                                 <div className="flex">
@@ -74,7 +76,7 @@ const Login = () => {
                                 <a href="/" className="text-gray-700 font-medium hover:text-gray-800">Dont Have account?</a>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
