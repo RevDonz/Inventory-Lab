@@ -29,7 +29,7 @@ const Login = () => {
 
         fetch('https://inventorylab.herokuapp.com/user/login/', reqOptions)
             .then(response => response.json())
-            .then(result => Alert(result.Status, result.message))
+            .then(result => Alert(result.status, result.message))
             .catch(error => console.log('error', error))            
         
     }
