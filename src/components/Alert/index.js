@@ -4,7 +4,7 @@ const Alert = (status, message) => {
     return (
         Swal.fire({
             icon: status === 400 ? 'error' : 'success',
-            title: status === 400 ? 'Login Gagal' : 'Login Berhasil',
+            title: status === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
             text: message,
             confirmButtonText: 'OK',
           })
