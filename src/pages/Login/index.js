@@ -47,15 +47,15 @@ const Login = () => {
                         <div className="rounded-md justify-center">
                             <span className="text-left text-gray-800 font-semibold text-3xl">Login</span>
                             <div className="pt-10">
-                                <input type="text" onChange={(e) => setEmail(e.target.value)} className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email" />
+                                <input type="text" onChange={(e) => setEmail(e.target.value)} className="block w-full px-3 py-2 rounded-md border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email" />
                             </div>
                             <div className="pt-10">
-                                <input type="password" onChange={(e) => setPassword(e.target.value)} className="block w-full px-3 py-2 rounded-md border-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Password" />
+                                <input type="password" onChange={(e) => setPassword(e.target.value)} className="block w-full px-3 py-2 rounded-md border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Password" />
                             </div>
                             <div className="pt-10">
                                 <div className="flex">
                                     <div className="flex items-center">
-                                        <input id="comments" type="checkbox" className="h-5 w-5 bg-white appearance-none form-checkbox border-2 rounded-md ring-offset-2 focus:outline-none focus:ring-2 focus:border-transparent" />
+                                        <input id="comments" type="checkbox" className="h-5 w-5 bg-white appearance-none form-checkbox border-blue-200 rounded-md ring-offset-2 focus:outline-none focus:ring-2 focus:border-transparent" />
                                     </div>
                                     <div className="ml-3 text-sm">
                                         <label htmlFor="comments" className="font-medium text-gray-700">
@@ -73,7 +73,7 @@ const Login = () => {
                                 <a href="/" className="text-gray-700 font-medium hover:text-gray-800">Forgot password?</a>
                             </div>
                             <div className="pt-5">
-                                <a href="/" className="text-gray-700 font-medium hover:text-gray-800">Dont Have account?</a>
+                                <a href="/register" className="text-gray-700 font-medium hover:text-gray-800">Dont Have account?</a>
                             </div>
                         </div>
                     </form>
