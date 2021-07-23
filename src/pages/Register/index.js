@@ -54,12 +54,12 @@ const Register = () => {
 
     fetch('https://inventorylab.herokuapp.com/user/register', requestOption)
     .then(response => 
-      console.log(response),
+      console.log(response)
+    )
+    .then(result => 
+      console.log(result.status),
       history.push('/dashboard')
     )
-    // .then(result => 
-    //   console.log(result)
-    // )
     .catch(error => {
       console.log('error : ', error);
     });
