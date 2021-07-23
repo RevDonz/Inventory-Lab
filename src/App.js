@@ -1,9 +1,9 @@
-import { Login } from './pages'
+import { Routes } from './config'
 
 function App() {
   return (
     <div>
-      <Login />
+      <Routes />
     </div>
   );
 }
