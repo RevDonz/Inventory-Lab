@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Alert from '../../components/Alert'
 
 const Register = () => {
   const [fullname, setFullname] = useState('');
@@ -52,13 +53,12 @@ const Register = () => {
       redirect: 'follow'
     };
 
-    fetch('https://inventorylab.herokuapp.com/user/register', requestOption)
+    fetch('https://inventorylab.herokuapp.com/user/register/', requestOption)
     .then(response => 
       console.log(response)
     )
     .then(result => 
-      console.log(result.status),
-      history.push('/dashboard')
+      Alert(result.status, result.message)
     )
     .catch(error => {
       console.log('error : ', error);
