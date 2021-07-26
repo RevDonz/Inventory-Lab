@@ -2,16 +2,14 @@ import React, { useState } from 'react'
 import { vectorLogin } from '../../assets'
 import { illusLogin } from '../../assets'
 import Alert from '../../components/Alert'
+import PropTypes from 'prop-types';
 
-
-const Login = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+const Login = ({setToken}) => {
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(email);
-        console.log(password);
 
         const myHeader = new Headers();
         myHeader.append('Content-Type', 'application/x-www-form-urlencoded')
@@ -30,8 +28,7 @@ const Login = () => {
         fetch('https://inventorylab.herokuapp.com/user/login/', reqOptions)
             .then(response => response.json())
             .then(result => Alert(result.status, result.message))
-            .catch(error => console.log('error', error))            
-        
+            .catch(error => console.log('error', error))
     }
 
 
@@ -81,6 +78,10 @@ const Login = () => {
             </div>
         </div>
     )
+}
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
 }
 
 export default Login

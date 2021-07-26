@@ -1,8 +1,13 @@
-import React from 'react'
+import { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Dashboard, Login, Register } from '../../pages'
 
 const Routes = () => {
+    const [token, setToken] = useState();
+
+    if (!token) {
+        return <Login setToken={setToken} />
+    }
     return (
         <Router>
             <Switch>
