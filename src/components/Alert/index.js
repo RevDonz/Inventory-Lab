@@ -11,6 +11,10 @@ const Alert = (status, message) => {
       title: status === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
       text: message,
       confirmButtonText: 'OK',
+    }).then((result) => {
+      if (result.isConfirmed && status === 200) {
+        window.location.href = `/dashboard`
+      }
     })
   );
 }

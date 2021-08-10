@@ -2,40 +2,33 @@ import React, { useState } from 'react'
 import { vectorLogin } from '../../assets'
 import { illusLogin } from '../../assets'
 import Alert from '../../components/Alert'
-import PropTypes from 'prop-types';
 
-async function loginUser(credentials) {
+const Login = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    const urlEncoded = new URLSearchParams();
-    urlEncoded.append('email', credentials.email);
-    urlEncoded.append('password', credentials.password);
-
-    return fetch('https://inventorylab.herokuapp.com/user/login/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: urlEncoded,
-    })
-    .then(response => response.json())
-    // .then(result => console.log(result))
-    .catch(error => console.log('error', error))
-
-}
-
-const Login = ({setToken}) => {
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-
-    const onSubmit = async (event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
 
-        const token = await loginUser({
-            email,
-            password
-        });
-        setToken(token.token)
-        console.log(token);
+        const myHeader = new Headers();
+        myHeader.append('Content-Type', 'application/x-www-form-urlencoded')
+
+        const urlEncoded = new URLSearchParams();
+        urlEncoded.append('email', email);
+        urlEncoded.append('password', password);
+
+        const reqOptions = {
+            method: 'POST',
+            headers: myHeader,
+            body: urlEncoded,
+            redirect: 'follow',
+        };
+
+        fetch('https://inventorylab.herokuapp.com/user/login/', reqOptions)
+            .then(response => response.json())
+            .then(result => Alert(result.status, result.message))
+            .catch(error => console.log('error', error))            
+        
     }
 
 
@@ -47,7 +40,7 @@ const Login = ({setToken}) => {
                     <div className="w-1/3 md:w-1/2 justify-center hidden md:flex">
                         <img src={vectorLogin} className="w-full md:w-2/3" alt="Login Vector" />
                     </div>
-                    <form action="" className="w-full md:w-1/2 lg:w-1/3 py-10 px-10 rounded-xl shadow-md md:rounded-none md:shadow-none">
+                    <form action="/" method="post" className="w-full md:w-1/2 lg:w-1/3 py-10 px-10 rounded-xl shadow-md md:rounded-none md:shadow-none">
                         <div className="rounded-md justify-center">
                             <span className="text-left text-gray-800 font-semibold text-3xl">Login</span>
                             <div className="pt-10">
@@ -85,10 +78,6 @@ const Login = ({setToken}) => {
             </div>
         </div>
     )
-}
-
-Login.propTypes = {
-    setToken: PropTypes.func.isRequired
 }
 
 export default Login
