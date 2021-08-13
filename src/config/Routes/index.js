@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Dashboard, Login, Register } from '../../pages'
+import { Login, Register, Home, CreateItem } from '../../pages'
 
 
 const Routes = () => {
@@ -7,14 +7,17 @@ const Routes = () => {
     return (
         <Router>
             <Switch>
+                <Route path="/">
+                    <Login/>
+                </Route>
                 <Route path="/register">
                     <Register/>
                 </Route>
                 <Route path="/dashboard">
-                    <Dashboard/>
+                    <Home/>
                 </Route>
-                <Route path="/">
-                    <Login/>
+                <Route path="/createItem">
+                    <CreateItem/>
                 </Route>
             </Switch>
         </Router>

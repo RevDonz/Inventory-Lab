@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { vectorLogin } from '../../assets'
-import { illusLogin } from '../../assets'
-import Alert from '../../components/Alert'
+import { vectorLogin } from '../../../assets'
+import { illusLogin } from '../../../assets'
+import Alert from '../../../components/Alert'
 
 const Login = () => {
     const [email, setEmail] = useState('')
