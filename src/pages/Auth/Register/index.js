@@ -60,7 +60,7 @@ const Register = () => {
     .then(result => {
       console.log(result);
       console.log(result.status);
-      Alert(result.status, result.message);
+      Alert(result.status, result.message, 'auth');
       if (result.status === 200) {
         history.push('/login')
       }
