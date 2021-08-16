@@ -13,7 +13,7 @@ const Alert = (status, message) => {
       confirmButtonText: 'OK',
     }).then((result) => {
       if (result.isConfirmed && status === 200) {
-        window.location.href = `/dashboard`
+        window.location.href = `/admin/home`
       }
     })
   );
