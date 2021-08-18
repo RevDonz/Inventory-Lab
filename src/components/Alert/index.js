@@ -14,8 +14,8 @@ const Alert = (status, message, type) => {
             }
         });
     } else if (type === 'item') {
-
+        
     }
 };
 
-export default Alert
+export default Alert;

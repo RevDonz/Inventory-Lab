@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
     const [dataItem, setDataItem] = useState([])
+    const [category, setCategory] = useState([])
 
     const getpost = () => {
         axios.get(`https://inventorylab.herokuapp.com/items`)
         .then(res => {
-            console.log(res.data);
             const responseAPI = res.data;
             setDataItem(responseAPI.data)
         })
@@ -17,11 +17,25 @@ const Home = () => {
             console.log('error: ', err);
         })
     }
+
+    const getCategory = (id) => {
+        axios.get(`https://inventorylab.herokuapp.com/category/searchCategory/${id}`)
+        .then(res => {
+            const responseAPI = res.data;
+            console.log(responseAPI.data.categoryName);
+            setCategory(responseAPI)
+            
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+
     useEffect(() => {  
         getpost()
     }, [])
     
-    const deletePost = (id) => {
+    const handleDeletePost = (id) => {
         Swal.fire({
             title: 'Apakah Anda yakin ingin menghapus data?',
             text: "Data yang sudah dihapus tidak dapat dikembalikan lagi!",
@@ -44,7 +58,7 @@ const Home = () => {
                 })
                 .catch(err => console.log('err:', err))
             }
-          })
+        })
     }
 
     return (
@@ -72,7 +86,7 @@ const Home = () => {
                                 <td className="p-3">{item.itemInBorrow}</td>
                                 <td className="flex p-3">
                                     <button className="p-2 bg-blue-500">Ubah</button>
-                                    <button className="p-2 bg-red-500" onClick={() => deletePost(item._id)}>Hapus</button>
+                                    <button className="p-2 bg-red-500" onClick={() => handleDeletePost(item._id)}>Hapus</button>
                                 </td>
                             </tr>
                         )
