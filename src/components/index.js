@@ -1,3 +1,4 @@
 import Alert from './Alert'
 
-export { Alert }
+import Navbar from './Navbar'
+export { Alert, Navbar }
