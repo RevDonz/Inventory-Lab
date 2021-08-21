@@ -1,4 +1,6 @@
-module.exports = {
+const windmill = require('@windmill/react-ui/config')
+
+module.exports = windmill({
   purge: {
     content: ["./**/*.html", "./**/*.js"],
   },
@@ -17,4 +19,4 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
   ],
-}
+})

@@ -2,14 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/css/index.css';
 import App from './App';
+import { Windmill } from '@windmill/react-ui'
 
 import reportWebVitals from './reportWebVitals';
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Windmill>
     <App />
-  </React.StrictMode>,
+  </Windmill>,
   document.getElementById('root')
 );
 
