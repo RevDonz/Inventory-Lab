@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Home = () => {
+    const history = useHistory();
     const [data, setData] = useState([]);
 
     const getItem = async () => {
@@ -90,7 +91,9 @@ const Home = () => {
                                 <td className='p-3'>{item.itemAmount}</td>
                                 <td className='p-3'>{item.itemInBorrow}</td>
                                 <td className='flex p-3'>
-                                    <button className='p-2 bg-blue-500'>
+                                    <button className='p-2 bg-blue-500'
+                                        onClick={() => history.push(`/admin/updateItem/${item._id}`)}
+                                    >
                                         Ubah
                                     </button>
                                     <button

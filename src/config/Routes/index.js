@@ -16,7 +16,7 @@ const Routes = () => {
                 <Route exact path="/admin/createItem">
                     <CreateItem/>
                 </Route>
-                <Route exact path="/admin/updateItem">
+                <Route exact path="/admin/updateItem/:id">
                     <UpdateItem/>
                 </Route>
                 <Route exact path="/admin/home">

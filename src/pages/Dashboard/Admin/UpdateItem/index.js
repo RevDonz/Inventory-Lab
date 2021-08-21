@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-const UpdateItem = () => {
+const UpdateItem = (props) => {
     const [itemName, setItemName] = useState('')
     const [itemAmount, setItemAmount] = useState('')
     const [categoryId, setCategoryId] = useState('')
@@ -19,8 +19,22 @@ const UpdateItem = () => {
         })
     }
     useEffect(() => {  
-        getCategory()
-    }, [])
+        getCategory();
+
+        const id = props.match.params.id;
+        axios.get(`https://inventorylab.herokuapp.com/items/findItem/${id}`)
+        .then(res => {
+            const data = res.data.data;
+            console.log('sukses', data);
+            setItemName(data.itemName);
+            setItemAmount(data.itemAmount);
+            setCategoryId(data.categoryId)
+
+        })
+        .catch(err => {
+            console.log('error', err)
+        })
+    }, [props])
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -94,4 +108,4 @@ const UpdateItem = () => {
     );
 };
 
-export default UpdateItem;
+export default withRouter(UpdateItem);
