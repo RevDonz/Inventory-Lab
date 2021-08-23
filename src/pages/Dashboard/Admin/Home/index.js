@@ -23,15 +23,15 @@ const Home = () => {
         // console.log(data);
         setData(data);
     };
+    useEffect(() => {
+        getItem();
+    }, []);
     const getCategory = async (id) => {
         const response = await axios.get(
             'https://inventorylab.herokuapp.com/category/searchCategory/' + id
         );
         return response.data.data;
     };
-    useEffect(() => {
-        getItem();
-    }, []);
 
     const handleDeletePost = (id) => {
         Swal.fire({
