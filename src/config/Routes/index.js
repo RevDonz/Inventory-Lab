@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Login, Register, Home, CreateItem, UpdateItem, HomeStyle } from '../../pages'
+import { Login, Register, Home, CreateItem, UpdateItem } from '../../pages'
 
 
 const Routes = () => {
@@ -21,9 +21,6 @@ const Routes = () => {
                 </Route>
                 <Route exact path="/admin/home">
                     <Home/>
-                </Route>
-                <Route exact path="/admin/homestyle">
-                    <HomeStyle />
                 </Route>
             </Switch>
         </Router>
