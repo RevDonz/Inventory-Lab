@@ -1,6 +1,8 @@
 import Alert from './Alert'
-import Navbar from './Navbar'
+import Header from './Header'
 import Sidebar from './Sidebar'
 import Content from './Content'
+import PageTitle from './Typography/PageTitle'
+import SectionTitle from './Typography/SectionTitle'
 
-export { Alert, Navbar, Sidebar, Content }
+export { Alert, Header, Sidebar, Content, PageTitle, SectionTitle }

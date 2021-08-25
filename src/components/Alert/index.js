@@ -14,7 +14,16 @@ const Alert = (status, message, type) => {
             }
         });
     } else if (type === 'item') {
-        
+        Swal.fire({
+            icon: status === 400 ? 'error' : 'success',
+            title: status === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            text: message,
+            confirmButtonText: 'OK',
+        }).then((result) => {
+            if (result.isConfirmed && status === 200) {
+                window.location.href = `/app/dashboard`;
+            }
+        });
     }
 };
 
