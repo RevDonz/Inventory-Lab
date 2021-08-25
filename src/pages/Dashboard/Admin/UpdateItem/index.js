@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2'
 import { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
@@ -44,13 +45,30 @@ const UpdateItem = (props) => {
         items.append('itemAmount', itemAmount)
         items.append('categoryId', categoryId)
 
-        axios.post('https://inventorylab.herokuapp.com/items/inputNewItem', items)
-        .then(res => {
-            console.log(res);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        const id = props.match.params.id
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Save`,
+            denyButtonText: `Don't save`,
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              axios.post(`https://inventorylab.herokuapp.com/items/renameItem/${id}`, items)
+              .then(result => {
+                console.log(result);
+              })
+              .catch(error => {
+                console.log('error : ', error);
+              });
+              Swal.fire('Saved!', '', 'success')
+              // history.push('/admin/category')
+              window.location.href = `/admin/home`
+            } else if (result.isDenied) {
+              Swal.fire('Changes are not saved', '', 'info')
+            }
+          })
     }
     return (
         <div>
@@ -67,7 +85,7 @@ const UpdateItem = (props) => {
                         name='itemName'
                         id='itemName'
                         className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-                        onChange={(e) => setItemName(e.target.value)}
+                        value={itemName} onChange={(e) => setItemName(e.target.value)}
                     />
                 </div>
                 <div className='col-span-6 sm:col-span-3'>
@@ -82,7 +100,7 @@ const UpdateItem = (props) => {
                         name='itemAmount'
                         id='itemAmount'
                         className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-                        onChange={(e) => setItemAmount(e.target.value)}
+                        value={itemAmount} onChange={(e) => setItemAmount(e.target.value)}
                     />
                 </div>
                 <div className='col-span-6 sm:col-span-3'>
@@ -91,7 +109,7 @@ const UpdateItem = (props) => {
                         className='block text-sm font-medium text-gray-700'
                     >
                         Kategori Barang
-                        <select onChange={(e) => setCategoryId(e.target.value)} name="" id="" className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'>
+                        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} name="" id="" className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'>
                             <option value="" disabled selected hidden>Pilih Kategori</option>
                         {dataCategory.map(category => {
                             return (
@@ -101,7 +119,7 @@ const UpdateItem = (props) => {
                         </select>
                     </label>
                 </div>
-                <button onClick={onSubmit} type="submit" className="p-3 bg-blue-500 rounded-md text-white hover:bg-blue-600">Tambah Data</button>
+                <button onClick={onSubmit} type="submit" className="p-3 bg-blue-500 rounded-md text-white hover:bg-blue-600">Ubah Data</button>
                 <Link className="p-3 bg-red-500 rounded-md text-white hover:bg-red-600 ml-3" to="/admin/home">Kembali</Link>
             </form>
         </div>
