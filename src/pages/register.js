@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Alert from '../../../components/Alert'
+import Alert from '../components/Alert'
 
 const Register = () => {
   const [fullname, setFullname] = useState('');

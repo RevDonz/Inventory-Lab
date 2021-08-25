@@ -1,16 +1,16 @@
 const routes = [
     {
-        path: '/admin/home',
+        path: '/app/dashboard',
         icon: 'HomeIcon',
         name: 'Dashboard',
     },
     {
-        path: '/admin/createitem',
+        path: '/app/createitem',
         icon: 'ModalsIcon',
         name: 'Tambah Barang',
     },
     {
-        path: '/admin/barang',
+        path: '/app/barang',
         icon: 'MenuIcon',
         name: 'Daftar Barang',
     },

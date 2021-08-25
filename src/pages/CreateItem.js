@@ -1,6 +1,8 @@
+import { Card } from '@windmill/react-ui';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { PageTitle, SectionTitle } from '../components';
 
 const CreateItem = () => {
     const [itemName, setItemName] = useState('')
@@ -40,7 +42,12 @@ const CreateItem = () => {
         })
     }
     return (
-        <div>
+        <>
+            <PageTitle>Tambah Barang</PageTitle>
+            <SectionTitle>Tambah Data Barang</SectionTitle>
+            <Card>
+                a
+            </Card>
             <form action='' className="w-1/3 p-10 space-y-3">
                 <div className='col-span-6 sm:col-span-3'>
                     <label
@@ -90,7 +97,7 @@ const CreateItem = () => {
                 <button onClick={onSubmit} type="submit" className="p-3 bg-blue-500 rounded-md text-white hover:bg-blue-600">Tambah Data</button>
                 <Link className="p-3 bg-red-500 rounded-md text-white hover:bg-red-600 ml-3" to="/admin/home">Kembali</Link>
             </form>
-        </div>
+        </>
     );
 };
 

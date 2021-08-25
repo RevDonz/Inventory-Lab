@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { vectorLogin } from '../../../assets'
-import { illusLogin } from '../../../assets'
-import Alert from '../../../components/Alert'
+import { vectorLogin } from '../assets'
+import { illusLogin } from '../assets'
+import Alert from '../components/Alert'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -26,7 +26,8 @@ const Login = () => {
 
         fetch('https://inventorylab.herokuapp.com/user/login/', reqOptions)
             .then(response => response.json())
-            .then(result => Alert(result.status, result.message, 'auth'))
+            // .then(result => Alert(result.status, result.message, 'auth')) 
+            .then(result => console.log(result)) 
             .catch(error => console.log('error', error))               
     }
 

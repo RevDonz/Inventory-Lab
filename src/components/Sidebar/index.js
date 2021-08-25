@@ -1,6 +1,6 @@
 import { NavLink, Route } from 'react-router-dom';
 import * as Icons from '../../icons';
-import {routes} from '../../config';
+import routes from '../../routes/sidebar';
 
 const Icon = ({ icon, ...props }) => {
     const Icon = Icons[icon];
