@@ -32,7 +32,6 @@ const Dashboard = () => {
             })
         );
         setIsLoading(!isLoading);
-        console.log(isLoading);
         setData(data);
     };
 
@@ -77,6 +76,14 @@ const Dashboard = () => {
         });
     };
 
+    const Spinner = () => {
+        return (
+            <TableRow>
+                <TableCell colSpan={6} className="text-center">Loading Data...</TableCell>
+            </TableRow>
+        )
+    }
+
     return (
         <>
             <PageTitle>Dashboard</PageTitle>
@@ -95,7 +102,7 @@ const Dashboard = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {isLoading ? <h1>loading</h1> : data.map((item, i) => {
+                        {isLoading ? <Spinner /> : data.map((item, i) => {
                             return (
                                 <TableRow key={i}>
                                     <TableCell>{item.itemName}</TableCell>
