@@ -17,7 +17,12 @@ const routes = [
     {
         path: '/app/category',
         icon: 'MenuIcon',
-        name: 'Kategori',
+        name: 'Daftar Kategori',
+    },
+    {
+        path: '/app/createcategory',
+        icon: 'ModalsIcon',
+        name: 'Tambah Kategori',
     },
 ];
 

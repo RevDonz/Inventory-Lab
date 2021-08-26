@@ -14,27 +14,27 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
-const ListItems = () => {
-    const [data, setData] = useState([]);
+const Category = () => {
+    const [dataCategory, setDataCategory] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory()
 
-    const getItem = () => {
-        axios
-            .get('https://inventorylab.herokuapp.com/items')
-            .then((res) => {
-                const data = res.data;
-                setData(data.data);
-                // console.log(data);
-                setIsLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+    const getCategory = () => {
+        axios.get(
+            'https://inventorylab.herokuapp.com/category'
+        )
+        .then((res) => {
+            const data = res.data;
+            setDataCategory(data.data);
+            setIsLoading(false)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     };
-
+    
     useEffect(() => {
-        getItem();
+        getCategory();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -50,58 +50,51 @@ const ListItems = () => {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`https://inventorylab.herokuapp.com/items/deleteItem/${id}`)
+                axios
+                    .delete(
+                        `https://inventorylab.herokuapp.com/category/deleteCategory/${id}`
+                    )
                     .then((res) => {
                         Swal.fire(
                             'Deleted!',
                             'Your file has been deleted.',
                             'success'
-                            );
-                            getItem();
-                        })
-                        .catch((err) => console.log('err:', err));
-                    }
-            });
+                        );
+                        getCategory();
+                    })
+                    .catch((err) => console.log('err:', err));
+            }
+        });
     };
 
     const Spinner = () => {
         return (
             <TableRow>
-                <TableCell colSpan={6} className='text-center'>
-                    Memuat Data...
-                </TableCell>
+                <TableCell colSpan={6} className="text-center">Loading Data...</TableCell>
             </TableRow>
-        );
-    };
+        )
+    }
 
     return (
         <>
-            <PageTitle>Daftar Barang</PageTitle>
-            <SectionTitle>Tabel daftar barang</SectionTitle>
+            <PageTitle>Kategori</PageTitle>
+            <SectionTitle>Tabel daftar kategori</SectionTitle>
 
             <TableContainer>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableCell>Nama Barang</TableCell>
-                            <TableCell>Kode Barang</TableCell>
-                            <TableCell>Kategori Barang</TableCell>
-                            <TableCell>Jumlah Barang</TableCell>
-                            <TableCell>Jumlah Barang Dipinjam</TableCell>
+                            <TableCell>No</TableCell>
+                            <TableCell>Nama Kategori</TableCell>
                             <TableCell>Aksi</TableCell>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                    {isLoading ? <Spinner /> : data.map((item, i) => {
+                        {isLoading ? <Spinner /> : dataCategory.map((category, index) => {
                             return (
-                                <TableRow key={i}>
-                                    <TableCell>{item.itemName}</TableCell>
-                                    <TableCell>{item.itemCode}</TableCell>
-                                    <TableCell>
-                                        {item.detailCategory[0].categoryName}
-                                    </TableCell>
-                                    <TableCell>{item.itemAmount}</TableCell>
-                                    <TableCell>{item.itemInBorrow}</TableCell>
+                                <TableRow key={category._id}>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>{category.categoryName}</TableCell>
                                     <TableCell>
                                         <div className='flex items-center space-x-4'>
                                             <Button
@@ -109,7 +102,7 @@ const ListItems = () => {
                                                 icon={EditIcon}
                                                 aria-label='Edit'
                                                 onClick = {() =>
-                                                    history.push(`/app/updateitem/${item._id}`)}
+                                                    history.push(`/app/updatecategory/${category._id}`)}
                                             />
                                             <Button
                                                 className='text-red-500'
@@ -117,7 +110,7 @@ const ListItems = () => {
                                                 icon={TrashIcon}
                                                 aria-label='Delete'
                                                 onClick={() =>
-                                                    handleDeletePost(item._id)
+                                                    handleDeletePost(category._id)
                                                 }
                                             />
                                         </div>
@@ -132,4 +125,4 @@ const ListItems = () => {
     );
 };
 
-export default ListItems;
+export default Category;

@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 import {
     Button,
     Card,
@@ -6,31 +8,44 @@ import {
     Label,
     Select,
 } from '@windmill/react-ui';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-import { PageTitle, SectionTitle } from '../components';
+import { useHistory, withRouter } from 'react-router-dom';
+import { Alert, PageTitle, SectionTitle } from '../components';
 
-const UpdateItem = () => {
-    const [itemName, setItemName] = useState('');
-    const [itemAmount, setItemAmount] = useState('');
-    const [categoryId, setCategoryId] = useState('');
-    const [dataCategory, setDataCategory] = useState([]);
+const UpdateItem = (props) => {
+    const [itemName, setItemName] = useState('')
+    const [itemAmount, setItemAmount] = useState('')
+    const [categoryId, setCategoryId] = useState('')
+    const [dataCategory, setDataCategory] = useState([])
+
+    const history = useHistory();
 
     const getCategory = () => {
-        axios
-            .get(`https://inventorylab.herokuapp.com/category`)
-            .then((res) => {
-                const responseAPI = res.data;
-                setDataCategory(responseAPI.data);
-            })
-            .catch((err) => {
-                console.log('error: ', err);
-            });
-    };
-    useEffect(() => {
+        axios.get(`https://inventorylab.herokuapp.com/category`)
+        .then(res => {
+            const responseAPI = res.data;
+            setDataCategory(responseAPI.data)
+        })
+        .catch(err => {
+            console.log('error: ', err);
+        })
+    }
+    useEffect(() => {  
         getCategory();
-    }, []);
+
+        const id = props.match.params.id;
+        axios.get(`https://inventorylab.herokuapp.com/items/findItem/${id}`)
+        .then(res => {
+            const data = res.data.data;
+            console.log('sukses', data);
+            setItemName(data.itemName);
+            setItemAmount(data.itemAmount);
+            setCategoryId(data.categoryId)
+
+        })
+        .catch(err => {
+            console.log('error', err)
+        })
+    }, [props])
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -40,30 +55,30 @@ const UpdateItem = () => {
         items.append('itemAmount', itemAmount);
         items.append('categoryId', categoryId);
 
-        axios
-            .post(
-                'https://inventorylab.herokuapp.com/items/inputNewItem',
-                items
-            )
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+        const id = props.match.params.id
+        axios.post(`https://inventorylab.herokuapp.com/items/updateItem/${id}`, items)
+        .then(result => {
+            console.log(result);
+            Alert(result.data.code, result.data.message, 'item')
+        })
+        .catch(error => {
+            console.log('error : ', error);
+        });
+        
+    }
     return (
         <>
-            <PageTitle>Tambah Barang</PageTitle>
-            <SectionTitle>Form Tambah Data</SectionTitle>
-            <Card className='w-full md:w-1/2'>
+            <PageTitle>Ubah Barang</PageTitle>
+            <SectionTitle>Form Ubah Data</SectionTitle>
+            <Card>
                 <CardBody>
                     <form action=''>
-                        <div className='gap-4 space-y-3'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                             <Label>
                                 <span>Nama Barang</span>
                                 <Input
                                     className='mt-1'
+                                    value={itemName}
                                     onChange={(e) =>
                                         setItemName(e.target.value)
                                     }
@@ -74,6 +89,7 @@ const UpdateItem = () => {
                                 <Input
                                     className='mt-1'
                                     type='number'
+                                    value={itemAmount}
                                     onChange={(e) =>
                                         setItemAmount(e.target.value)
                                     }
@@ -83,6 +99,7 @@ const UpdateItem = () => {
                                 <span>Requested Limit</span>
                                 <Select
                                     className='mt-1'
+                                    value={categoryId}
                                     onChange={(e) =>
                                         setCategoryId(e.target.value)
                                     }
@@ -106,7 +123,15 @@ const UpdateItem = () => {
                                 onClick={onSubmit}
                                 className=''
                             >
-                                Tambah Data
+                                Ubah Data
+                            </Button>
+                            <Button
+                                type='submit'
+                                layout="outline"
+                                onClick={() => history.push('/app/dashboard')}
+                                className='mx-4'
+                            >
+                                Kembali
                             </Button>
                         </div>
                     </form>
@@ -116,4 +141,4 @@ const UpdateItem = () => {
     );
 };
 
-export default UpdateItem;
+export default withRouter(UpdateItem);
