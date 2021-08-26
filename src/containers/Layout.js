@@ -1,32 +1,43 @@
-import React, { Suspense } from 'react';
-import routes from '../routes'
+import React, { lazy, Suspense, useContext, useEffect } from 'react';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import routes from '../routes';
 
 import { Header, Sidebar } from '../components';
-import Main from './Main';
-import { Switch, Route, Redirect } from 'react-router-dom'
+import Main from '../containers/Main';
+import { SidebarContext } from '../context/SidebarContext';
+
+const Page404 = lazy(() => import('../pages/404'))
 
 const Layout = () => {
+    const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
+    let location = useLocation();
+
+    useEffect(() => {
+        closeSidebar();
+    }, [location]);
 
     return (
-        <div class='flex h-screen bg-gray-50 dark:bg-gray-900 font-poppins'>
-            {/* <!-- Desktop sidebar --> */}
+        <div className={`flex h-screen bg-gray-50 dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}>
             <Sidebar />
-            <div class='flex flex-col flex-1'>
+            <div class='flex flex-col flex-1 w-full'>
                 <Header />
                 <Main>
                     <Suspense fallback={<h1>Loading...</h1>}>
                         <Switch>
                             {routes.map((route, i) => {
                                 return route.component ? (
-                                    <Route 
-                                        key={i} 
-                                        exact={true} 
-                                        path={`/app${route.path}`} 
-                                        render={(props) => <route.component {...props} />}
+                                    <Route
+                                        key={i}
+                                        exact={true}
+                                        path={`/app${route.path}`}
+                                        render={(props) => (
+                                            <route.component {...props} />
+                                        )}
                                     />
-                                ) : null
+                                ) : null;
                             })}
-                            <Redirect exact from="/app" to="/app/dashboard" />
+                            <Redirect exact from='/app' to='/app/dashboard' />
+                            <Route component={Page404} />
                         </Switch>
                     </Suspense>
                 </Main>
