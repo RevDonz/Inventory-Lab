@@ -15,6 +15,7 @@ const CreateItem = () => {
     const [itemAmount, setItemAmount] = useState('');
     const [categoryId, setCategoryId] = useState('');
     const [dataCategory, setDataCategory] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const getCategory = () => {
         axios
@@ -23,6 +24,7 @@ const CreateItem = () => {
                 const responseAPI = res.data;
                 // console.log(responseAPI);
                 setDataCategory(responseAPI.data);
+                setIsLoading(false)
             })
             .catch((err) => {
                 console.log('error: ', err);
@@ -47,17 +49,17 @@ const CreateItem = () => {
             )
             .then(result => Alert(result.data.code, result.data.message, 'item'))
             .catch((err) => {
-                console.log(err);
+                Alert(400, err, 'item');
             });
     };
     return (
         <>
             <PageTitle>Tambah Barang</PageTitle>
             <SectionTitle>Form Tambah Data</SectionTitle>
-            <Card>
+            <Card className="w-full md:w-1/2">
                 <CardBody>
                     <form action=''>
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                        <div className='gap-4 space-y-3'>
                             <Label>
                                 <span>Nama Barang</span>
                                 <Input
@@ -72,20 +74,19 @@ const CreateItem = () => {
                                 <Input
                                     className='mt-1'
                                     type='number'
-                                    onChange={(e) =>
-                                        setItemAmount(e.target.value)
-                                    }
+                                    onChange={(e) => setItemAmount(e.target.value)}
+                                    defaultValue={1}
                                 />
                             </Label>
                             <Label>
-                                <span>Requested Limit</span>
+                                <span>Kategori Barang</span>
                                 <Select
                                     className='mt-1'
                                     onChange={(e) =>
                                         setCategoryId(e.target.value)
                                     }
                                 >
-                                    {dataCategory.map((category) => {
+                                    {isLoading ? <option>Memuat kategori...</option> : dataCategory.map((category) => {
                                         return (
                                             <option
                                                 key={category._id}

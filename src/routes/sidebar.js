@@ -5,14 +5,19 @@ const routes = [
         name: 'Dashboard',
     },
     {
+        path: '/app/items',
+        icon: 'HomeIcon',
+        name: 'Data Barang',
+    },
+    {
         path: '/app/createitem',
         icon: 'ModalsIcon',
         name: 'Tambah Barang',
     },
     {
-        path: '/app/barang',
+        path: '/app/category',
         icon: 'MenuIcon',
-        name: 'Daftar Barang',
+        name: 'Kategori',
     },
 ];
 

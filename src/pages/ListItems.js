@@ -7,7 +7,6 @@ import {
     TableRow,
     TableCell,
     Button,
-    Badge,
 } from '@windmill/react-ui';
 import { EditIcon, TrashIcon } from '../icons';
 import { PageTitle, SectionTitle } from '../components';
@@ -15,16 +14,17 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const Dashboard = () => {
+const ListItems = () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const getItem = () => {
         axios
-            .get('https://inventorylab.herokuapp.com/borrower/')
+            .get('https://inventorylab.herokuapp.com/items')
             .then((res) => {
                 const data = res.data;
                 setData(data.data);
+                // console.log(data);
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -66,7 +66,7 @@ const Dashboard = () => {
     const Spinner = () => {
         return (
             <TableRow>
-                <TableCell colSpan={9} className='text-center'>
+                <TableCell colSpan={6} className='text-center'>
                     Memuat Data...
                 </TableCell>
             </TableRow>
@@ -75,21 +75,18 @@ const Dashboard = () => {
 
     return (
         <>
-            <PageTitle>Dashboard</PageTitle>
-            <SectionTitle>Tabel Data Peminjaman</SectionTitle>
+            <PageTitle>Daftar Barang</PageTitle>
+            <SectionTitle>Tabel daftar barang</SectionTitle>
 
             <TableContainer>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableCell>Nama Peminjam</TableCell>
                             <TableCell>Nama Barang</TableCell>
-                            <TableCell>Jumlah</TableCell>
-                            <TableCell>Tanggal Pinjam</TableCell>
-                            <TableCell>Tanggal Dikembalikan</TableCell>
-                            <TableCell>Garansi</TableCell>
-                            <TableCell>Tanggal Pengajuan</TableCell>
-                            <TableCell>Status</TableCell>
+                            <TableCell>Kode Barang</TableCell>
+                            <TableCell>Kategori Barang</TableCell>
+                            <TableCell>Jumlah Barang</TableCell>
+                            <TableCell>Jumlah Barang Dipinjam</TableCell>
                             <TableCell>Aksi</TableCell>
                         </TableRow>
                     </TableHeader>
@@ -97,17 +94,18 @@ const Dashboard = () => {
                         {isLoading ? (
                             <Spinner />
                         ) : (
-                            data.map((borr, i) => {
+                            data.map((item, i) => {
                                 return (
                                     <TableRow key={i}>
-                                        <TableCell>{borr.detailUser[0].fullname}</TableCell>
-                                        <TableCell>{borr.detailItem[0].itemName}</TableCell>
-                                        <TableCell>{borr.itemBorrow}</TableCell>
-                                        <TableCell>{borr.dateBorrow}</TableCell>
-                                        <TableCell>{borr.dateReturn}</TableCell>
-                                        <TableCell>{borr.guarantee}</TableCell>
-                                        <TableCell>{borr.dateRequest}</TableCell>
-                                        <TableCell><Badge type="success">{borr.status}</Badge></TableCell>
+                                        <TableCell>{item.itemName}</TableCell>
+                                        <TableCell>{item.itemCode}</TableCell>
+                                        <TableCell>
+                                            {item.detailCategory[0].categoryName}
+                                        </TableCell>
+                                        <TableCell>{item.itemAmount}</TableCell>
+                                        <TableCell>
+                                            {item.itemInBorrow}
+                                        </TableCell>
                                         <TableCell>
                                             <div className='flex items-center space-x-4'>
                                                 <Link to='/app/updateitem'>
@@ -124,7 +122,7 @@ const Dashboard = () => {
                                                     aria-label='Delete'
                                                     onClick={() =>
                                                         handleDeletePost(
-                                                            borr._id
+                                                            item._id
                                                         )
                                                     }
                                                 />
@@ -141,4 +139,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default ListItems;

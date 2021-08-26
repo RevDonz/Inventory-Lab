@@ -10,7 +10,7 @@ const Alert = (status, message, type) => {
             confirmButtonText: 'OK',
         }).then((result) => {
             if (result.isConfirmed && status === 200) {
-                window.location.href = `/admin/home`;
+                window.location.href = `/app/dashboard`;
             }
         });
     } else if (type === 'item') {
@@ -21,7 +21,7 @@ const Alert = (status, message, type) => {
             confirmButtonText: 'OK',
         }).then((result) => {
             if (result.isConfirmed && status === 200) {
-                window.location.href = `/app/dashboard`;
+                window.location.href = `/app/items`;
             }
         });
     }

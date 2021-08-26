@@ -3,7 +3,8 @@ import { lazy } from 'react'
 const Dashboard = lazy(() => import('../pages/Dashboard'))
 const CreateItem = lazy(() => import('../pages/CreateItem'))
 const UpdateItem = lazy(() => import('../pages/UpdateItem'))
-const History = lazy(() => import('../pages/History'))
+const ListItems = lazy(() => import('../pages/ListItems'))
+// const History = lazy(() => import('../pages/History'))
 
 const routes = [
     {
@@ -19,8 +20,8 @@ const routes = [
         component: UpdateItem
     },
     {
-        path: '/history',
-        component: History
+        path: '/items',
+        component: ListItems
     }
 ]
 
