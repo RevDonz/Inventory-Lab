@@ -16,13 +16,13 @@ const routes = [
     },
     {
         path: '/app/category',
-        icon: 'ModalsIcon',
-        name: 'Tambah Kategori',
+        icon: 'MenuIcon',
+        name: 'Daftar Kategori',
     },
     {
         path: '/app/createcategory',
-        icon: 'MenuIcon',
-        name: 'Daftar Kategori',
+        icon: 'ModalsIcon',
+        name: 'Tambah Kategori',
     },
 ];
 

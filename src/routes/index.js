@@ -4,6 +4,9 @@ const Dashboard = lazy(() => import('../pages/Dashboard'))
 const CreateItem = lazy(() => import('../pages/CreateItem'))
 const UpdateItem = lazy(() => import('../pages/UpdateItem'))
 const History = lazy(() => import('../pages/History'))
+const Category = lazy(() => import('../pages/Category'))
+const CreateCategory = lazy(() => import('../pages/CreateCategory'))
+const UpdateCategory = lazy(() => import('../pages/UpdateCategory'))
 
 const routes = [
     {
@@ -21,7 +24,19 @@ const routes = [
     {
         path: '/history',
         component: History
-    }
+    },
+    {
+        path: '/category',
+        component: Category
+    },
+    {
+        path: '/createcategory',
+        component: CreateCategory
+    },
+    {
+        path: '/updatecategory/:id',
+        component: UpdateCategory
+    },
 ]
 
 
