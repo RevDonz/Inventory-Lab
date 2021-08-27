@@ -47,7 +47,7 @@ const CreateItem = () => {
                 'https://inventorylab.herokuapp.com/items/inputNewItem',
                 items
             )
-            .then(result => Alert(result.data.code, result.data.message, 'item'))
+            .then(result => Alert(result, 'item'))
             .catch((err) => {
                 Alert(400, err, 'item');
             });

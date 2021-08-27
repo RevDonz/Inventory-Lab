@@ -8,7 +8,7 @@ import {
     OutlineLogoutIcon,
     OutlinePersonIcon,
     SearchIcon,
-    SunIcon,
+    // SunIcon,
 } from '../../icons';
 import {
     Avatar,
@@ -33,9 +33,14 @@ const Header = () => {
         setIsProfileMenuOpen(!isProfileMenuOpen);
     }
 
+    const logout = async () => {
+        window.localStorage.removeItem('token')
+        window.location.href = `/`;
+    }
+
     return (
-        <header class='z-10 py-4 bg-indigo-50 dark:bg-gray-800'>
-            <div class='container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300'>
+        <header className='z-10 py-4 bg-indigo-50 dark:bg-gray-800'>
+            <div className='container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300'>
                 {/* <!-- Mobile hamburger --> */}
                 <button
                     className='p-1 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple'
@@ -60,7 +65,7 @@ const Header = () => {
                         />
                     </div>
                 </div>
-                <ul class='flex items-center flex-shrink-0 space-x-6'>
+                <ul className='flex items-center flex-shrink-0 space-x-6'>
                     {/* <!-- Theme toggler --> */}
                     <li className='flex'>
                         <button
@@ -147,7 +152,7 @@ const Header = () => {
                                 />
                                 <span>Settings</span>
                             </DropdownItem>
-                            <DropdownItem onClick={() => alert('Log out!')}>
+                            <DropdownItem onClick={logout}>
                                 <OutlineLogoutIcon
                                     className='w-4 h-4 mr-3'
                                     aria-hidden='true'

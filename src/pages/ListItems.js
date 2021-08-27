@@ -7,6 +7,8 @@ import {
     TableRow,
     TableCell,
     Button,
+    TableFooter,
+    Pagination,
 } from '@windmill/react-ui';
 import { EditIcon, TrashIcon } from '../icons';
 import { PageTitle, SectionTitle } from '../components';
@@ -19,19 +21,39 @@ const ListItems = () => {
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory()
 
+    // setup pages control for every table
+    const [pageTable1, setPageTable1] = useState(1)
+
+    // setup data for every table
+    const [dataTable1, setDataTable1] = useState([])
+
+    // pagination setup
+    const resultsPerPage = 7
+    const totalResults = data.length
+    console.log(data);
+
+    // pagination change control
+    function onPageChangeTable1(p) {
+        setPageTable1(p)
+    }
+
     const getItem = () => {
         axios
             .get('https://inventorylab.herokuapp.com/items')
             .then((res) => {
                 const data = res.data;
+                setDataTable1(data.data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
                 setData(data.data);
-                // console.log(data);
                 setIsLoading(false);
             })
             .catch((err) => {
                 console.log(err);
             })
     };
+
+    useEffect(() => {
+        setDataTable1(data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+    }, [pageTable1])
 
     useEffect(() => {
         getItem();
@@ -92,7 +114,7 @@ const ListItems = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                    {isLoading ? <Spinner /> : data.map((item, i) => {
+                    {isLoading ? <Spinner /> : dataTable1.map((item, i) => {
                             return (
                                 <TableRow key={i}>
                                     <TableCell>{item.itemName}</TableCell>
@@ -127,6 +149,14 @@ const ListItems = () => {
                         })}
                     </TableBody>
                 </Table>
+                <TableFooter>
+                    <Pagination
+                        totalResults={totalResults}
+                        resultsPerPage={resultsPerPage}
+                        onChange={onPageChangeTable1}
+                        label="Table navigation"
+                    />
+                </TableFooter>
             </TableContainer>
         </>
     );

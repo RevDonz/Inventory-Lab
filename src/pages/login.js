@@ -26,7 +26,7 @@ const Login = () => {
 
         fetch('https://inventorylab.herokuapp.com/user/login/', reqOptions)
             .then(response => response.json())
-            .then(result => Alert(result.status, result.message, 'auth'))
+            .then(result => Alert(result, 'auth'))
             // .then(result => console.log(result))
             .catch(error => console.log('error', error))               
     }
@@ -39,7 +39,7 @@ const Login = () => {
                     <div className="w-1/3 md:w-1/2 justify-center hidden md:flex">
                         <img src={vectorLogin} className="w-full md:w-2/3" alt="Login Vector" />
                     </div>
-                    <form action="/" method="post" className="w-full md:w-1/2 lg:w-1/3 py-10 px-10 rounded-xl shadow-md md:rounded-none md:shadow-none">
+                    <form action="/" autoComplete="on" method="post" className="w-full md:w-1/2 lg:w-1/3 py-10 px-10 rounded-xl shadow-md md:rounded-none md:shadow-none">
                         <div className="rounded-md justify-center">
                             <span className="text-left text-gray-800 font-semibold text-3xl">Login</span>
                             <div className="pt-10">

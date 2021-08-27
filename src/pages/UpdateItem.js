@@ -33,6 +33,7 @@ const UpdateItem = (props) => {
         getCategory();
 
         const id = props.match.params.id;
+        console.log(props);
         axios.get(`https://inventorylab.herokuapp.com/items/findItem/${id}`)
         .then(res => {
             const data = res.data.data;

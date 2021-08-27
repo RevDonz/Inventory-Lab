@@ -33,10 +33,10 @@ const CreateCategory = () => {
         <>
             <PageTitle>Tambah Kategori</PageTitle>
             <SectionTitle>Form Tambah Data</SectionTitle>
-            <Card>
+            <Card className="w-full md:w-1/2">
                 <CardBody>
                     <form action=''>
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                        <div className='gap-4'>
                             <Label>
                                 <span>Nama Kategori</span>
                                 <Input
