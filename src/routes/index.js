@@ -7,6 +7,10 @@ const History = lazy(() => import('../pages/History'))
 const Category = lazy(() => import('../pages/Category'))
 const CreateCategory = lazy(() => import('../pages/CreateCategory'))
 const UpdateCategory = lazy(() => import('../pages/UpdateCategory'))
+const DashboardUser = lazy(() => import('../pages/DashboardUser'))
+const Pengajuan = lazy(() => import('../pages/Pengajuan'))
+const Profile = lazy(() => import('../pages/Profile'))
+const RiwayatPeminjaman = lazy(() => import('../pages/RiwayatPeminjaman'))
 
 const routes = [
     {
@@ -36,6 +40,22 @@ const routes = [
     {
         path: '/updatecategory/:id',
         component: UpdateCategory
+    },
+    {
+        path: '/user/dashboard',
+        component: DashboardUser
+    },
+    {
+        path: '/user/pengajuan/:id',
+        component: Pengajuan
+    },
+    {
+        path: '/user/myProfile',
+        component: Profile
+    },
+    {
+        path: '/user/riwayatPeminjaman',
+        component: RiwayatPeminjaman
     },
 ]
 
