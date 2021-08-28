@@ -15,7 +15,7 @@ const Pengajuan = (props) => {
     const [itemName, setItemName] = useState('')
     const [itemAmount, setItemAmount] = useState('')
     const [itemInBorrow, setItemInBorrow] = useState('')
-    const [itemBorrow, setItemBorrow] = useState('')
+    let [itemBorrow, setItemBorrow] = useState(1)
     const [itemPicture, setItemPicture] = useState('')
     const [categoryId, setCategoryId] = useState('')
     const [itemId, setItemId] = useState('')
@@ -38,15 +38,14 @@ const Pengajuan = (props) => {
             console.log('error: ', err);
         })
     }
-    useEffect(() => {
-        getCategory();
 
+    const getItemById = () =>{
         const id = props.match.params.id;
         axios.get(`https://inventorylab.herokuapp.com/items/findItem/${id}`)
         .then(res => {
             const data = res.data.data;
             console.log('sukses', data);
-            setItemId(data.itemId)
+            setItemId(data._id)
             setItemName(data.itemName);
             setItemAmount(data.itemAmount);
             setItemInBorrow(data.itemInBorrow);
@@ -57,9 +56,22 @@ const Pengajuan = (props) => {
         .catch(err => {
             console.log('error', err)
         })
+    }
+    useEffect(() => {
+        getCategory();
+        getItemById();
     }, [props])
 
     const onSubmit = (event) => {
+        console.log(
+            itemId,
+            itemName,
+            itemBorrow,
+            dateBorrow,
+            dateReturn,
+            guarantee,
+            guaranteePicture
+            );
         event.preventDefault();
 
         const data = new URLSearchParams();
@@ -71,15 +83,6 @@ const Pengajuan = (props) => {
         data.append('guarantee', guarantee);
         data.append('guaranteePicture', guaranteePicture);
 
-        console.log(
-            userId,
-            itemId,
-            itemBorrow,
-            dateBorrow,
-            dateReturn,
-            guarantee,
-            guaranteePicture
-            );
 
         axios
             .post(
@@ -93,15 +96,23 @@ const Pengajuan = (props) => {
     };
 
 
-    let [count, setCount] = useState(0);
+    // let [count, setCount] = useState(0);
 
     function plush() {
-        count = count + 1;
-        setCount(count);
+        itemBorrow = itemBorrow + 1;
+        if ((itemAmount-itemInBorrow) < itemBorrow) {
+            itemBorrow = itemAmount-itemInBorrow
+        } else {
+            setItemBorrow(itemBorrow);
+        }
       }
     function minus() {
-        count = count - 1;
-        setCount(count);
+        itemBorrow = itemBorrow - 1;
+        if (itemBorrow < 1) {
+            itemBorrow = 1
+        } else{
+            setItemBorrow(itemBorrow);
+        }
       }
 
     return (
@@ -133,11 +144,12 @@ const Pengajuan = (props) => {
                                             <Input
                                             className="block w-full pl-16 sm:pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                                             placeholder=""
-                                            value={count}
+                                            value={itemBorrow}
                                             onChange={(e) =>
                                                 setItemBorrow(e.target.value)
                                             }
                                             >
+                                                
                                             </Input>
                                             <button className="absolute inset-y-0 px-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                 onClick={minus}>
@@ -212,7 +224,7 @@ const Pengajuan = (props) => {
                                             type="file"
                                             placeholder="Link Google Drive KTP/KTM Aktif"
                                             onChange={(e) =>
-                                                setGuaranteePicture(e.target.value)
+                                                setGuaranteePicture(e.target.files[0])
                                             }
                                         />
                                     </Label>
@@ -221,6 +233,7 @@ const Pengajuan = (props) => {
                                     <Button
                                         type='submit'
                                         onClick={onSubmit}
+                                        onChange={(e)=> setItemId(e.target.itemId)}
                                         className=''
                                     >
                                         Pinjam
