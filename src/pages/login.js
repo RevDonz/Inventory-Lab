@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import { vectorLogin } from '../assets'
 import { illusLogin } from '../assets'
@@ -10,25 +11,28 @@ const Login = () => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        const myHeader = new Headers();
-        myHeader.append('Content-Type', 'application/x-www-form-urlencoded')
-
         const urlEncoded = new URLSearchParams();
         urlEncoded.append('email', email);
         urlEncoded.append('password', password);
 
-        const reqOptions = {
-            method: 'POST',
-            headers: myHeader,
-            body: urlEncoded,
-            redirect: 'follow',
-        };
+        axios.post('https://inventorylab.herokuapp.com/user/login/', urlEncoded)
+        .then(result => Login(result))
+        // .then(result => console.log(result))
+        .catch(err => console.log(err))
 
-        fetch('https://inventorylab.herokuapp.com/user/login/', reqOptions)
-            .then(response => response.json())
-            .then(result => Alert(result, 'auth'))
-            // .then(result => console.log(result))
-            .catch(error => console.log('error', error))               
+    }
+
+    const Login = (result) => {
+        const accessToken = result.data.accessToken;
+        window.localStorage.setItem('token', accessToken)
+
+        axios.get('https://inventorylab.herokuapp.com/user/getdetailuser/', {
+            headers: {
+                'Authorization': `token ${accessToken}`
+            }
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
     }
 
     return (

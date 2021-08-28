@@ -39,6 +39,7 @@ const Category = () => {
     }, []);
 
     const handleDeletePost = (id) => {
+        const accesstoken = window.localStorage.getItem('token')
         Swal.fire({
             title: 'Apakah Anda yakin ingin menghapus data?',
             text: 'Data yang sudah dihapus tidak dapat dikembalikan lagi!',
@@ -51,9 +52,11 @@ const Category = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
-                    .delete(
-                        `https://inventorylab.herokuapp.com/category/deleteCategory/${id}`
-                    )
+                    .delete(`https://inventorylab.herokuapp.com/category/deleteCategory/${id}`, {
+                        headers: {
+                            'Authorization' : `token ${accesstoken}`
+                        }
+                    })
                     .then((res) => {
                         Swal.fire(
                             'Deleted!',
