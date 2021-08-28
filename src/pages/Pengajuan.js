@@ -17,6 +17,11 @@ const Pengajuan = (props) => {
     const [itemInBorrow, setItemInBorrow] = useState('')
     const [itemPicture, setItemPicture] = useState('')
     const [categoryId, setCategoryId] = useState('')
+    const [itemId, setItemId] = useState('')
+    const [dateBorrow, setDateBorrow] = useState('')
+    const [dateReturn, setDateReturn] = useState('')
+    const [guarantee, setGuarantee] = useState('')
+    const [guaranteePicture, setGuaranteePicture] = useState('')
     const [dataCategory, setDataCategory] = useState([])
 
     const history = useHistory();
@@ -62,17 +67,6 @@ const Pengajuan = (props) => {
         count = count - 1;
         setCount(count);
       }
-
-    const products = [
-        {
-          id: 3,
-          name: 'MacBook',
-          href: '#',
-          price: '$89',
-          imageSrc: 'https://www.freepnglogos.com/uploads/macbook-png/apple-macbook-air-quot-skins-custom-laptop-skins-30.png',
-          imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-        }
-      ]
 
     return (
         <>
@@ -173,7 +167,7 @@ const Pengajuan = (props) => {
                                             </Select>
                                     </Label>
                                     <Label className='pt-3'>
-                                        <span>Upload file png/jpg</span>
+                                        <span>Upload file</span>
                                         <Input
                                             className='mt-1'
                                             type="file"
