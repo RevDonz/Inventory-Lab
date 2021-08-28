@@ -31,7 +31,7 @@ const Login = () => {
                 'Authorization': `token ${accessToken}`
             }
         })
-        .then(res => console.log(res))
+        .then(res => console.log(res.data.data._id._id))
         .catch(err => console.log(err))
     }
 
@@ -43,14 +43,14 @@ const Login = () => {
                     <div className="w-1/3 md:w-1/2 justify-center hidden md:flex">
                         <img src={vectorLogin} className="w-full md:w-2/3" alt="Login Vector" />
                     </div>
-                    <form action="/" autoComplete="on" method="post" className="w-full md:w-1/2 lg:w-1/3 py-10 px-10 rounded-xl shadow-md md:rounded-none md:shadow-none">
+                    <form action="/" autoComplete="on" method="POST" className="w-full md:w-1/2 lg:w-1/3 py-10 px-10 rounded-xl shadow-md md:rounded-none md:shadow-none">
                         <div className="rounded-md justify-center">
                             <span className="text-left text-gray-800 font-semibold text-3xl">Login</span>
                             <div className="pt-10">
-                                <input type="text" onChange={(e) => setEmail(e.target.value)} className="block w-full px-3 py-2 rounded-md border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email" />
+                                <input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} className="block w-full px-3 py-2 rounded-md border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email" />
                             </div>
                             <div className="pt-10">
-                                <input type="password" onChange={(e) => setPassword(e.target.value)} className="block w-full px-3 py-2 rounded-md border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Password" />
+                                <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)} className="block w-full px-3 py-2 rounded-md border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Password" />
                             </div>
                             <div className="pt-10">
                                 <div className="flex">
@@ -65,7 +65,7 @@ const Login = () => {
                                 </div>
                             </div>
                             <div className="pt-10">
-                                <button className="bg-blue-500 hover:bg-blue-600 px-7 py-2 rounded-md" onClick={onSubmit}>
+                                <button type="submit" className="bg-blue-500 hover:bg-blue-600 px-7 py-2 rounded-md" onClick={onSubmit}>
                                     <span className="text-white font-semibold">Login</span>
                                 </button>
                             </div>
