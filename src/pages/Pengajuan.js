@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { PageTitle } from '../components';
+import { Alert, PageTitle, SectionTitle } from '../components';
 import {
     Button,
     Card,
@@ -15,9 +15,11 @@ const Pengajuan = (props) => {
     const [itemName, setItemName] = useState('')
     const [itemAmount, setItemAmount] = useState('')
     const [itemInBorrow, setItemInBorrow] = useState('')
+    const [itemBorrow, setItemBorrow] = useState('')
     const [itemPicture, setItemPicture] = useState('')
     const [categoryId, setCategoryId] = useState('')
     const [itemId, setItemId] = useState('')
+    const [userId, setUserId] = useState('')
     const [dateBorrow, setDateBorrow] = useState('')
     const [dateReturn, setDateReturn] = useState('')
     const [guarantee, setGuarantee] = useState('')
@@ -36,7 +38,7 @@ const Pengajuan = (props) => {
             console.log('error: ', err);
         })
     }
-    useEffect(() => {  
+    useEffect(() => {
         getCategory();
 
         const id = props.match.params.id;
@@ -44,17 +46,51 @@ const Pengajuan = (props) => {
         .then(res => {
             const data = res.data.data;
             console.log('sukses', data);
+            setItemId(data.itemId)
             setItemName(data.itemName);
             setItemAmount(data.itemAmount);
             setItemInBorrow(data.itemInBorrow);
             setItemPicture(data.itemPicture);
-            // setCategoryId(data.categoryId)
+            setCategoryId(data.categoryId)
 
         })
         .catch(err => {
             console.log('error', err)
         })
     }, [props])
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+
+        const data = new URLSearchParams();
+        data.append('userId', userId);
+        data.append('itemId', itemId);
+        data.append('itemBorrow', itemBorrow);
+        data.append('dateBorrow', dateBorrow);
+        data.append('dateReturn', dateReturn);
+        data.append('guarantee', guarantee);
+        data.append('guaranteePicture', guaranteePicture);
+
+        console.log(
+            userId,
+            itemId,
+            itemBorrow,
+            dateBorrow,
+            dateReturn,
+            guarantee,
+            guaranteePicture
+            );
+
+        axios
+            .post(
+                'https://inventorylab.herokuapp.com/borrower/requestItem',
+                data
+            )
+            .then(result => Alert(result.data.code, result.data.message, 'item'))
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
 
     let [count, setCount] = useState(0);
@@ -98,6 +134,9 @@ const Pengajuan = (props) => {
                                             className="block w-full pl-16 sm:pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                                             placeholder=""
                                             value={count}
+                                            onChange={(e) =>
+                                                setItemBorrow(e.target.value)
+                                            }
                                             >
                                             </Input>
                                             <button className="absolute inset-y-0 px-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
@@ -123,9 +162,9 @@ const Pengajuan = (props) => {
                                             className='mt-1'
                                             type="date"
                                             placeholder="Tanggal Pinjam"
-                                            // onChange={(e) =>
-                                            //     setCategoryName(e.target.value)
-                                            // }
+                                            onChange={(e) =>
+                                                setDateBorrow(e.target.value)
+                                            }
                                         />
                                     </Label>
                                     <Label className='pt-3'>
@@ -134,9 +173,9 @@ const Pengajuan = (props) => {
                                             className='mt-1'
                                             placeholder="Tanggal Kembali"
                                             type="date"
-                                            // onChange={(e) =>
-                                            //     setCategoryName(e.target.value)
-                                            // }
+                                            onChange={(e) =>
+                                                setDateReturn(e.target.value)
+                                            }
                                         />
                                     </Label>
                                     <Label className='pt-3'>
@@ -144,9 +183,9 @@ const Pengajuan = (props) => {
                                         <Select
                                                 className='mt-1'
                                                 placeholder="KTP/KTM"
-                                                // onChange={(e) =>
-                                                //     setCategoryId(e.target.value)
-                                                // }
+                                                onChange={(e) =>
+                                                    setGuarantee(e.target.value)
+                                                }
                                             >
                                                 {/* {dataCategory.map((category) => {
                                                     return ( */}
@@ -172,16 +211,16 @@ const Pengajuan = (props) => {
                                             className='mt-1'
                                             type="file"
                                             placeholder="Link Google Drive KTP/KTM Aktif"
-                                            // onChange={(e) =>
-                                            //     setCategoryName(e.target.value)
-                                            // }
+                                            onChange={(e) =>
+                                                setGuaranteePicture(e.target.value)
+                                            }
                                         />
                                     </Label>
                                 </div>
                                 <div className='mt-4 flex justify-center'>
                                     <Button
                                         type='submit'
-                                        // onClick={onSubmit}
+                                        onClick={onSubmit}
                                         className=''
                                     >
                                         Pinjam
