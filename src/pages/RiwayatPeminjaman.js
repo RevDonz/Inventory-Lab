@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     Badge, 
     Button,
@@ -11,19 +11,64 @@ import {
     Avatar} from '@windmill/react-ui'
 import { PageTitle, SectionTitle } from '../components';
 import { DropdownIcon } from '../icons'
+import axios from 'axios';
 
-const RiwayatPeminjaman = () => {
-    const [isOpen, setIsOpen] = useState(false)
-    const [data, setData] = useState();
-    
-    function toggleDropdown() {
+const RiwayatPeminjaman = (props) => {
+    const [userIdUser, setUserIdUser] = useState('')
+    const [dataPeminjaman, setDataPeminjaman] = useState('')
+    const [dataStatus, setDataStatus] = useState();
+
+    const getUserById = () => {
+        const accesstoken = window.localStorage.getItem('token')
+        axios.get('https://inventorylab.herokuapp.com/user/getdetailuser/', {
+            headers: {
+                'Authorization': `token ${accesstoken}`
+            }
+        })
+        .then(res => {
+            const data = res.data.data._id;
+            console.log('id user:', data._id);
+            setUserIdUser(data._id);
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
+
+    const getHistory = async () => {
+        const response = await axios.get(
+            'https://inventorylab.herokuapp.com/borrower'
+        );
+        const data = await Promise.all(
+            response.data.data.map(async (borrow) => {
+                return {
+                    ...borrow,
+                    item: await getItem(borrow.itemId).then((res) => {
+                        return res;
+                    }),
+                };
+            })
+        );
+        setDataPeminjaman(data);
+    };
+
+    const getItem = async (id) => {
+        const response = await axios.get(
+            'https://inventorylab.herokuapp.com/items/findItem/' + id
+        );
+        return response.data.data;
+    };
+
+    useEffect(() => {
+        getUserById();
+        getHistory();
+    }, [props])
     
     function showProcess() {
-        setData("process");
+        setDataStatus("process");
       }
     function showReject() {
-        setData("reject");
+        setDataStatus("reject");
       }
     return (
         <>
@@ -33,33 +78,34 @@ const RiwayatPeminjaman = () => {
                     InProcess
                 </Button>
             </div>
-            {data === "process" && (
+            {dataStatus === "process" && (
                 <div id="dataInProcess" className="mb-8">
                     <SectionTitle>Peminjaman Dengan Status InProcess</SectionTitle>
                     <TableContainer>
                         <Table>
                             <TableHeader>
-                            <TableRow>
-                                <TableCell>Client</TableCell>
-                                <TableCell>Amount</TableCell>
-                                <TableCell>Status</TableCell>
-                            </TableRow>
+                                <TableRow>
+                                    <TableCell>Barang</TableCell>
+                                    <TableCell>Jumlah</TableCell>
+                                    <TableCell>Tanggal Pinjam</TableCell>
+                                    <TableCell>Tanggal Kembali</TableCell>
+                                    <TableCell>Status</TableCell>
+                                </TableRow>
                             </TableHeader>
                             <TableBody>
-                            <TableRow>
-                                <TableCell>
-                                <div className="flex items-center text-sm">
-                                    <Avatar src="/img/avatar-1.jpg" alt="Judith" />
-                                    <span className="font-semibold ml-2">Judith Ipsum</span>
-                                </div>
-                                </TableCell>
-                                <TableCell>
-                                <span className="text-sm">$ 534.87</span>
-                                </TableCell>
-                                <TableCell>
-                                <Badge type="success">success</Badge>
-                                </TableCell>
-                            </TableRow>
+                            {dataPeminjaman.map((borrow) => {
+                                if ((borrow.userId === userIdUser) & (borrow.status === "in process"))  {
+                                    return (
+                                            <TableRow>
+                                                <TableCell>{borrow.item.itemName}</TableCell>
+                                                <TableCell>{borrow.itemBorrow}</TableCell>
+                                                <TableCell>{borrow.dateBorrowUser}</TableCell>
+                                                <TableCell>{borrow.dateReturnUser}</TableCell>
+                                                <TableCell>
+                                                    <Badge type="success">{borrow.status}</Badge>
+                                                </TableCell>
+                                            </TableRow>
+                                )}})}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -70,33 +116,34 @@ const RiwayatPeminjaman = () => {
                     Reject
                 </Button>
             </div>
-            {data === "reject" && (
+            {dataStatus === "reject" && (
                 <div id="dataInReject" className="mb-8">
                     <SectionTitle>Peminjaman Dengan Status Rejected</SectionTitle>
                     <TableContainer>
-                        <Table>
+                    <Table>
                             <TableHeader>
-                            <TableRow>
-                                <TableCell>Client</TableCell>
-                                <TableCell>Amount</TableCell>
-                                <TableCell>Status</TableCell>
-                            </TableRow>
+                                <TableRow>
+                                    <TableCell>Barang</TableCell>
+                                    <TableCell>Jumlah</TableCell>
+                                    <TableCell>Tanggal Pinjam</TableCell>
+                                    <TableCell>Tanggal Kembali</TableCell>
+                                    <TableCell>Status</TableCell>
+                                </TableRow>
                             </TableHeader>
                             <TableBody>
-                            <TableRow>
-                                <TableCell>
-                                <div className="flex items-center text-sm">
-                                    <Avatar src="/img/avatar-1.jpg" alt="Judith" />
-                                    <span className="font-semibold ml-2">Judith Ipsum</span>
-                                </div>
-                                </TableCell>
-                                <TableCell>
-                                <span className="text-sm">$ 534.87</span>
-                                </TableCell>
-                                <TableCell>
-                                <Badge type="success">success</Badge>
-                                </TableCell>
-                            </TableRow>
+                            {dataPeminjaman.map((borrow) => {
+                                if ((borrow.userId === userIdUser) & (borrow.status === "rejected"))  {
+                                    return (
+                                            <TableRow>
+                                                <TableCell>{borrow.item.itemName}</TableCell>
+                                                <TableCell>{borrow.itemBorrow}</TableCell>
+                                                <TableCell>{borrow.dateBorrowUser}</TableCell>
+                                                <TableCell>{borrow.dateReturnUser}</TableCell>
+                                                <TableCell>
+                                                    <Badge type="success">{borrow.status}</Badge>
+                                                </TableCell>
+                                            </TableRow>
+                                )}})}
                             </TableBody>
                         </Table>
                     </TableContainer>

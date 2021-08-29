@@ -20,8 +20,8 @@ const Pengajuan = (props) => {
     const [categoryId, setCategoryId] = useState('')
     const [itemId, setItemId] = useState('')
     const [userId, setUserId] = useState('')
-    const [dateBorrow, setDateBorrow] = useState('')
-    const [dateReturn, setDateReturn] = useState('')
+    const [dateReturnUser, setDateReturnUser] = useState('')
+    const [dateBorrowUser, setDateBorrowUser] = useState('')
     const [guarantee, setGuarantee] = useState('')
     const [guaranteePicture, setGuaranteePicture] = useState('')
     const [dataCategory, setDataCategory] = useState([])
@@ -57,37 +57,55 @@ const Pengajuan = (props) => {
             console.log('error', err)
         })
     }
+
+    const getUserById = () => {
+        const accesstoken = window.localStorage.getItem('token')
+        axios.get('https://inventorylab.herokuapp.com/user/getdetailuser/', {
+            headers: {
+                'Authorization': `token ${accesstoken}`
+            }
+        })
+        .then(res => {
+            const data = res.data.data._id;
+            console.log('id user:', data._id);
+            setUserId(data._id);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     useEffect(() => {
         getCategory();
         getItemById();
+        getUserById();
     }, [props])
 
     const onSubmit = (event) => {
         console.log(
+            userId,
             itemId,
             itemName,
             itemBorrow,
-            dateBorrow,
-            dateReturn,
+            dateReturnUser,
+            dateBorrowUser,
             guarantee,
             guaranteePicture
             );
         event.preventDefault();
 
-        const data = new URLSearchParams();
+        const data = new FormData();
         data.append('userId', userId);
         data.append('itemId', itemId);
         data.append('itemBorrow', itemBorrow);
-        data.append('dateBorrow', dateBorrow);
-        data.append('dateReturn', dateReturn);
+        data.append('dateReturnUser', dateReturnUser);
+        data.append('dateBorrowUser', dateBorrowUser);
         data.append('guarantee', guarantee);
         data.append('guaranteePicture', guaranteePicture);
 
-
         axios
             .post(
-                'https://inventorylab.herokuapp.com/borrower/requestItem',
-                data
+                'https://inventorylab.herokuapp.com/borrower/requestItem', data
             )
             .then(result => Alert(result.data.code, result.data.message, 'item'))
             .catch((err) => {
@@ -175,7 +193,7 @@ const Pengajuan = (props) => {
                                             type="date"
                                             placeholder="Tanggal Pinjam"
                                             onChange={(e) =>
-                                                setDateBorrow(e.target.value)
+                                                setDateBorrowUser(e.target.value)
                                             }
                                         />
                                     </Label>
@@ -186,7 +204,7 @@ const Pengajuan = (props) => {
                                             placeholder="Tanggal Kembali"
                                             type="date"
                                             onChange={(e) =>
-                                                setDateReturn(e.target.value)
+                                                setDateReturnUser(e.target.value)
                                             }
                                         />
                                     </Label>
@@ -199,8 +217,12 @@ const Pengajuan = (props) => {
                                                     setGuarantee(e.target.value)
                                                 }
                                             >
-                                                {/* {dataCategory.map((category) => {
-                                                    return ( */}
+                                                        <option
+                                                            key="ktp"
+                                                            value=""
+                                                        >
+                                                            KTP/KTM
+                                                        </option>
                                                         <option
                                                             key="ktp"
                                                             value="KTP"
@@ -213,8 +235,6 @@ const Pengajuan = (props) => {
                                                         >
                                                             KTM
                                                         </option>
-                                                    {/* );
-                                                })} */}
                                             </Select>
                                     </Label>
                                     <Label className='pt-3'>
@@ -233,7 +253,6 @@ const Pengajuan = (props) => {
                                     <Button
                                         type='submit'
                                         onClick={onSubmit}
-                                        onChange={(e)=> setItemId(e.target.itemId)}
                                         className=''
                                     >
                                         Pinjam

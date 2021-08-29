@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PageTitle } from '../components';
 import {
     Button,
@@ -8,8 +8,49 @@ import {
     Label,
     Avatar,
 } from '@windmill/react-ui';
+import axios from 'axios';
 
-const Profile = () => {
+const Profile = (props) => {
+    const [fullname, setFullname] = useState('');
+    const [NIM, setNIM] = useState('');
+    const [major, setMajor] = useState('');
+    const [faculty, setFaculty] = useState('');
+    const [year, setYear] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [homeAddress, setHomeAddress] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const getUserById = () => {
+        const accesstoken = window.localStorage.getItem('token')
+        axios.get('https://inventorylab.herokuapp.com/user/getdetailuser/', {
+            headers: {
+                'Authorization': `token ${accesstoken}`
+            }
+        })
+        .then(res => {
+            const data = res.data.data._id;
+            console.log('id user:', data._id);
+            // setUserId(data._id);
+            setFullname(data.fullname);
+            setMajor(data.major);
+            setFaculty(data.faculty);
+            setNIM(data.NIM);
+            setYear(data.year);
+            setPhoneNumber(data.phoneNumber);
+            setHomeAddress(data.homeAddress);
+            setEmail(data.email);
+            setPassword(data.password);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        getUserById();
+    }, [props])
+
     return (
         <>
             <PageTitle>Data Diri</PageTitle>
@@ -30,98 +71,64 @@ const Profile = () => {
                                 <Input
                                     disabled
                                     className='mt-1'
-                                    value="Alif Babrizq Kuncara"
-                                    // onChange={(e) =>
-                                    //     setItemName(e.target.value)
-                                    // }
+                                    value={fullname}
                                 />
                             </Label>
                             <Label>
                                 <Input
                                     disabled
                                     className='mt-1'
-                                    value="alif@gmail.com"
-                                    // type='number'
-                                    // onChange={(e) =>
-                                    //     setItemAmount(e.target.value)
-                                    // }
+                                    value={email}
                                 />
                             </Label>
                             <Label>
                                 <Input
                                     disabled
                                     className='mt-1'
-                                    value="130120428"
-                                    // type='number'
-                                    // onChange={(e) =>
-                                    //     setItemAmount(e.target.value)
-                                    // }
+                                    value={NIM}
                                 />
                             </Label>
                             <Label>
                                 <Input
                                     disabled
                                     className='mt-1'
-                                    value="123456789"
-                                    type='password'
-                                    // onChange={(e) =>
-                                    //     setItemAmount(e.target.value)
-                                    // }
+                                    value={password}
+                                    type= 'password'
                                 />
                             </Label>
                             <Label>
                                 <Input
                                     disabled
                                     className='mt-1'
-                                    value="Informatika"
-                                    // type='number'
-                                    // onChange={(e) =>
-                                    //     setItemAmount(e.target.value)
-                                    // }
+                                    value={faculty}
                                 />
                             </Label>
                             <Label>
                                 <Input
                                     disabled
                                     className='mt-1'
-                                    value="081234531051"
-                                    // type='number'
-                                    // onChange={(e) =>
-                                    //     setItemAmount(e.target.value)
-                                    // }
+                                    value={phoneNumber}
                                 />
                             </Label>
                             <Label>
                                 <Input
                                     disabled
                                     className='mt-1'
-                                    value="S1 Informatika"
-                                    // type='number'
-                                    // onChange={(e) =>
-                                    //     setItemAmount(e.target.value)
-                                    // }
+                                    value={major}
                                 />
                             </Label>
                             <Label>
                                 <Input
                                     disabled
                                     className='mt-1'
-                                    value="2020"
-                                    // type='number'
-                                    // onChange={(e) =>
-                                    //     setItemAmount(e.target.value)
-                                    // }
+                                    value={year}
                                 />
                             </Label>
                             <Label>
                                 <Input
                                     disabled 
                                     className='mt-1'
-                                    value="Tulungagung"
-                                    // type='number'
-                                    // onChange={(e) =>
-                                    //     setItemAmount(e.target.value)
-                                    // }
+                                    value={homeAddress}
                                 />
                             </Label>
                         </div>
