@@ -4,39 +4,38 @@ import { vectorLogin } from '../assets'
 import { illusLogin } from '../assets'
 import Alert from '../components/Alert'
 
+// const accessToken = localStorage.getItem('token')
+// if (accessToken) {
+//     return <Redirect to="/app/dashboard" />
+// } else {
+//     return <Login />
+// }
+
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    
     const onSubmit = (event) => {
         event.preventDefault();
-
+        
         const urlEncoded = new URLSearchParams();
         urlEncoded.append('email', email);
         urlEncoded.append('password', password);
-
+        
         axios.post('https://inventorylab.herokuapp.com/user/login/', urlEncoded)
-        .then(result => Login(result))
-        // .then(result => console.log(result))
-        .catch(err => console.log(err))
-
-    }
-
-    const Login = (result) => {
-        const accessToken = result.data.accessToken;
-        window.localStorage.setItem('token', accessToken)
-
-        axios.get('https://inventorylab.herokuapp.com/user/getdetailuser/', {
-            headers: {
-                'Authorization': `token ${accessToken}`
-            }
+        .then((result) => {
+            console.log(result);
+            localStorage.setItem('token', result.data.accessToken)
+            Alert(result, 'auth')
         })
-        .then(res => console.log(res.data.data._id._id))
         .catch(err => console.log(err))
+        
     }
 
     return (
         <div className="h-screen font-poppins">
+            
             <div className="container mx-auto px-5 lg:px-20 h-full relative">
                 <img src={illusLogin} className="fixed top-0 right-0 w-1/2" alt="" />
                 <div className="flex sm:flex-row h-full justify-between items-center relative">
@@ -70,7 +69,9 @@ const Login = () => {
                                 </button>
                             </div>
                             <div className="pt-5">
-                                <a href="/" className="text-gray-700 font-medium hover:text-gray-800">Forgot password?</a>
+                                {/* {loginStatus && (
+                                    <a href="/" className="text-gray-700 font-medium hover:text-gray-800">Login berhasil</a>
+                                )} */}
                             </div>
                             <div className="pt-5">
                                 <a href="/register" className="text-gray-700 font-medium hover:text-gray-800">Dont Have account?</a>

@@ -1,4 +1,3 @@
-// import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const Alert = (hasil, type) => {
@@ -6,12 +5,11 @@ const Alert = (hasil, type) => {
         Swal.fire({
             icon: hasil.status === 400 ? 'error' : 'success',
             title: hasil.status === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
-            text: hasil.message,
+            text: hasil.data.message,
             confirmButtonText: 'OK',
         }).then((result) => {
             if (result.isConfirmed && hasil.status === 200) {
                 window.location.href = `/app/dashboard`;
-                window.localStorage.setItem('token', hasil.token);
             }
         });
     } else if (type === 'item') {

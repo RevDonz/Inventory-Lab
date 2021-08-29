@@ -52,6 +52,7 @@ const ListItems = () => {
 
     useEffect(() => {
         setDataTable1(data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageTable1])
 
     useEffect(() => {

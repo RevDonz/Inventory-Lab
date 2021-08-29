@@ -112,16 +112,16 @@ const Dashboard = () => {
 
     const ButtonAction = (props) => {
         if (props.status === 'Accepted') {
-            return <button className="rounded-sm bg-yellow-400 text-white font-medium px-2 py-1 text-sm" onClick={() => Returning(props.id)} value="Returned">Return</button>
+            return <button className="rounded-sm bg-yellow-400 hover:bg-yellow-500 text-white font-medium px-2 py-1 text-sm" onClick={() => Returning(props.id)} value="Returned">Return</button>
         } else if (props.status === 'in process') {
             return (
                 <div className="space-x-2 flex">
-                    <button className="rounded-sm bg-green-500 text-white font-medium px-2 py-1 text-sm" onClick={() => Accepting(props.id)}>Terima</button>
-                    <button className="rounded-sm bg-red-500 text-white font-medium px-2 py-1 text-sm" onClick={() => Rejecting(props.id)}>Tolak</button>
+                    <button className="rounded-sm bg-green-500 hover:bg-green-600 text-white font-medium px-2 py-1 text-sm" onClick={() => Accepting(props.id)}>Terima</button>
+                    <button className="rounded-sm bg-red-500 hover:bg-red-600 text-white font-medium px-2 py-1 text-sm" onClick={() => Rejecting(props.id)}>Tolak</button>
                 </div>
             )
         } else {
-            return <button className="rounded-sm bg-indigo-500 text-white font-medium px-2 py-1 text-sm">Selesai</button>
+            return <button className="rounded-sm bg-indigo-500 cursor-not-allowed text-white font-medium px-2 py-1 text-sm">Selesai</button>
         }
     }
 
@@ -137,10 +137,10 @@ const Dashboard = () => {
                             <TableCell>Nama Peminjam</TableCell>
                             <TableCell>Nama Barang</TableCell>
                             <TableCell>Jumlah</TableCell>
+                            <TableCell>Tanggal Pengajuan</TableCell>
                             <TableCell>Tanggal Pinjam</TableCell>
                             <TableCell>Tanggal Dikembalikan</TableCell>
                             <TableCell>Garansi</TableCell>
-                            <TableCell>Tanggal Pengajuan</TableCell>
                             <TableCell className="text-center">Status</TableCell>
                             <TableCell className="text-center">Aksi</TableCell>
                         </TableRow>
@@ -155,10 +155,10 @@ const Dashboard = () => {
                                         <TableCell>{borr.detailUser[0].fullname}</TableCell>
                                         <TableCell>{borr.detailItem[0].itemName}</TableCell>
                                         <TableCell>{borr.itemBorrow}</TableCell>
-                                        <TableCell>{borr.dateBorrow}</TableCell>
-                                        <TableCell>{borr.dateReturn}</TableCell>
-                                        <TableCell>{borr.guarantee}</TableCell>
                                         <TableCell>{borr.dateRequest}</TableCell>
+                                        <TableCell>{borr.dateBorrowUser}</TableCell>
+                                        <TableCell>{borr.dateReturnUser}</TableCell>
+                                        <TableCell>{borr.guarantee}</TableCell>
                                         <TableCell className="text-center">
                                             <Badge type={borr.status === 'Accepted' ? 'success' : borr.status === 'in process' ? 'warning' : 'danger'} >
                                                 {borr.status}

@@ -4,7 +4,6 @@ import {
     BellIcon,
     MenuIcon,
     MoonIcon,
-    OutlineCogIcon,
     OutlineLogoutIcon,
     OutlinePersonIcon,
     SearchIcon,
@@ -144,13 +143,6 @@ const Header = () => {
                                     aria-hidden='true'
                                 />
                                 <span>Profile</span>
-                            </DropdownItem>
-                            <DropdownItem tag='a' href='#'>
-                                <OutlineCogIcon
-                                    className='w-4 h-4 mr-3'
-                                    aria-hidden='true'
-                                />
-                                <span>Settings</span>
                             </DropdownItem>
                             <DropdownItem onClick={logout}>
                                 <OutlineLogoutIcon

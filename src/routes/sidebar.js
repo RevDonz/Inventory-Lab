@@ -7,13 +7,13 @@ const routes = [
     },
     {
         path: '/app/items',
-        icon: 'HomeIcon',
+        icon: 'CollectionIcon',
         name: 'Data Barang',
         type: 'Admin'
     },
     {
         path: '/app/createitem',
-        icon: 'ModalsIcon',
+        icon: 'DocumentAdd',
         name: 'Tambah Barang',
         type: 'Admin'
     },
@@ -27,6 +27,24 @@ const routes = [
         path: '/app/createcategory',
         icon: 'ModalsIcon',
         name: 'Tambah Kategori',
+        type: 'User'
+    },
+    {
+        path: '/app/user/dashboard',
+        icon: 'ModalsIcon',
+        name: 'Dashboard user',
+        type: 'User'
+    },
+    {
+        path: '/app/user/myProfile',
+        icon: 'ModalsIcon',
+        name: 'Profile',
+        type: 'User'
+    },
+    {
+        path: '/app/user/riwayatPeminjaman',
+        icon: 'ModalsIcon',
+        name: 'Riwayat Peminjaman',
         type: 'User'
     },
 ];
