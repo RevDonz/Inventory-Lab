@@ -10,16 +10,14 @@ import {
     Card,
     CardBody,
 } from '@windmill/react-ui';
-import { EditIcon, TrashIcon } from '../icons';
 import { PageTitle, SectionTitle } from '../components';
-import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { saly } from '../assets';
 
 const DashboardUser = () => {
     const [data, setData] = useState([]);
-    // const [isLoading, setIsLoading] = useState(true);
+    const [dataMax, setDataMax] = useState([]);
     const history = useHistory()
 
     const getItem = async () => {
@@ -36,8 +34,10 @@ const DashboardUser = () => {
                 };
             })
         );
-        // setIsLoading(!isLoading);
         setData(data);
+        console.log(data)
+        setDataMax(data);
+        console.log('maksimum', Math.max(dataMax.map((item => item.itemInBorrow))))
     };
 
     const getCategory = async (id) => {
@@ -49,72 +49,12 @@ const DashboardUser = () => {
     
     useEffect(() => {
         getItem();
+        console.log('coba',Math.max(1, 3, 2));
+        console.log('maksimum', Math.max(dataMax.map((item => item.itemInBorrow))))
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleDeletePost = (id) => {
-        Swal.fire({
-            title: 'Apakah Anda yakin ingin menghapus data?',
-            text: 'Data yang sudah dihapus tidak dapat dikembalikan lagi!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus data',
-            cancelButtonText: 'Batal',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios
-                    .delete(
-                        `https://inventorylab.herokuapp.com/items/deleteItem/${id}`
-                    )
-                    .then((res) => {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        );
-                        getItem();
-                    })
-                    .catch((err) => console.log('err:', err));
-            }
-        });
-    };
-    const products = [
-        {
-          id: 1,
-          name: 'Meja Laboratorium',
-          href: '#',
-          price: '$48',
-          imageSrc: 'https://s3.amazonaws.com/diversif-868/low-res/175/FACS.png',
-          imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-        },
-        {
-          id: 2,
-          name: 'Lampu Belajar',
-          href: '#',
-          price: '$35',
-          imageSrc: 'https://s.kaskus.id/images/fjb/2015/11/11/light_up_your_workspace___desk_lamp___lampu_belajar___lampu_meja_2187534_1447217914.png',
-          imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-        },
-        {
-          id: 3,
-          name: 'MacBook',
-          href: '#',
-          price: '$89',
-          imageSrc: 'https://www.freepnglogos.com/uploads/macbook-png/apple-macbook-air-quot-skins-custom-laptop-skins-30.png',
-          imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-        },
-        {
-          id: 4,
-          name: 'Terminal Listrik',
-          href: '#',
-          price: '$35',
-          imageSrc: 'https://id-test-11.slatic.net/p/15ef8867f253c118935635ad1bde4963.png',
-          imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-        },
-        // More products...
-      ]
 
     return (
         <>
@@ -124,24 +64,30 @@ const DashboardUser = () => {
             <div className="grid grid-cols-3 gap-2 sm:gap-6">
                 <div className="col-span-2 px-2 py-2 sm:px-8 sm:py-7 bg-blue-600 rounded-lg sm:rounded-2xl">
                     <div colored className="bg-blue-600">
-                        <div className="grid grid-cols-3">
-                            <div className="col-span-2">
+                        {dataMax.map((item,i) => Math.max(item.itemInBorrow))}
+                        {/* {Math.max(dataMax.map((item => item.itemInBorrow) (
+                        // {dataMax.map((item, i) => {
+                        //     return Math.max(dataMax.map(item => item.itemInBorrow)( */}
+                            <div key={i} className="grid grid-cols-3">
+                                <div className="col-span-2">
+                                    <div className="">
+                                        <h1 className="text-white font-semibold text-xl sm:text-3xl">Printer epson</h1>
+                                        <p className="font-normal text-gray-300 text-xs py-2">10 Dipinjam <span className="px-2">2 Tersisa</span> </p>
+                                        <button 
+                                            type='submit'
+                                            // onClick={onSubmit}
+                                            className="bg-indigo-900 text-white text-sm px-3 py-2 mt-5 rounded-2xl"
+                                        >
+                                            Pinjam
+                                        </button>
+                                    </div>
+                                </div>
                                 <div className="">
-                                    <h1 className="text-white font-semibold text-xl sm:text-3xl">Printer Epson</h1>
-                                    <p className="font-normal text-gray-300 text-xs py-2">10 Dipinjam <span className="px-2">2 Tersisa</span> </p>
-                                    <button 
-                                        type='submit'
-                                        // onClick={onSubmit}
-                                        className="bg-indigo-900 text-white text-sm px-3 py-2 mt-5 rounded-2xl"
-                                    >
-                                        Pinjam
-                                    </button>
+                                    <img className="sm:h-full sm:w-full py-5 object-cover object-center" src="https://www.freepnglogos.com/uploads/printer-png/laser-printer-png-image-pngpix-3.png"></img>
                                 </div>
                             </div>
-                            <div className="">
-                                <img className="sm:h-full sm:w-full py-5 object-cover object-center" src="https://www.freepnglogos.com/uploads/printer-png/laser-printer-png-image-pngpix-3.png"></img>
-                            </div>
-                        </div>
+                        {/* // ))})}
+                        )))} */}
                     </div>
                 </div>
                 <div className="bg-gray-700 rounded-lg sm:rounded-2xl px-3 py-3 sm:px-7 sm:py-5 flex-wrap content-center grid">

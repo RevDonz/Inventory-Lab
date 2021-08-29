@@ -15,7 +15,10 @@ import axios from 'axios';
 
 const RiwayatPeminjaman = (props) => {
     const [userIdUser, setUserIdUser] = useState('')
-    const [dataPeminjaman, setDataPeminjaman] = useState('')
+    const [dataPeminjamanProcess, setDataPeminjamanProcess] = useState([])
+    const [dataPeminjamanAccepted, setDataPeminjamanAccepted] = useState([])
+    const [dataPeminjamanRejected, setDataPeminjamanRejected] = useState([])
+    const [dataPeminjamanReturned, setDataPeminjamanReturned] = useState([])
     const [dataStatus, setDataStatus] = useState();
 
     const getUserById = () => {
@@ -49,7 +52,11 @@ const RiwayatPeminjaman = (props) => {
                 };
             })
         );
-        setDataPeminjaman(data);
+        console.log(data)
+        setDataPeminjamanProcess(data);
+        setDataPeminjamanAccepted(data);
+        setDataPeminjamanRejected(data);
+        setDataPeminjamanReturned(data);
     };
 
     const getItem = async (id) => {
@@ -66,10 +73,16 @@ const RiwayatPeminjaman = (props) => {
     
     function showProcess() {
         setDataStatus("process");
-      }
+    }
+    function showAcc() {
+        setDataStatus("acc");
+    }
     function showReject() {
         setDataStatus("reject");
-      }
+    }
+    function showReturn() {
+        setDataStatus("return");
+    }
     return (
         <>
             <PageTitle>Riwayat Peminjaman</PageTitle>
@@ -93,10 +106,48 @@ const RiwayatPeminjaman = (props) => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                            {dataPeminjaman.map((borrow) => {
-                                if ((borrow.userId === userIdUser) & (borrow.status === "in process"))  {
+                            {dataPeminjamanProcess.map((borrow, i) => {
+                                if ((borrow.userId === userIdUser) && (borrow.status === "in process"))  {
                                     return (
-                                            <TableRow>
+                                            <TableRow key={i}>
+                                                <TableCell>{borrow.item.itemName}</TableCell>
+                                                <TableCell>{borrow.itemBorrow}</TableCell>
+                                                <TableCell>{borrow.dateBorrowUser}</TableCell>
+                                                <TableCell>{borrow.dateReturnUser}</TableCell>
+                                                <TableCell>
+                                                    <Badge>{borrow.status}</Badge>
+                                                </TableCell>
+                                            </TableRow>
+                                )}})}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+            )}
+            <div className="grid justify-items-end my-2">
+                <Button onClick={() => showAcc()} iconRight={DropdownIcon} aria-label="Notifications" aria-haspopup="true">
+                    Accepted
+                </Button>
+            </div>
+            {dataStatus === "acc" && (
+                <div id="dataAccepted" className="mb-8">
+                    <SectionTitle>Peminjaman Dengan Status Accepted</SectionTitle>
+                    <TableContainer>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableCell>Barang</TableCell>
+                                    <TableCell>Jumlah</TableCell>
+                                    <TableCell>Tanggal Pinjam</TableCell>
+                                    <TableCell>Tanggal Kembali</TableCell>
+                                    <TableCell>Status</TableCell>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                            {dataPeminjamanAccepted.map((borrow, i) => {
+                                if ((borrow.userId === userIdUser) && (borrow.status === "Accepted"))  {
+                                    return (
+                                            <TableRow key={i}>
                                                 <TableCell>{borrow.item.itemName}</TableCell>
                                                 <TableCell>{borrow.itemBorrow}</TableCell>
                                                 <TableCell>{borrow.dateBorrowUser}</TableCell>
@@ -113,7 +164,7 @@ const RiwayatPeminjaman = (props) => {
             )}
             <div className="grid justify-items-end my-2">
                 <Button onClick={() => showReject()} iconRight={DropdownIcon} aria-label="Notifications" aria-haspopup="true">
-                    Reject
+                    Rejected
                 </Button>
             </div>
             {dataStatus === "reject" && (
@@ -131,16 +182,54 @@ const RiwayatPeminjaman = (props) => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                            {dataPeminjaman.map((borrow) => {
-                                if ((borrow.userId === userIdUser) & (borrow.status === "rejected"))  {
+                            {dataPeminjamanRejected.map((borrow, i) => {
+                                if ((borrow.userId === userIdUser) & (borrow.status === "Rejected"))  {
                                     return (
-                                            <TableRow>
+                                            <TableRow key={i}>
                                                 <TableCell>{borrow.item.itemName}</TableCell>
                                                 <TableCell>{borrow.itemBorrow}</TableCell>
                                                 <TableCell>{borrow.dateBorrowUser}</TableCell>
                                                 <TableCell>{borrow.dateReturnUser}</TableCell>
                                                 <TableCell>
-                                                    <Badge type="success">{borrow.status}</Badge>
+                                                    <Badge type="warning">{borrow.status}</Badge>
+                                                </TableCell>
+                                            </TableRow>
+                                )}})}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+            )}
+            <div className="grid justify-items-end my-2">
+                <Button onClick={() => showReturn()} iconRight={DropdownIcon} aria-label="Notifications" aria-haspopup="true">
+                    Returned
+                </Button>
+            </div>
+            {dataStatus === "return" && (
+                <div id="dataInReturn" className="mb-8">
+                    <SectionTitle>Peminjaman Dengan Status Returned</SectionTitle>
+                    <TableContainer>
+                    <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableCell>Barang</TableCell>
+                                    <TableCell>Jumlah</TableCell>
+                                    <TableCell>Tanggal Pinjam</TableCell>
+                                    <TableCell>Tanggal Kembali</TableCell>
+                                    <TableCell>Status</TableCell>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                            {dataPeminjamanReturned.map((borrow, i) => {
+                                if ((borrow.userId === userIdUser) & (borrow.status === "Returned"))  {
+                                    return (
+                                            <TableRow key={i}>
+                                                <TableCell>{borrow.item.itemName}</TableCell>
+                                                <TableCell>{borrow.itemBorrow}</TableCell>
+                                                <TableCell>{borrow.dateBorrowUser}</TableCell>
+                                                <TableCell>{borrow.dateReturnUser}</TableCell>
+                                                <TableCell>
+                                                    <Badge type="neutral">{borrow.status}</Badge>
                                                 </TableCell>
                                             </TableRow>
                                 )}})}
