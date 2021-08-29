@@ -17,6 +17,7 @@ module.exports = windmill({
     },
   },
   plugins: [
+    require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/forms'),
   ],
 })
