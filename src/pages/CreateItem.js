@@ -13,9 +13,11 @@ import { Alert, PageTitle, SectionTitle } from '../components';
 const CreateItem = () => {
     const [itemName, setItemName] = useState('');
     const [itemAmount, setItemAmount] = useState('');
+    const [itemPicture, setItemPicture] = useState('');
     const [categoryId, setCategoryId] = useState('');
     const [dataCategory, setDataCategory] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const accesstoken = window.localStorage.getItem('token')
 
     const getCategory = () => {
         axios
@@ -37,16 +39,19 @@ const CreateItem = () => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        const items = new URLSearchParams();
+        const items = new FormData();
         items.append('itemName', itemName);
         items.append('itemAmount', itemAmount);
+        items.append('itemPicture', itemPicture);
         items.append('categoryId', categoryId);
 
         axios
             .post(
-                'https://inventorylab.herokuapp.com/items/inputNewItem',
-                items
-            )
+                'https://inventorylab.herokuapp.com/items/inputNewItem', items, {
+                    headers: {
+                        'Authorization': `token ${accesstoken}`
+                    }
+                })
             .then(result => Alert(result, 'item'))
             .catch((err) => {
                 Alert(400, err, 'item');
@@ -76,6 +81,14 @@ const CreateItem = () => {
                                     type='number'
                                     onChange={(e) => setItemAmount(e.target.value)}
                                     defaultValue={1}
+                                />
+                            </Label>
+                            <Label>
+                                <span>Gambar Barang</span>
+                                <Input
+                                    className='mt-1'
+                                    type='file'
+                                    onChange={(e) => setItemPicture(e.target.files[0])}
                                 />
                             </Label>
                             <Label>

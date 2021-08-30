@@ -20,6 +20,7 @@ const ListItems = () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory()
+    const accesstoken = localStorage.getItem('token');
 
     // setup pages control for every table
     const [pageTable1, setPageTable1] = useState(1)
@@ -72,7 +73,11 @@ const ListItems = () => {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`https://inventorylab.herokuapp.com/items/deleteItem/${id}`)
+                axios.delete(`https://inventorylab.herokuapp.com/items/deleteItem/${id}`, {
+                    headers: {
+                        'Authorization' : `token ${accesstoken}`
+                    }
+                })
                     .then((res) => {
                         Swal.fire(
                             'Deleted!',
