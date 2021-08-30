@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2';
 
 const Alert = (hasil, type) => {
+
     if (type === 'auth') {
         Swal.fire({
             icon: hasil.status === 400 ? 'error' : 'success',
@@ -9,7 +10,11 @@ const Alert = (hasil, type) => {
             confirmButtonText: 'OK',
         }).then((result) => {
             if (result.isConfirmed && hasil.status === 200) {
-                window.location.href = `/app/dashboard`;
+                if (hasil.data.type === "Admin") {
+                    window.location.href = `/app/dashboard`;
+                } else if (hasil.data.type === "User") {
+                    window.location.href = `/app/user/dashboard`;
+                }
             }
         });
     } else if (type === 'item') {

@@ -14,6 +14,7 @@ import Alert from '../components/Alert'
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    // const [typeUser, setTypeuser] = useState('')
 
     
     const onSubmit = (event) => {
@@ -25,12 +26,12 @@ const Login = () => {
         
         axios.post('https://inventorylab.herokuapp.com/user/login/', urlEncoded)
         .then((result) => {
-            console.log(result);
             localStorage.setItem('token', result.data.accessToken)
             Alert(result, 'auth')
         })
-        .catch(err => console.log(err))
-        
+        .catch((err) => {
+            Alert(err.response, 'auth')
+        })
     }
 
     return (

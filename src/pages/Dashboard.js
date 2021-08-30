@@ -7,33 +7,24 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    // Button,
     Badge,
     TableFooter,
     Pagination,
-    // Dropdown,
-    // DropdownItem,
 } from '@windmill/react-ui';
 import { PageTitle, SectionTitle } from '../components';
-// import { OutlineCogIcon, OutlineLogoutIcon, OutlinePersonIcon } from '../icons';
-// import { EditIcon, TrashIcon } from '../icons';
-// import Swal from 'sweetalert2';
-
 
 const Dashboard = () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const accesstoken = localStorage.getItem('token');
 
     // setup pages control for every table
     const [pageTable1, setPageTable1] = useState(1)
-
     // setup data for every table
     const [dataTable1, setDataTable1] = useState([])
-
     // pagination setup
     const resultsPerPage = 7
     const totalResults = data.length
-
     // pagination change control
     const onPageChangeTable1 = (p) => {
         setPageTable1(p)
@@ -73,11 +64,17 @@ const Dashboard = () => {
         );
     };
 
+    const headers = {
+        headers: {
+            Authorization: `token ${accesstoken}`
+        }
+    }
+
     const Accepting = (id) => {
         const data = new URLSearchParams()
         data.append('status', 'Accepted')
 
-        axios.post(`https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`, data)
+        axios.post(`https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`, data, headers)
             .then(result => {
                 console.log(result)
                 getItem()
@@ -89,7 +86,7 @@ const Dashboard = () => {
         const data = new URLSearchParams()
         data.append('status', 'Rejected')
 
-        axios.post(`https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`, data)
+        axios.post(`https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`, data, headers)
             .then(result => {
                 console.log(result)
                 getItem()
@@ -101,7 +98,7 @@ const Dashboard = () => {
         const data = new URLSearchParams()
         data.append('status', 'Returned')
 
-        axios.post(`https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`, data)
+        axios.post(`https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`, data, headers)
             .then(result => {
                 getItem()
             })
