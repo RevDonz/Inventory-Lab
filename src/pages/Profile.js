@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { PageTitle } from '../components';
 import {
-    Button,
-    Card,
     CardBody,
     Input,
     Label,
-    Avatar,
 } from '@windmill/react-ui';
 import axios from 'axios';
 
@@ -29,8 +26,7 @@ const Profile = (props) => {
             }
         })
         .then(res => {
-            const data = res.data.data._id;
-            console.log('id user:', data._id);
+            const data = res.data.details._id;
             // setUserId(data._id);
             setFullname(data.fullname);
             setMajor(data.major);

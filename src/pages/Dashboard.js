@@ -33,7 +33,6 @@ const Dashboard = () => {
     // pagination setup
     const resultsPerPage = 7
     const totalResults = data.length
-    console.log(data);
 
     // pagination change control
     const onPageChangeTable1 = (p) => {
@@ -104,7 +103,6 @@ const Dashboard = () => {
 
         axios.post(`https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`, data)
             .then(result => {
-                console.log(result)
                 getItem()
             })
             .catch(err => console.log(err))

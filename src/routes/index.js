@@ -4,8 +4,6 @@ const Dashboard = lazy(() => import('../pages/Dashboard'))
 const CreateItem = lazy(() => import('../pages/CreateItem'))
 const UpdateItem = lazy(() => import('../pages/UpdateItem'))
 const ListItems = lazy(() => import('../pages/ListItems'))
-// const History = lazy(() => import('../pages/History'))
-const History = lazy(() => import('../pages/History'))
 const Category = lazy(() => import('../pages/Category'))
 const CreateCategory = lazy(() => import('../pages/CreateCategory'))
 const UpdateCategory = lazy(() => import('../pages/UpdateCategory'))
@@ -17,51 +15,58 @@ const RiwayatPeminjaman = lazy(() => import('../pages/RiwayatPeminjaman'))
 const routes = [
     {
         path: '/dashboard',
-        component: Dashboard
+        component: Dashboard,
+        type: 'Admin'
     },
     {
         path: '/createitem',
-        component: CreateItem
+        component: CreateItem,
+        type: 'Admin'
     },
     {
         path: '/updateitem/:id',
-        component: UpdateItem
+        component: UpdateItem,
+        type: 'Admin'
     },
     {
         path: '/items',
-        component: ListItems
-    },
-    {
-        path: '/history',
-        component: History
+        component: ListItems,
+        type: 'Admin'
     },
     {
         path: '/category',
-        component: Category
+        component: Category,
+        type: 'Admin'
     },
     {
         path: '/createcategory',
-        component: CreateCategory
+        component: CreateCategory,
+        type: 'Admin'
     },
     {
         path: '/updatecategory/:id',
-        component: UpdateCategory
+        component: UpdateCategory,
+        type: 'Admin'
     },
     {
         path: '/user/dashboard',
-        component: DashboardUser
+        component: DashboardUser,
+        type: 'User'
     },
     {
         path: '/user/pengajuan/:id',
-        component: Pengajuan
+        component: Pengajuan,
+        type: 'User'
     },
     {
         path: '/user/myProfile',
-        component: Profile
+        component: Profile,
+        type: 'User'
     },
     {
         path: '/user/riwayatPeminjaman',
-        component: RiwayatPeminjaman
+        component: RiwayatPeminjaman,
+        type: 'User'
     },
 ]
 

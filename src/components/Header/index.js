@@ -1,9 +1,7 @@
 import { SidebarContext } from '../../context/SidebarContext';
 import { useContext, useState } from 'react';
 import {
-    BellIcon,
     MenuIcon,
-    MoonIcon,
     OutlineLogoutIcon,
     OutlinePersonIcon,
     SearchIcon,
@@ -11,7 +9,6 @@ import {
 } from '../../icons';
 import {
     Avatar,
-    Badge,
     Dropdown,
     DropdownItem,
     Input,
@@ -19,14 +16,7 @@ import {
 
 const Header = () => {
     const { toggleSidebar } = useContext(SidebarContext);
-
-    const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] =
-        useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-
-    function handleNotificationsClick() {
-        setIsNotificationsMenuOpen(!isNotificationsMenuOpen);
-    }
 
     function handleProfileClick() {
         setIsProfileMenuOpen(!isProfileMenuOpen);
@@ -57,67 +47,15 @@ const Header = () => {
                                 aria-hidden='true'
                             />
                         </div>
-                        <input
-                            class='w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-300 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input'
-                            type='text'
+                        <Input
+                            className='pl-8 text-gray-700 bg-gray-200 focus:bg-gray-50'
                             placeholder='Search for projects'
                             aria-label='Search'
+                            type="text"
                         />
                     </div>
                 </div>
                 <ul className='flex items-center flex-shrink-0 space-x-6'>
-                    {/* <!-- Theme toggler --> */}
-                    <li className='flex'>
-                        <button
-                            className='rounded-md focus:outline-none focus:shadow-outline-purple'
-                            // onClick={toggleMode}
-                            aria-label='Toggle color mode'
-                        >
-                            <MoonIcon className='w-5 h-5' aria-hidden='true' />
-                        </button>
-                    </li>
-                    {/* <!-- Notifications menu --> */}
-                    <li className='relative'>
-                        <button
-                            className='relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple'
-                            onClick={handleNotificationsClick}
-                            aria-label='Notifications'
-                            aria-haspopup='true'
-                        >
-                            <BellIcon className='w-5 h-5' aria-hidden='true' />
-                            {/* <!-- Notification badge --> */}
-                            <span
-                                aria-hidden='true'
-                                className='absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800'
-                            ></span>
-                        </button>
-
-                        <Dropdown
-                            align='right'
-                            isOpen={isNotificationsMenuOpen}
-                            onClose={() => setIsNotificationsMenuOpen(false)}
-                        >
-                            <DropdownItem
-                                tag='a'
-                                href='#'
-                                className='justify-between'
-                            >
-                                <span>Messages</span>
-                                <Badge type='danger'>13</Badge>
-                            </DropdownItem>
-                            <DropdownItem
-                                tag='a'
-                                href='#'
-                                className='justify-between'
-                            >
-                                <span>Sales</span>
-                                <Badge type='danger'>2</Badge>
-                            </DropdownItem>
-                            <DropdownItem onClick={() => alert('Alerts!')}>
-                                <span>Alerts</span>
-                            </DropdownItem>
-                        </Dropdown>
-                    </li>
                     {/* <!-- Profile menu --> */}
                     <li className='relative'>
                         <button

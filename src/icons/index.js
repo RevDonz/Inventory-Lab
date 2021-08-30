@@ -28,10 +28,16 @@ import { ReactComponent as OutlineCogIcon } from './outlineCog.svg'
 import { ReactComponent as OutlineLogoutIcon } from './outlineLogout.svg'
 import { ReactComponent as CollectionIcon } from './collection.svg'
 import { ReactComponent as DocumentAdd } from './documentAdd.svg'
+import { ReactComponent as ClipboardList } from './clipboardList.svg'
+import { ReactComponent as UserIcon } from './user.svg'
+import { ReactComponent as Refresh } from './refresh.svg'
 
 export {
   ButtonsIcon,
   DocumentAdd,
+  UserIcon,
+  Refresh,
+  ClipboardList,
   CollectionIcon,
   CardsIcon,
   ChartsIcon,

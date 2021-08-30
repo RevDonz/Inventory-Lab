@@ -19,49 +19,34 @@ const routes = [
     },
     {
         path: '/app/category',
-        icon: 'MenuIcon',
+        icon: 'ClipboardList',
         name: 'Daftar Kategori',
-        type: 'User'
+        type: 'Admin'
     },
     {
         path: '/app/createcategory',
-        icon: 'ModalsIcon',
+        icon: 'DocumentAdd',
         name: 'Tambah Kategori',
-        type: 'User'
-    },
-    {
-        path: '/app/user/dashboard',
-        icon: 'ModalsIcon',
-        name: 'Dashboard user',
-        type: 'User'
-    },
-    {
-        path: '/app/user/myProfile',
-        icon: 'ModalsIcon',
-        name: 'Profile',
-        type: 'User'
-    },
-    {
-        path: '/app/user/riwayatPeminjaman',
-        icon: 'ModalsIcon',
-        name: 'Riwayat Peminjaman',
-        type: 'User'
+        type: 'Admin'
     },
     {
         path: '/app/user/dashboard',
         icon: 'HomeIcon',
-        name: 'List Barang',
-    },
-    {
-        path: '/app/user/myProfile',
-        icon: 'PeopleIcon',
-        name: 'Akun Saya',
+        name: 'Dashboard',
+        type: 'User'
     },
     {
         path: '/app/user/riwayatPeminjaman',
-        icon: 'CartIcon',
+        icon: 'Refresh',
         name: 'Riwayat Peminjaman',
-    }
+        type: 'User'
+    },
+    {
+        path: '/app/user/myProfile',
+        icon: 'UserIcon',
+        name: 'Profile',
+        type: 'User'
+    },
 ];
 
 export default routes

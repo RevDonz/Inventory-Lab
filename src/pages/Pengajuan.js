@@ -1,15 +1,12 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Alert, PageTitle, SectionTitle } from '../components';
+import { Alert, PageTitle } from '../components';
 import {
     Button,
-    Card,
-    CardBody,
     Input,
     Label,
     Select,
 } from '@windmill/react-ui';
-import { useHistory } from 'react-router-dom';
 
 const Pengajuan = (props) => {
     const [itemName, setItemName] = useState('')
@@ -17,27 +14,12 @@ const Pengajuan = (props) => {
     const [itemInBorrow, setItemInBorrow] = useState('')
     let [itemBorrow, setItemBorrow] = useState(1)
     const [itemPicture, setItemPicture] = useState('')
-    const [categoryId, setCategoryId] = useState('')
     const [itemId, setItemId] = useState('')
     const [userId, setUserId] = useState('')
     const [dateReturnUser, setDateReturnUser] = useState('')
     const [dateBorrowUser, setDateBorrowUser] = useState('')
     const [guarantee, setGuarantee] = useState('')
     const [guaranteePicture, setGuaranteePicture] = useState('')
-    const [dataCategory, setDataCategory] = useState([])
-
-    const history = useHistory();
-
-    const getCategory = () => {
-        axios.get(`https://inventorylab.herokuapp.com/category`)
-        .then(res => {
-            const responseAPI = res.data;
-            setDataCategory(responseAPI.data)
-        })
-        .catch(err => {
-            console.log('error: ', err);
-        })
-    }
 
     const getItemById = () =>{
         const id = props.match.params.id;
@@ -50,8 +32,6 @@ const Pengajuan = (props) => {
             setItemAmount(data.itemAmount);
             setItemInBorrow(data.itemInBorrow);
             setItemPicture(data.itemPicture);
-            setCategoryId(data.categoryId)
-
         })
         .catch(err => {
             console.log('error', err)
@@ -76,9 +56,9 @@ const Pengajuan = (props) => {
     }
 
     useEffect(() => {
-        getCategory();
         getItemById();
         getUserById();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props])
 
     const onSubmit = (event) => {
@@ -141,18 +121,18 @@ const Pengajuan = (props) => {
                     <div className="grid grid-cols-1 gap-y-10 gap-x-6 lg:grid-cols-2 xl:grid-cols-3">
                         <div className="">
                                 <div className="bg-gray-700 rounded-2xl px-4 py-3"> 
-                                    <a className="group">
+                                    <div className="group">
                                         <div className="w-full aspect-w-1 aspect-h-1 overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
                                             <img
                                             src={itemPicture}
-                                            // alt={product.imageAlt}
+                                            alt={itemName}
                                             className="w-full h-full object-center group-hover:opacity-75"
                                             />
                                         </div>
                                         <div className="flex justify-center my-2">
                                             <p className="font-normal text-gray-300 text-xs py-2">{itemInBorrow} Dipinjam<span className="px-2">{itemAmount - itemInBorrow} Tersisa</span> </p>    
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                             <div className="grid grid-cols-2 pt-4">
                                 <p className="self-center">Jumlah</p>

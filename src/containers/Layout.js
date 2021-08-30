@@ -12,6 +12,7 @@ const Page403 = lazy(() => import('../pages/403'));
 const Layout = () => {
     const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
     const [isLogin, setIsLogin] = useState(false);
+    const [typeUser, setTypeuser] = useState("")
     const [isLoading, setIsLoading] = useState(true);
     let location = useLocation();
     
@@ -28,14 +29,15 @@ const Layout = () => {
                 },
             })
             .then((res) => {
-                if (res.data.success) {
-                    console.log(res);
+                if (res.data.status) {
+                    setTypeuser(res.data.type)
                     setIsLogin(true);
                     setIsLoading(false)
                 }
             })
             .catch((err) => console.log(err));
     }
+
     useEffect(() => {
         getItem()
     }, []);
@@ -70,7 +72,7 @@ const Layout = () => {
                             <Switch>
                                 {isLogin ? (
                                     routes.map((route, i) => {
-                                        return route.component ? (
+                                        return route.component && route.type === typeUser ? (
                                             <Route
                                                 key={i}
                                                 exact={true}

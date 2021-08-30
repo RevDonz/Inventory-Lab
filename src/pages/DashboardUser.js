@@ -1,15 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {
-    TableContainer,
-    Table,
-    TableHeader,
-    TableBody,
-    TableRow,
-    TableCell,
-    Button,
-    Card,
-    CardBody,
-} from '@windmill/react-ui';
 import { PageTitle, SectionTitle } from '../components';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -83,7 +72,7 @@ const DashboardUser = () => {
                                     </div>
                                 </div>
                                 <div className="">
-                                    <img className="sm:h-full sm:w-full py-5 object-cover object-center" src="https://www.freepnglogos.com/uploads/printer-png/laser-printer-png-image-pngpix-3.png"></img>
+                                    <img className="sm:h-full sm:w-full py-5 object-cover object-center" alt="Gambar terbanyak" src="https://www.freepnglogos.com/uploads/printer-png/laser-printer-png-image-pngpix-3.png"></img>
                                 </div>
                             </div>
                         {/* // ))})}
@@ -92,7 +81,7 @@ const DashboardUser = () => {
                 </div>
                 <div className="bg-gray-700 rounded-lg sm:rounded-2xl px-3 py-3 sm:px-7 sm:py-5 flex-wrap content-center grid">
                     <h1 className="text-white text-xs sm:text-xl sm:font-semibold">Minjem ga ribet, dengan Inventory Lab</h1>
-                    <img className="h-20 sm:w-auto sm:h-52 object-cover object-center justify-self-center " src={saly}></img>
+                    <img className="h-20 sm:w-auto sm:h-52 object-cover object-center justify-self-center" alt="gambar saly" src={saly}></img>
                 </div>
             </div>
 
@@ -102,11 +91,11 @@ const DashboardUser = () => {
                     <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                     {data.map((item, i) => (
                         <div className="bg-gray-700 rounded-2xl px-4 py-3"> 
-                            <a key={i} className="group">
+                            <div key={i} className="group">
                                 <div className="w-full aspect-w-1 aspect-h-1 overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
                                     <img
                                     src={item.itemPicture}
-                                    // alt={product.imageAlt}
+                                    alt={item.itemName}
                                     className="w-full h-full object-center group-hover:opacity-75"
                                     />
                                 </div>
@@ -122,7 +111,7 @@ const DashboardUser = () => {
                                             Pinjam
                                     </button>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     ))}
                     </div>
