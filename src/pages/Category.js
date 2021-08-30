@@ -7,6 +7,8 @@ import {
     TableRow,
     TableCell,
     Button,
+    TableFooter,
+    Pagination,
 } from '@windmill/react-ui';
 import { EditIcon, TrashIcon } from '../icons';
 import { PageTitle, SectionTitle } from '../components';
@@ -19,6 +21,18 @@ const Category = () => {
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory()
 
+    // setup pages control for every table
+    const [pageTable1, setPageTable1] = useState(1)
+    // setup data for every table
+    const [dataTable1, setDataTable1] = useState([])
+    // pagination setup
+    const resultsPerPage = 7
+    const totalResults = dataCategory.length
+    // pagination change control
+    const onPageChangeTable1 = (p) => {
+        setPageTable1(p)
+    }
+
     const getCategory = () => {
         axios.get(
             'https://inventorylab.herokuapp.com/category'
@@ -26,13 +40,18 @@ const Category = () => {
         .then((res) => {
             const data = res.data;
             setDataCategory(data.data);
+            setDataTable1(data.data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
             setIsLoading(false)
         })
         .catch((err) => {
             console.log(err)
         })
     };
-    
+    useEffect(() => {
+        setDataTable1(dataCategory.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pageTable1])
+
     useEffect(() => {
         getCategory();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,7 +112,7 @@ const Category = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {isLoading ? <Spinner /> : dataCategory.map((category, index) => {
+                        {isLoading ? <Spinner /> : dataTable1.map((category, index) => {
                             return (
                                 <TableRow key={category._id}>
                                     <TableCell>{index + 1}</TableCell>
@@ -123,6 +142,14 @@ const Category = () => {
                         })}
                     </TableBody>
                 </Table>
+                <TableFooter>
+                    <Pagination
+                        totalResults={totalResults}
+                        resultsPerPage={resultsPerPage}
+                        onChange={onPageChangeTable1}
+                        label="Table navigation"
+                    />
+                </TableFooter>
             </TableContainer>
         </>
     );

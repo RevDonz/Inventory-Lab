@@ -79,17 +79,6 @@ const RiwayatPeminjaman = (props) => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                                    {/* <TableRow key={i}>
-                                        <TableCell>{borrow.item.itemName}</TableCell>
-                                        <TableCell>{borrow.itemBorrow}</TableCell>
-                                        <TableCell>{borrow.dateBorrowUser}</TableCell>
-                                        <TableCell>{borrow.dateReturnUser}</TableCell>
-                                        <TableCell>
-                                            <Badge type={borrow.status === 'Accepted' ? 'success' : borrow.status === 'in process' ? 'warning' : 'danger'} >
-                                                {borrow.status}
-                                            </Badge>
-                                        </TableCell>
-                                    </TableRow> */}
                         {dataPeminjaman.map((borrow, i) => {
                             return borrow.userId === userIdUser ? (
                                 <TableRow key={i}>

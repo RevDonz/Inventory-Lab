@@ -15,8 +15,8 @@ import { PageTitle, SectionTitle } from '../components';
 
 const Dashboard = () => {
     const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const accesstoken = localStorage.getItem('token');
+    const [isLoading, setIsLoading] = useState(true);
 
     // setup pages control for every table
     const [pageTable1, setPageTable1] = useState(1)

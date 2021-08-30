@@ -13,6 +13,7 @@ import { Alert, PageTitle, SectionTitle } from '../components';
 const CreateCategory = () => {
     const [categoryName, setCategoryName] = useState('');
     const history = useHistory();
+    const accesstoken = window.localStorage.getItem('token')
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -22,11 +23,14 @@ const CreateCategory = () => {
 
         axios
             .post(
-                'https://inventorylab.herokuapp.com/category/addCategory', data
-            )
-            .then(result => Alert(result.data.code, result.data.message, 'item'))
+                'https://inventorylab.herokuapp.com/category/addCategory', data, {
+                    headers: {
+                        'Authorization' : `token ${accesstoken}`
+                    }
+                })
+            .then(result => Alert(result, 'category'))
             .catch((err) => {
-                console.log(err);
+                Alert(err.response, 'auth')
             });
     };
     return (

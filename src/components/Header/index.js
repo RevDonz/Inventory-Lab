@@ -5,7 +5,6 @@ import {
     OutlineLogoutIcon,
     OutlinePersonIcon,
     SearchIcon,
-    // SunIcon,
 } from '../../icons';
 import {
     Avatar,
@@ -74,7 +73,7 @@ const Header = () => {
                         <Dropdown
                             align='right'
                             isOpen={isProfileMenuOpen}
-                            onClose={() => setIsProfileMenuOpen(false)}
+                            onClose={() => setIsProfileMenuOpen(true)}
                         >
                             <DropdownItem tag='a' href='#'>
                                 <OutlinePersonIcon
