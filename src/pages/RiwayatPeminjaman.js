@@ -6,13 +6,29 @@ import {
     TableHeader,
     TableBody,
     TableRow,
-    TableCell} from '@windmill/react-ui'
+    TableCell,
+    Pagination,
+    TableFooter} from '@windmill/react-ui'
 import { PageTitle, SectionTitle } from '../components';
 import axios from 'axios';
 
 const RiwayatPeminjaman = (props) => {
     const [userIdUser, setUserIdUser] = useState('')
     const [dataPeminjaman, setDataPeminjaman] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
+
+    // setup pages control for every table
+    const [pageTable1, setPageTable1] = useState(1)
+    // setup data for every table
+    const [dataTable1, setDataTable1] = useState([])
+    // pagination setup
+    const resultsPerPage = 7
+    const totalResults = dataPeminjaman.length
+    console.log(dataPeminjaman);
+    // pagination change control
+    const onPageChangeTable1 = (p) => {
+        setPageTable1(p)
+    }
 
     const getUserById = () => {
         const accesstoken = window.localStorage.getItem('token')
@@ -47,7 +63,14 @@ const RiwayatPeminjaman = (props) => {
         );
         console.log(data)
         setDataPeminjaman(data);
+        setDataTable1(data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+        setIsLoading(false)
     };
+
+    useEffect(() => {
+        setDataTable1(dataPeminjaman.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pageTable1])
 
     const getItem = async (id) => {
         const response = await axios.get(
@@ -61,6 +84,14 @@ const RiwayatPeminjaman = (props) => {
         getHistory();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props])
+
+    const Spinner = () => {
+        return (
+            <TableRow>
+                <TableCell colSpan={6} className="text-center">Loading Data...</TableCell>
+            </TableRow>
+        )
+    }
     
     return (
         <>
@@ -79,7 +110,7 @@ const RiwayatPeminjaman = (props) => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                        {dataPeminjaman.map((borrow, i) => {
+                        {isLoading ? <Spinner /> : dataTable1.map((borrow, i) => {
                             return borrow.userId === userIdUser ? (
                                 <TableRow key={i}>
                                         <TableCell>{borrow.item.itemName}</TableCell>
@@ -96,6 +127,14 @@ const RiwayatPeminjaman = (props) => {
                         })}
                         </TableBody>
                     </Table>
+                    <TableFooter>
+                        <Pagination
+                            totalResults={totalResults}
+                            resultsPerPage={resultsPerPage}
+                            onChange={onPageChangeTable1}
+                            label="Table navigation"
+                        />
+                </TableFooter>
                 </TableContainer>
             </div>
         </>
