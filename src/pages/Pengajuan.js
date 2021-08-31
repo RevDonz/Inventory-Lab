@@ -58,6 +58,7 @@ const Pengajuan = (props) => {
     useEffect(() => {
         getItemById();
         getUserById();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props])
 
     const onSubmit = (event) => {
