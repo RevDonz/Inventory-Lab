@@ -129,7 +129,7 @@ const UpdateItem = (props) => {
                             <Button
                                 type='submit'
                                 layout="outline"
-                                onClick={() => history.push('/app/dashboard')}
+                                onClick={() => history.push('/app/items')}
                                 className='mx-4'
                             >
                                 Kembali

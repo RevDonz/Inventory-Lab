@@ -20,9 +20,8 @@ export const SidebarProvider = ({ children }) => {
             toggleSidebar,
             closeSidebar,
         }),
-        
+
         [isSidebarOpen] // eslint-disable-line react-hooks/exhaustive-deps
-        
     );
 
     return (

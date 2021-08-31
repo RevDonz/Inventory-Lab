@@ -16,6 +16,7 @@ const RiwayatPeminjaman = (props) => {
     const [userIdUser, setUserIdUser] = useState('')
     const [dataPeminjaman, setDataPeminjaman] = useState([])
     const [isLoading, setIsLoading] = useState(true);
+    const accesstoken = window.localStorage.getItem('token')
 
     // setup pages control for every table
     const [pageTable1, setPageTable1] = useState(1)
@@ -24,14 +25,13 @@ const RiwayatPeminjaman = (props) => {
     // pagination setup
     const resultsPerPage = 7
     const totalResults = dataPeminjaman.length
-    console.log(dataPeminjaman);
+
     // pagination change control
     const onPageChangeTable1 = (p) => {
         setPageTable1(p)
     }
 
     const getUserById = () => {
-        const accesstoken = window.localStorage.getItem('token')
         axios.get('https://inventorylab.herokuapp.com/user/getdetailuser/', {
             headers: {
                 'Authorization': `token ${accesstoken}`
@@ -61,7 +61,6 @@ const RiwayatPeminjaman = (props) => {
                 };
             })
         );
-        console.log(data)
         setDataPeminjaman(data);
         setDataTable1(data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
         setIsLoading(false)
@@ -123,7 +122,7 @@ const RiwayatPeminjaman = (props) => {
                                             </Badge>
                                         </TableCell>
                                     </TableRow>
-                            ) : null
+                            ) : null;
                         })}
                         </TableBody>
                     </Table>
