@@ -19,7 +19,7 @@ const Loading = () => {
                 </div>
             </header>
             <div className='flex'>
-                <div className='w-1/5'>
+                <div className='w-1/5 hidden md:block'>
                     <ul className="list-none">
                         <li className='relative px-6 py-3'>
                             <div
