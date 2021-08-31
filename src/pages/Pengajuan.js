@@ -200,12 +200,6 @@ const Pengajuan = (props) => {
                                             >
                                                         <option
                                                             key="ktp"
-                                                            value=""
-                                                        >
-                                                            KTP/KTM
-                                                        </option>
-                                                        <option
-                                                            key="ktp"
                                                             value="KTP"
                                                         >
                                                             KTP

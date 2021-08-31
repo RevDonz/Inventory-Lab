@@ -14,8 +14,11 @@ import { Alert, PageTitle, SectionTitle } from '../components';
 const UpdateItem = (props) => {
     const [itemName, setItemName] = useState('')
     const [itemAmount, setItemAmount] = useState('')
+    const [itemPicture, setItemPicture] = useState('')
     const [categoryId, setCategoryId] = useState('')
     const [dataCategory, setDataCategory] = useState([])
+
+    const accesstoken = window.localStorage.getItem('token')
 
     const history = useHistory();
 
@@ -40,6 +43,7 @@ const UpdateItem = (props) => {
             console.log('sukses', data);
             setItemName(data.itemName);
             setItemAmount(data.itemAmount);
+            setItemPicture(data.itemPicture);
             setCategoryId(data.categoryId)
 
         })
@@ -54,13 +58,18 @@ const UpdateItem = (props) => {
         const items = new URLSearchParams();
         items.append('itemName', itemName);
         items.append('itemAmount', itemAmount);
+        items.append('itemPicture', itemPicture);
         items.append('categoryId', categoryId);
 
         const id = props.match.params.id
-        axios.post(`https://inventorylab.herokuapp.com/items/updateItem/${id}`, items)
+        axios.post(`https://inventorylab.herokuapp.com/items/updateItem/${id}`, items ,{
+            headers: {
+                'Authorization': `token ${accesstoken}`
+            }
+        })
         .then(result => {
             console.log(result);
-            Alert(result.data.code, result.data.message, 'item')
+            Alert(result,'item')
         })
         .catch(error => {
             console.log('error : ', error);
@@ -94,6 +103,16 @@ const UpdateItem = (props) => {
                                     onChange={(e) =>
                                         setItemAmount(e.target.value)
                                     }
+                                />
+                            </Label>
+                                {itemPicture && <img className="w-12 h-14" src={itemPicture}></img>}
+                            <Label>
+                                <span>Gambar Barang</span>
+                                <Input
+                                    className='mt-1 p-1 border'
+                                    type='file'
+                                    // value={itemPicture}
+                                    onChange={(e) => setItemPicture(e.target.files[0])}
                                 />
                             </Label>
                             <Label>
