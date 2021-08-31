@@ -39,6 +39,28 @@ const Alert = (hasil, type) => {
                 window.location.href = `/app/category`;
             }
         });
+    } else if (type === 'user') {
+        Swal.fire({
+            icon: hasil.data.code === 400 ? 'error' : 'success',
+            title: hasil.data.code === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            text: hasil.data.message,
+            confirmButtonText: 'OK',
+        }).then((result) => {
+            if (result.isConfirmed && hasil.data.code === 200) {
+                window.location.href = `/app/user/myProfile`;
+            }
+        });
+    } else if (type === 'pinjam') {
+        Swal.fire({
+            icon: hasil.data.code === 400 ? 'error' : 'success',
+            title: hasil.data.code === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            text: hasil.data.message,
+            confirmButtonText: 'OK',
+        }).then((result) => {
+            if (result.isConfirmed && hasil.data.code === 200) {
+                window.location.href = `/app/user/riwayatPeminjaman`;
+            }
+        });
     }
 };
 

@@ -13,6 +13,7 @@ import { Alert, PageTitle, SectionTitle } from '../components';
 const CreateItem = () => {
     const [itemName, setItemName] = useState('');
     const [itemAmount, setItemAmount] = useState('');
+    const [itemPicture, setItemPicture] = useState('');
     const [categoryId, setCategoryId] = useState('');
     const [dataCategory, setDataCategory] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -35,17 +36,23 @@ const CreateItem = () => {
     }, []);
 
     const onSubmit = (event) => {
+        const accesstoken = window.localStorage.getItem('token')
         event.preventDefault();
 
-        const items = new URLSearchParams();
+        const items = new FormData();
         items.append('itemName', itemName);
         items.append('itemAmount', itemAmount);
+        items.append('itemPicture', itemPicture);
         items.append('categoryId', categoryId);
 
         axios
             .post(
                 'https://inventorylab.herokuapp.com/items/inputNewItem',
-                items
+                items, {
+                    headers: {
+                    'Authorization' : `token ${accesstoken}`
+                }
+            }
             )
             .then(result => Alert(result, 'item'))
             .catch((err) => {
@@ -97,6 +104,14 @@ const CreateItem = () => {
                                         );
                                     })}
                                 </Select>
+                            </Label>
+                            <Label>
+                                <span>Gambar Barang</span>
+                                <Input
+                                    className='mt-1'
+                                    type='file'
+                                    onChange={(e) => setItemPicture(e.target.files[0])}
+                                />
                             </Label>
                         </div>
                         <div className='mt-4 items-center flex'>

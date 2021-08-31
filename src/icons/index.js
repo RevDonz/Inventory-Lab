@@ -31,6 +31,7 @@ import { ReactComponent as DocumentAdd } from './documentAdd.svg'
 import { ReactComponent as ClipboardList } from './clipboardList.svg'
 import { ReactComponent as UserIcon } from './user.svg'
 import { ReactComponent as Refresh } from './refresh.svg'
+import { ReactComponent as SettingIcon } from './setting.svg'
 
 export {
   ButtonsIcon,
@@ -66,4 +67,5 @@ export {
   OutlinePersonIcon,
   OutlineCogIcon,
   OutlineLogoutIcon,
+  SettingIcon
 }

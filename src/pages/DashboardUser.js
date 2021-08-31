@@ -25,8 +25,9 @@ const DashboardUser = () => {
         );
         setData(data);
         console.log(data)
-        setDataMax(data);
-        console.log('maksimum', Math.max(dataMax.map((item => item.itemInBorrow))))
+        const desc = data.sort((a,b) => a.itemInBorrow - b.itemInBorrow).reverse()
+        console.log(desc)
+        setDataMax(desc[0]);
     };
 
     const getCategory = async (id) => {
@@ -38,10 +39,6 @@ const DashboardUser = () => {
     
     useEffect(() => {
         getItem();
-        console.log('coba',Math.max(1, 3, 2));
-        console.log('maksimum', Math.max(dataMax.map((item => item.itemInBorrow))))
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -53,35 +50,29 @@ const DashboardUser = () => {
             <div className="grid grid-cols-3 gap-2 sm:gap-6">
                 <div className="col-span-2 px-2 py-2 sm:px-8 sm:py-7 bg-blue-600 rounded-lg sm:rounded-2xl">
                     <div colored className="bg-blue-600">
-                        {dataMax.map((item,i) => Math.max(item.itemInBorrow))}
-                        {/* {Math.max(dataMax.map((item => item.itemInBorrow) (
-                        // {dataMax.map((item, i) => {
-                        //     return Math.max(dataMax.map(item => item.itemInBorrow)( */}
-                            <div className="grid grid-cols-3">
-                                <div className="col-span-2">
-                                    <div className="">
-                                        <h1 className="text-white font-semibold text-xl sm:text-3xl">Printer epson</h1>
-                                        <p className="font-normal text-gray-300 text-xs py-2">10 Dipinjam <span className="px-2">2 Tersisa</span> </p>
-                                        <button 
-                                            type='submit'
-                                            // onClick={onSubmit}
-                                            className="bg-indigo-900 text-white text-sm px-3 py-2 mt-5 rounded-2xl"
-                                        >
-                                            Pinjam
-                                        </button>
-                                    </div>
-                                </div>
+                        <div className="grid grid-cols-3">
+                            <div className="col-span-2">
                                 <div className="">
-                                    <img className="sm:h-full sm:w-full py-5 object-cover object-center" alt="Gambar terbanyak" src="https://www.freepnglogos.com/uploads/printer-png/laser-printer-png-image-pngpix-3.png"></img>
+                                    <h1 className="text-white font-semibold text-xl sm:text-3xl">{dataMax.itemName}</h1>
+                                    <p className="font-normal text-gray-300 text-xs py-2">{dataMax.itemInBorrow} Dipinjam<span className="px-2">{dataMax.itemAmount - dataMax.itemInBorrow} Tersisa</span> </p>
+                                    <button 
+                                        type='submit'
+                                        onClick={() => history.push(`/app/user/pengajuan/${dataMax._id}`)}
+                                        className="bg-indigo-900 text-white text-sm px-3 py-2 mt-5 rounded-2xl"
+                                    >
+                                        Pinjam
+                                    </button>
                                 </div>
                             </div>
-                        {/* // ))})}
-                        )))} */}
+                            <div className="">
+                                <img className="sm:h-full sm:w-full py-5 object-cover object-center" alt="" src={dataMax.itemPicture}></img>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="bg-gray-700 rounded-lg sm:rounded-2xl px-3 py-3 sm:px-7 sm:py-5 flex-wrap content-center grid">
                     <h1 className="text-white text-xs sm:text-xl sm:font-semibold">Minjem ga ribet, dengan Inventory Lab</h1>
-                    <img className="h-20 sm:w-auto sm:h-52 object-cover object-center justify-self-center" alt="gambar saly" src={saly}></img>
+                    <img className="h-20 sm:w-auto sm:h-52 object-cover object-center justify-self-center" alt="" src={saly}></img>
                 </div>
             </div>
 

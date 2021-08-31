@@ -21,6 +21,8 @@ const Pengajuan = (props) => {
     const [guarantee, setGuarantee] = useState('')
     const [guaranteePicture, setGuaranteePicture] = useState('')
 
+    const accesstoken = window.localStorage.getItem('token')
+
     const getItemById = () =>{
         const id = props.match.params.id;
         axios.get(`https://inventorylab.herokuapp.com/items/findItem/${id}`)
@@ -39,14 +41,13 @@ const Pengajuan = (props) => {
     }
 
     const getUserById = () => {
-        const accesstoken = window.localStorage.getItem('token')
         axios.get('https://inventorylab.herokuapp.com/user/getdetailuser/', {
             headers: {
                 'Authorization': `token ${accesstoken}`
             }
         })
         .then(res => {
-            const data = res.data.data._id;
+            const data = res.data.details._id;
             console.log('id user:', data._id);
             setUserId(data._id);
         })
@@ -58,7 +59,6 @@ const Pengajuan = (props) => {
     useEffect(() => {
         getItemById();
         getUserById();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props])
 
     const onSubmit = (event) => {
@@ -85,16 +85,17 @@ const Pengajuan = (props) => {
 
         axios
             .post(
-                'https://inventorylab.herokuapp.com/borrower/requestItem', data
+                'https://inventorylab.herokuapp.com/borrower/requestItem', data, {
+                    headers: {
+                        'Authorization': `token ${accesstoken}`
+                    }
+                }
             )
-            .then(result => Alert(result.data.code, result.data.message, 'item'))
+            .then(result => Alert(result, 'pinjam'))
             .catch((err) => {
                 console.log(err);
             });
     };
-
-
-    // let [count, setCount] = useState(0);
 
     function plush() {
         itemBorrow = itemBorrow + 1;
