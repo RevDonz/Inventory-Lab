@@ -47,6 +47,12 @@ const routes = [
         name: 'Profile',
         type: 'User'
     },
+    // {
+    //     path: '/app/user/pengaturan',
+    //     icon: 'SettingIcon',
+    //     name: 'Pengaturan',
+    //     type: 'User'
+    // },
 ];
 
 export default routes

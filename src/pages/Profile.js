@@ -16,7 +16,7 @@ const Profile = (props) => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [homeAddress, setHomeAddress] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // const [password, setPassword] = useState('');
 
     const getUserById = () => {
         const accesstoken = window.localStorage.getItem('token')
@@ -36,7 +36,7 @@ const Profile = (props) => {
             setPhoneNumber(data.phoneNumber);
             setHomeAddress(data.homeAddress);
             setEmail(data.email);
-            setPassword(data.password);
+            // setPassword(data.password);
         })
         .catch(err => {
             console.log(err)
@@ -84,14 +84,14 @@ const Profile = (props) => {
                                     value={NIM}
                                 />
                             </Label>
-                            <Label>
+                            {/* <Label>
                                 <Input
                                     disabled
                                     className='mt-1'
                                     value={password}
                                     type= 'password'
                                 />
-                            </Label>
+                            </Label> */}
                             <Label>
                                 <Input
                                     disabled

@@ -10,6 +10,7 @@ const UpdateCategory = lazy(() => import('../pages/UpdateCategory'))
 const DashboardUser = lazy(() => import('../pages/DashboardUser'))
 const Pengajuan = lazy(() => import('../pages/Pengajuan'))
 const Profile = lazy(() => import('../pages/Profile'))
+// const Pengaturan = lazy(() => import('../pages/Pengaturan'))
 const RiwayatPeminjaman = lazy(() => import('../pages/RiwayatPeminjaman'))
 
 const routes = [
@@ -68,6 +69,11 @@ const routes = [
         component: RiwayatPeminjaman,
         type: 'User'
     },
+    // {
+    //     path: '/user/pengaturan',
+    //     component: Pengaturan,
+    //     type: 'User'
+    // },
 ]
 
 

@@ -40,14 +40,13 @@ const Pengajuan = (props) => {
     }
 
     const getUserById = () => {
-        const accesstoken = window.localStorage.getItem('token')
         axios.get('https://inventorylab.herokuapp.com/user/getdetailuser/', {
             headers: {
                 'Authorization': `token ${accesstoken}`
             }
         })
         .then(res => {
-            const data = res.data.data._id;
+            const data = res.data.details._id;
             console.log('id user:', data._id);
             setUserId(data._id);
         })
@@ -59,7 +58,6 @@ const Pengajuan = (props) => {
     useEffect(() => {
         getItemById();
         getUserById();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props])
 
     const onSubmit = (event) => {
@@ -92,14 +90,11 @@ const Pengajuan = (props) => {
                     }
                 }
             )
-            .then(result => Alert(result, 'item'))
+            .then(result => Alert(result, 'pinjam'))
             .catch((err) => {
                 console.log(err);
             });
     };
-
-
-    // let [count, setCount] = useState(0);
 
     function plush() {
         itemBorrow = itemBorrow + 1;
