@@ -86,7 +86,7 @@ const CreateItem = () => {
                             <Label>
                                 <span>Gambar Barang</span>
                                 <Input
-                                    className='mt-1'
+                                    className='mt-1 p-1 border'
                                     type='file'
                                     onChange={(e) => setItemPicture(e.target.files[0])}
                                 />

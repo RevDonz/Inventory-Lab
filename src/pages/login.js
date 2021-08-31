@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import Swal from 'sweetalert2'
 import { vectorLogin } from '../assets'
 import { illusLogin } from '../assets'
 import Alert from '../components/Alert'
@@ -14,12 +15,15 @@ import Alert from '../components/Alert'
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    // const [typeUser, setTypeuser] = useState('')
-
     
     const onSubmit = (event) => {
         event.preventDefault();
-        
+        Swal.fire({
+            title: 'Loading',
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        })
         const urlEncoded = new URLSearchParams();
         urlEncoded.append('email', email);
         urlEncoded.append('password', password);
@@ -45,7 +49,7 @@ const Login = () => {
                     </div>
                     <form action="/" autoComplete="on" method="POST" className="w-full md:w-1/2 lg:w-1/3 py-10 px-10 rounded-xl shadow-md md:rounded-none md:shadow-none">
                         <div className="rounded-md justify-center">
-                            <span className="text-left text-gray-800 font-semibold text-3xl">Login</span>
+                            <span className="text-left text-gray-800 font-semibold text-3xl">Login Inventory Lab</span>
                             <div className="pt-10">
                                 <input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} className="block w-full px-3 py-2 rounded-md border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email" />
                             </div>

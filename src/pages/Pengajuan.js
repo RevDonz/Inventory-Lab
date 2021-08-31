@@ -20,6 +20,7 @@ const Pengajuan = (props) => {
     const [dateBorrowUser, setDateBorrowUser] = useState('')
     const [guarantee, setGuarantee] = useState('')
     const [guaranteePicture, setGuaranteePicture] = useState('')
+    const accesstoken = window.localStorage.getItem('token')
 
     const getItemById = () =>{
         const id = props.match.params.id;
@@ -85,9 +86,13 @@ const Pengajuan = (props) => {
 
         axios
             .post(
-                'https://inventorylab.herokuapp.com/borrower/requestItem', data
+                'https://inventorylab.herokuapp.com/borrower/requestItem', data, {
+                    headers: {
+                        'Authorization': `token ${accesstoken}`
+                    }
+                }
             )
-            .then(result => Alert(result.data.code, result.data.message, 'item'))
+            .then(result => Alert(result, 'item'))
             .catch((err) => {
                 console.log(err);
             });
