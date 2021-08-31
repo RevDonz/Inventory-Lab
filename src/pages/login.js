@@ -20,6 +20,7 @@ const Login = () => {
         event.preventDefault();
         Swal.fire({
             title: 'Loading',
+            allowOutsideClick: false,
             didOpen: () => {
                 Swal.showLoading()
             }

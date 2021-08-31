@@ -8,6 +8,7 @@ const Alert = (hasil, type) => {
             title: hasil.status === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
             text: hasil.data.message,
             confirmButtonText: 'OK',
+            allowOutsideClick: false,
         }).then((result) => {
             if (result.isConfirmed && hasil.status === 200) {
                 if (hasil.data.type === "Admin") {
