@@ -9,6 +9,7 @@ import axios from 'axios';
 
 const Profile = (props) => {
     const [fullname, setFullname] = useState('');
+    // const [userId, setUserId] = useState('');
     const [NIM, setNIM] = useState('');
     const [major, setMajor] = useState('');
     const [faculty, setFaculty] = useState('');

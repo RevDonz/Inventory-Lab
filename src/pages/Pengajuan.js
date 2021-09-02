@@ -7,6 +7,7 @@ import {
     Label,
     Select,
 } from '@windmill/react-ui';
+import Swal from 'sweetalert2';
 
 const Pengajuan = (props) => {
     const [itemName, setItemName] = useState('')
@@ -73,7 +74,12 @@ const Pengajuan = (props) => {
             guaranteePicture
             );
         event.preventDefault();
-
+        Swal.fire({
+            title: 'Loading',
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        })
         const data = new FormData();
         data.append('userId', userId);
         data.append('itemId', itemId);
@@ -193,7 +199,6 @@ const Pengajuan = (props) => {
                                         <span>Jaminan</span>
                                         <Select
                                                 className='mt-1'
-                                                placeholder="KTP/KTM"
                                                 onChange={(e) =>
                                                     setGuarantee(e.target.value)
                                                 }

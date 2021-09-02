@@ -13,7 +13,7 @@ function App() {
     return (
         <Router>
             <Switch>
-                <Suspense fallback={<h1>Loading..</h1>}>
+                <Suspense fallback={""}>
                     <Route exact path='/' component={Login} />
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/register' component={Register} />

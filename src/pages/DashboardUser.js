@@ -24,9 +24,9 @@ const DashboardUser = () => {
             })
         );
         setData(data);
-        console.log(data)
+        // console.log(data)
         const desc = data.sort((a,b) => a.itemInBorrow - b.itemInBorrow).reverse()
-        console.log(desc)
+        // console.log(desc)
         setDataMax(desc[0]);
     };
 
@@ -50,7 +50,7 @@ const DashboardUser = () => {
 
             <div className="grid grid-cols-3 gap-2 sm:gap-6">
                 <div className="col-span-2 px-2 py-2 sm:px-8 sm:py-7 bg-blue-600 rounded-lg sm:rounded-2xl">
-                    <div colored className="bg-blue-600">
+                    <div className="bg-blue-600">
                         <div className="grid grid-cols-3">
                             <div className="col-span-2">
                                 <div className="">
@@ -82,8 +82,8 @@ const DashboardUser = () => {
                     <SectionTitle className="mt-96">Barang Yang Mungkin Kamu Cari</SectionTitle>
                     <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                     {data.map((item, i) => (
-                        <div className="bg-gray-700 rounded-2xl px-4 py-3"> 
-                            <div key={i} className="group">
+                        <div key={i} className="bg-gray-700 rounded-2xl px-4 py-3"> 
+                            <div className="group">
                                 <div className="w-full aspect-w-1 aspect-h-1 overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
                                     <img
                                     src={item.itemPicture}
