@@ -103,7 +103,7 @@ const RiwayatPeminjaman = (props) => {
                         {isLoading ? <Spinner /> : dataTable1.map((borrow, i) => {
                             return (
                                 <TableRow key={i}>
-                                        <TableCell>{borrow.itemId}</TableCell>
+                                        <TableCell>{borrow.detailItem[0].itemName}</TableCell>
                                         <TableCell>{borrow.itemBorrow}</TableCell>
                                         <TableCell>{borrow.dateBorrowUser}</TableCell>
                                         <TableCell>{borrow.dateReturnUser}</TableCell>

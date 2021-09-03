@@ -111,14 +111,6 @@ const CreateItem = () => {
                                     })}
                                 </Select>
                             </Label>
-                            <Label>
-                                <span>Gambar Barang</span>
-                                <Input
-                                    className='mt-1'
-                                    type='file'
-                                    onChange={(e) => setItemPicture(e.target.files[0])}
-                                />
-                            </Label>
                         </div>
                         <div className='mt-4 items-center flex'>
                             <Button
