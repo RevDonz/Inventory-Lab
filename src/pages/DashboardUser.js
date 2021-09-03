@@ -51,7 +51,7 @@ const DashboardUser = () => {
 
             <div className='grid grid-cols-3 gap-2 sm:gap-6'>
                 <div className='bg-blue-600 col-span-2 rounded-lg p-3'>
-                    <div className='flex items-center justify-center h-full'>
+                    <div className='flex items-center justify-center'>
                         <div className='w-1/2 space-y-2 md:space-y-3 px-1 md:px-3'>
                             <h1 className='text-white md:font-semibold md:text-xl'>
                                 {dataMax.itemName}
@@ -77,9 +77,9 @@ const DashboardUser = () => {
                             </button>
                         </div>
                         <div className='w-1/2'>
-                            <div className='aspect-w-6 aspect-h-8 md:aspect-w-8 md:aspect-h-8 lg:aspect-w-8 lg:aspect-h-6'>
+                            <div className='aspect-w-8 aspect-h-8'>
                                 <img
-                                    className='sm:h-full sm:w-full rounded-md object-cover'
+                                    className='rounded-md object-cover'
                                     src={dataMax.itemPicture}
                                     alt={dataMax.itemName}
                                 />
@@ -117,9 +117,9 @@ const DashboardUser = () => {
                                         className='rounded-t-md object-cover'
                                     />
                                 </div>
-                                <div className='group px-3 flex flex-col'>
-                                    <h3 className='text-lg'>{item.itemName}</h3>
-                                    <div className='text-gray-500 flex space-x-2 text-xs mb-2'>
+                                <div className='group px-3 pt-2 flex flex-col'>
+                                    <h3 className='text-sm font-semibold md:text-lg'>{item.itemName}</h3>
+                                    <div className='text-gray-500 flex flex-col text-xs mb-2'>
                                         <p>{item.itemInBorrow} Dipinjam</p>
                                         <p>
                                             {item.itemAmount -
