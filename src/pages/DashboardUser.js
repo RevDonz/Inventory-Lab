@@ -81,6 +81,7 @@ const DashboardUser = () => {
                                 <img
                                     className='sm:h-full sm:w-full rounded-md object-cover'
                                     src={dataMax.itemPicture}
+                                    alt={dataMax.itemName}
                                 />
                             </div>
                         </div>
