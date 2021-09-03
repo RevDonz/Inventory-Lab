@@ -78,9 +78,9 @@ const DashboardUser = () => {
             </div>
 
             <div className="">
-                <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+                <div className="max-w-2xl mx-auto py-16 sm:py-24 lg:max-w-7xl">
                     <SectionTitle className="mt-96">Barang Yang Mungkin Kamu Cari</SectionTitle>
-                    <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                    <div className="grid grid-cols-2 gap-y-3 gap-x-4 sm:gap-x-6 sm:gap-y-7 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-7 xl:gap-y-8">
                     {data.map((item, i) => (
                         <div key={i} className="bg-gray-700 rounded-2xl px-4 py-3"> 
                             <div className="group">
@@ -91,7 +91,7 @@ const DashboardUser = () => {
                                     className="w-full h-full object-center group-hover:opacity-75"
                                     />
                                 </div>
-                                <h3 className="mt-2 text-lg text-white">{item.itemName}</h3>
+                                <h3 className="mt-2 text-sm md:text-lg text-white">{item.itemName}</h3>
                                 <p className="font-normal text-gray-300 text-xs py-2">{item.itemInBorrow} Dipinjam<span className="px-2">{item.itemAmount - item.itemInBorrow} Tersisa</span> </p>
                                 <div className="flex justify-center my-2">
                                     <button 

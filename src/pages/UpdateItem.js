@@ -14,7 +14,9 @@ import { Alert, PageTitle, SectionTitle } from '../components';
 const UpdateItem = (props) => {
     const [itemName, setItemName] = useState('')
     const [itemAmount, setItemAmount] = useState('')
+    const [inputAmount, setInputAmount] = useState(null)
     const [itemPicture, setItemPicture] = useState('')
+    const [preview, setPreview] = useState(null)
     const [categoryId, setCategoryId] = useState('')
     const [dataCategory, setDataCategory] = useState([])
 
@@ -44,7 +46,8 @@ const UpdateItem = (props) => {
             setItemName(data.itemName);
             setItemAmount(data.itemAmount);
             setItemPicture(data.itemPicture);
-            setCategoryId(data.categoryId)
+            setCategoryId(data.categoryId);
+            setPreview(data.itemPicture)
 
         })
         .catch(err => {
@@ -52,38 +55,91 @@ const UpdateItem = (props) => {
         })
     }, [props])
 
+    const onImageUpload = (e) =>{
+        // if (itemPicture !== null) {
+            const file = e.target.files[0];
+            setItemPicture(file)
+            setPreview(URL.createObjectURL(file))
+        // } else {
+
+        // }
+    }
+
     const onSubmit = (event) => {
         event.preventDefault();
 
+        
         const items = new URLSearchParams();
         items.append('itemName', itemName);
-        items.append('itemAmount', itemAmount);
-        items.append('itemPicture', itemPicture);
         items.append('categoryId', categoryId);
+        
+        console.log('ini gambar: ', itemPicture)
+        console.log('ini gambar: ', preview)
+        console.log('stok: ',itemAmount)
+        const pctr = new FormData();
+        pctr.append('itemPicture', itemPicture);
 
         const id = props.match.params.id
-        axios.post(`https://inventorylab.herokuapp.com/items/updateItem/${id}`, items ,{
+
+        axios.post(`https://inventorylab.herokuapp.com/items/updateItem/${id}`, items, {
             headers: {
                 'Authorization': `token ${accesstoken}`
             }
         })
-        .then(result => {
-            console.log(result);
-            Alert(result,'item')
-        })
-        .catch(error => {
-            console.log('error : ', error);
-        });
+        if (itemPicture !== preview) {
+            
+            axios.post(`https://inventorylab.herokuapp.com/items/updatePicture/${id}`, pctr, {
+                headers: {
+                    'Authorization': `token ${accesstoken}`
+                }
+            })
+        }
+
+        if (inputAmount === null) {
+            setItemAmount(itemAmount)
+        } else if (inputAmount > itemAmount) {
+            const tambah = inputAmount - itemAmount
+            setItemAmount(tambah)
+
+            const stok = new URLSearchParams();
+            stok.append('itemAmount', itemAmount);
+
+            axios.post(`https://inventorylab.herokuapp.com/items/addItem/${id}/${tambah}`, stok, {
+                headers: {
+                    'Authorization': `token ${accesstoken}`
+                }
+            })
+        } else {
+            const kurang = itemAmount - inputAmount;
+            setItemAmount(kurang)
+
+            const stok = new URLSearchParams();
+            stok.append('itemAmount', itemAmount);
+
+            axios.post(`https://inventorylab.herokuapp.com/items/minItem/${id}/${kurang}`, stok, {
+                headers: {
+                    'Authorization': `token ${accesstoken}`
+                }
+            })
+        }
+
+        // .then(result => {
+        //     console.log(result);
+        //     Alert(result,'item')
+        // })
+        // .catch(error => {
+        //     console.log('error : ', error);
+        // });
         
     }
     return (
         <>
             <PageTitle>Ubah Barang</PageTitle>
             <SectionTitle>Form Ubah Data</SectionTitle>
-            <Card>
+            <Card className="w-full md:w-1/2">
                 <CardBody>
                     <form action=''>
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                        <div className='gap-4 space-y-3'>
                             <Label>
                                 <span>Nama Barang</span>
                                 <Input
@@ -95,24 +151,27 @@ const UpdateItem = (props) => {
                                 />
                             </Label>
                             <Label>
-                                <span>Jumlah Barang</span>
+                                <span>Jumlah Awal : <p className="font-bold text-lg">{itemAmount}</p></span>
+                            </Label>
+                            <Label>
+                                <span>Ubah Jumlah Barang</span>
                                 <Input
                                     className='mt-1'
                                     type='number'
-                                    value={itemAmount}
+                                    // value={itemAmount}
                                     onChange={(e) =>
-                                        setItemAmount(e.target.value)
+                                        setInputAmount(e.target.value)
                                     }
                                 />
                             </Label>
-                                {itemPicture && <img className="w-12 h-14" src={itemPicture}></img>}
+                                {itemPicture && <img className="w-12 h-14" src={preview}></img>}
                             <Label>
                                 <span>Gambar Barang</span>
                                 <Input
                                     className='mt-1 p-1 border'
                                     type='file'
                                     // value={itemPicture}
-                                    onChange={(e) => setItemPicture(e.target.files[0])}
+                                    onChange={(e) => onImageUpload(e)}
                                 />
                             </Label>
                             <Label>

@@ -39,6 +39,7 @@ const RiwayatPeminjaman = (props) => {
         })
         .then(res => {
             const data = res.data.details._id;
+            console.log('id:', data._id)
             getHistory(data._id)
         })
         .catch(err => {
@@ -48,6 +49,7 @@ const RiwayatPeminjaman = (props) => {
 
     const getHistory = (UserId) => {
         const accesstoken = window.localStorage.getItem('token')
+        console.log(UserId)
 
         axios.get(`https://inventorylab.herokuapp.com/borrower/user/${UserId}`, {
             headers: {
@@ -56,8 +58,8 @@ const RiwayatPeminjaman = (props) => {
         })
         .then((res) => {
             setIsLoading(false)
-            console.log(res);
             setDataPeminjaman(res.data.data);
+            console.log('ini apa',res.data.data);
             setDataTable1(res.data.data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
         })
         .catch((err) => {
@@ -103,7 +105,7 @@ const RiwayatPeminjaman = (props) => {
                         {isLoading ? <Spinner /> : dataTable1.map((borrow, i) => {
                             return (
                                 <TableRow key={i}>
-                                        <TableCell>{borrow.itemId}</TableCell>
+                                        <TableCell>{borrow.detailItem[0].itemName}</TableCell>
                                         <TableCell>{borrow.itemBorrow}</TableCell>
                                         <TableCell>{borrow.dateBorrowUser}</TableCell>
                                         <TableCell>{borrow.dateReturnUser}</TableCell>

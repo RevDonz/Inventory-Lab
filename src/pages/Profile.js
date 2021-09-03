@@ -55,7 +55,7 @@ const Profile = (props) => {
                 <div className=' grid mb-8'>
                     <img
                         className='align-middle rounded-full h-24 w-24 flex items-center justify-center justify-self-center my-4'
-                        src='https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82'
+                        src='https://cdn-icons-png.flaticon.com/512/709/709722.png'
                         alt=''
                         aria-hidden='true'
                     />
