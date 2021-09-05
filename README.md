@@ -17,7 +17,7 @@
 -   [ReactJS](https://reactjs.org)
 -   [TailwindCSS](https://tailwindcss.com)
 -   [MongoDB](https://www.mongodb.com/)
--   [ExpressJS](https://expressjs.com/)https://nodejs.org/en/
+-   [ExpressJS](https://expressjs.com/)
 -   [NodeJS](https://nodejs.org/en/)
 
 <!-- GETTING STARTED -->
