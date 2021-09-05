@@ -6,6 +6,7 @@ import {
     Label,
 } from '@windmill/react-ui';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Alert, PageTitle, SectionTitle } from '../components';
@@ -30,6 +31,13 @@ const UpdateCategory = (props) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
+        Swal.fire({
+            title: 'Loading',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        })
 
         const data = new URLSearchParams();
         data.append('categoryName', categoryName);
@@ -42,7 +50,7 @@ const UpdateCategory = (props) => {
                         'Authorization': `token ${accesstoken}`
                     }
                 })
-            .then(result => Alert(result.data.code, result.data.message, 'item'))
+            .then(result => Alert(result, 'category'))
             .catch((err) => {
                 console.log(err);
             });

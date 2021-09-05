@@ -5,7 +5,7 @@ import {
     Button,
     Input,
     Label,
-    Select,
+    Select
 } from '@windmill/react-ui';
 import Swal from 'sweetalert2';
 
@@ -19,7 +19,7 @@ const Pengajuan = (props) => {
     const [userId, setUserId] = useState('')
     const [dateReturnUser, setDateReturnUser] = useState('')
     const [dateBorrowUser, setDateBorrowUser] = useState('')
-    const [guarantee, setGuarantee] = useState('')
+    let [guarantee, setGuarantee] = useState('KTP')
     const [guaranteePicture, setGuaranteePicture] = useState('')
     const accesstoken = window.localStorage.getItem('token')
 
@@ -120,6 +120,17 @@ const Pengajuan = (props) => {
         }
       }
 
+    const jaminan = [
+        {
+            id : 0,
+            name : 'KTP'
+        },
+        {
+            id : 1,
+            name : 'KTM'
+        }
+    ]
+
     return (
         <>
             <PageTitle>Pengajuan Barang</PageTitle>
@@ -203,18 +214,16 @@ const Pengajuan = (props) => {
                                                     setGuarantee(e.target.value)
                                                 }
                                             >
+                                                {jaminan.map((jam) => {
+                                                    return (
                                                         <option
-                                                            key="ktp"
-                                                            value="KTP"
+                                                            key={jam.id}
+                                                            value={jam.name}
                                                         >
-                                                            KTP
+                                                            {jam.name}
                                                         </option>
-                                                        <option
-                                                            key="ktm"
-                                                            value="KTM"
-                                                        >
-                                                            KTM
-                                                        </option>
+                                                    );
+                                                })}
                                             </Select>
                                     </Label>
                                     <Label className='pt-3'>
@@ -227,6 +236,7 @@ const Pengajuan = (props) => {
                                                 setGuaranteePicture(e.target.files[0])
                                             }
                                         />
+                                        {/* <HelperText>Gambar KTM/KTP harus png</HelperText> */}
                                     </Label>
                                 </div>
                                 <div className='mt-4 flex justify-center'>

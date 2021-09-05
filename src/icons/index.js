@@ -32,6 +32,7 @@ import { ReactComponent as ClipboardList } from './clipboardList.svg'
 import { ReactComponent as UserIcon } from './user.svg'
 import { ReactComponent as Refresh } from './refresh.svg'
 import { ReactComponent as SettingIcon } from './setting.svg'
+import { ReactComponent as ProfilleIcon } from './profille.svg'
 
 export {
   ButtonsIcon,
@@ -67,5 +68,6 @@ export {
   OutlinePersonIcon,
   OutlineCogIcon,
   OutlineLogoutIcon,
-  SettingIcon
+  SettingIcon,
+  ProfilleIcon
 }

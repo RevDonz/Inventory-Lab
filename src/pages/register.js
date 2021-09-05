@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Alert from '../components/Alert'
 
 const Register = () => {
@@ -30,6 +31,13 @@ const Register = () => {
       confirmPassword
     );
     event.preventDefault();
+    Swal.fire({
+      title: 'Loading',
+      allowOutsideClick: false,
+      didOpen: () => {
+          Swal.showLoading()
+      }
+    })
     console.log(email, password);
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -293,7 +301,7 @@ const Register = () => {
               <input className="w-full py-3 lg:py-3 lg:w-3/5 focus:ring-blue-300 focus:border-blue-300 border-1 border-gray-300 rounded-lg my-4 font-semibold" type="password" name="confirmPass" placeholder="Konfirmasi Kata Sandi"
               value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/> <br/>
             </div>
-            <div className="px-10 md:w-3/5 m-auto pt-9">
+            <div className="px-10 lg:w-3/5 m-auto pt-9">
               <label className="inline-flex items-center mt-4" >
                 <input className="focus:ring-blue-300 h-5 w-5 border-blue-300 rounded" type="checkbox"/>
                 <span className="ml-4 text-blue-900 text-base md:text-lg font-semibold">Saya Telah Membaca dan Menyetujui Persyaratan Layanan</span> 

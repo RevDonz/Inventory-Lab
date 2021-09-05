@@ -78,7 +78,7 @@ const SidebarContent = () => {
                                 exact
                                 to={menu.path}
                                 className='inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200'
-                                activeClassName='text-gray-800 dark:text-gray-100'
+                                activeclassname='text-gray-800 dark:text-gray-100'
                             >
                                 <Route path={menu.path} exact={menu.exact}>
                                     <span

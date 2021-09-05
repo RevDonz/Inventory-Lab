@@ -33,24 +33,19 @@ const Dashboard = () => {
 
     const getItem = () => {
         axios
-            .get('https://inventorylab.herokuapp.com/borrower/')
-            .then((res) => {
-                const data = res.data;
-                const desc = data.data
-                    .sort((a, b) => a.dateRequest - b.dateRequest)
-                    .reverse();
-                setDataTable1(
-                    desc.slice(
-                        (pageTable1 - 1) * resultsPerPage,
-                        pageTable1 * resultsPerPage
-                    )
-                );
-                setData(desc);
-                setIsLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        .get('https://inventorylab.herokuapp.com/borrower/')
+        .then((res) => {
+            const data = res.data;
+            const desc = data.data
+                .sort((a, b) => a.dateRequest - b.dateRequest)
+                .reverse();
+            setDataTable1(desc.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+            setData(desc);
+            setIsLoading(false);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     };
 
     useEffect(() => {

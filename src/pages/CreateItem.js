@@ -6,6 +6,7 @@ import {
     Label,
     Select,
 } from '@windmill/react-ui';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Alert, PageTitle, SectionTitle } from '../components';
@@ -38,6 +39,13 @@ const CreateItem = () => {
 
     const onSubmit = (event) => {
         event.preventDefault();
+        Swal.fire({
+            title: 'Loading',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        })
 
         const items = new FormData();
         items.append('itemName', itemName);
