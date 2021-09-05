@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Alert from '../components/Alert'
 
 const Register = () => {
-  const history = useHistory();
-
   const [fullname, setFullname] = useState('');
   const [NIM, setNIM] = useState('');
   const [major, setMajor] = useState('');
@@ -31,14 +28,7 @@ const Register = () => {
       confirmPassword
     );
     event.preventDefault();
-    Swal.fire({
-      title: 'Loading',
-      allowOutsideClick: false,
-      didOpen: () => {
-          Swal.showLoading()
-      }
-    })
-    console.log(email, password);
+    
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -61,22 +51,34 @@ const Register = () => {
     };
 
     if (confirmPassword !== password) {
-        Alert(400, "kata sandi tidak sama")
-    } else fetch('https://inventorylab.herokuapp.com/user/register/', requestOption)
-    .then(response => 
-      response.json()
-    )
-    .then(result => {
-      console.log(result);
-      console.log(result.code);
-      Alert(result.code, result.message, 'auth');
-      if (result.code === 200) {
-        history.push(`/`)
-      }
-    })
-    .catch(error => {
-      console.log('error : ', error);
-    });
+      Swal.fire({
+        icon:'error',
+        title: 'Wadidaw Gagal',
+        text: 'kata sandi tidak sama',
+        confirmButtonText: 'OK',
+      })
+    } else { 
+      Swal.fire({
+        title: 'Loading',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading()
+        }
+      })
+      fetch('https://inventorylab.herokuapp.com/user/register/', requestOption)
+      .then(response => 
+        response.json()
+      )
+      .then(result => {
+        console.log(result);
+        console.log(result.code);
+        Alert(result, 'regis')
+      })
+      .catch(error => {
+        console.log('error : ', error.response);
+        Alert(error.response, 'regis')
+      });
+    }
   }
 
   const datafaculty = [
@@ -113,6 +115,7 @@ const Register = () => {
       name: 'Ilmu Terapan'
     },
   ]
+
   const datamajor = [
     {
       id: 0,
