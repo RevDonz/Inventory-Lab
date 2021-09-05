@@ -39,8 +39,11 @@ const Category = () => {
         )
         .then((res) => {
             const data = res.data;
-            setDataCategory(data.data);
-            setDataTable1(data.data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+            const desc = data.data
+                    .sort((a, b) => a - b)
+                    .reverse();
+            setDataCategory(desc);
+            setDataTable1(desc.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
             setIsLoading(false)
         })
         .catch((err) => {

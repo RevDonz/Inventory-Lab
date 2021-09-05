@@ -14,11 +14,11 @@ import { Alert, PageTitle, SectionTitle } from '../components';
 const UpdateItem = (props) => {
     const [itemName, setItemName] = useState('')
     const [itemAmount, setItemAmount] = useState('')
+    const [inputAmount, setInputAmount] = useState(null)
     const [itemPicture, setItemPicture] = useState('')
     const [preview, setPreview] = useState(null)
     const [categoryId, setCategoryId] = useState('')
     const [dataCategory, setDataCategory] = useState([])
-    const [currentItem, setCurrentItem] = useState('')
 
     const accesstoken = window.localStorage.getItem('token')
 
@@ -45,7 +45,6 @@ const UpdateItem = (props) => {
             console.log('sukses', data);
             setItemName(data.itemName);
             setItemAmount(data.itemAmount);
-            setCurrentItem(data.itemAmount);
             setItemPicture(data.itemPicture);
             setCategoryId(data.categoryId);
             setPreview(data.itemPicture)
@@ -57,13 +56,18 @@ const UpdateItem = (props) => {
     }, [props])
 
     const onImageUpload = (e) =>{
-        const file = e.target.files[0];
-        setItemPicture(file)
-        setPreview(URL.createObjectURL(file))
+        // if (itemPicture !== null) {
+            const file = e.target.files[0];
+            setItemPicture(file)
+            setPreview(URL.createObjectURL(file))
+        // } else {
+
+        // }
     }
 
     const onSubmit = (event) => {
         event.preventDefault();
+
         
         const items = new URLSearchParams();
         items.append('itemName', itemName);
@@ -82,33 +86,21 @@ const UpdateItem = (props) => {
                 'Authorization': `token ${accesstoken}`
             }
         })
-        .then(result => {
-            console.log(result);
-            Alert(result,'item')
-        })
-        .catch(error => {
-            console.log('error : ', error);
-        });
-
-        if (itemPicture !== preview) {    
+        if (itemPicture !== preview) {
+            
             axios.post(`https://inventorylab.herokuapp.com/items/updatePicture/${id}`, pctr, {
                 headers: {
                     'Authorization': `token ${accesstoken}`
                 }
             })
-            .then(result => {
-                console.log(result);
-                Alert(result,'item')
-            })
-            .catch(error => {
-                console.log('error : ', error);
-            });
         }
-        
-        if (itemAmount > currentItem) {
-            const tambah = itemAmount - currentItem
-            // setItemAmount(tambah)
-            console.log("nambah");
+
+        if (inputAmount === null) {
+            setItemAmount(itemAmount)
+        } else if (inputAmount > itemAmount) {
+            const tambah = inputAmount - itemAmount
+            setItemAmount(tambah)
+
             const stok = new URLSearchParams();
             stok.append('itemAmount', itemAmount);
 
@@ -117,17 +109,10 @@ const UpdateItem = (props) => {
                     'Authorization': `token ${accesstoken}`
                 }
             })
-            .then(result => {
-                console.log(result);
-                Alert(result,'item')
-            })
-            .catch(error => {
-                console.log('error : ', error);
-            });
-        } else if (itemAmount < currentItem) {
-            const kurang = currentItem - itemAmount;
-            // setItemAmount(kurang)
-            console.log("ngurang");
+        } else {
+            const kurang = itemAmount - inputAmount;
+            setItemAmount(kurang)
+
             const stok = new URLSearchParams();
             stok.append('itemAmount', itemAmount);
 
@@ -137,15 +122,15 @@ const UpdateItem = (props) => {
                     'Authorization': `token ${accesstoken}`
                 }
             })
-            .then(result => {
-                console.log(result);
-                Alert(result,'item')
-            })
-            .catch(error => {
-                console.log('error : ', error);
-            });
         }
 
+        // .then(result => {
+        //     console.log(result);
+        //     Alert(result,'item')
+        // })
+        // .catch(error => {
+        //     console.log('error : ', error);
+        // });
         
     }
     return (
@@ -166,21 +151,21 @@ const UpdateItem = (props) => {
                                     }
                                 />
                             </Label>
-                            {/* <Label>
+                            <Label>
                                 <span>Jumlah Awal : <p className="font-bold text-lg">{itemAmount}</p></span>
-                            </Label> */}
+                            </Label>
                             <Label>
                                 <span>Ubah Jumlah Barang</span>
                                 <Input
                                     className='mt-1'
                                     type='number'
-                                    value={itemAmount}
+                                    // value={itemAmount}
                                     onChange={(e) =>
-                                        setItemAmount(e.target.value)
+                                        setInputAmount(e.target.value)
                                     }
                                 />
                             </Label>
-                                {itemPicture && <img className="w-12 h-14" src={preview} alt={itemAmount}></img>}
+                                {itemPicture && <img className="w-12 h-14" src={preview}></img>}
                             <Label>
                                 <span>Gambar Barang</span>
                                 <Input

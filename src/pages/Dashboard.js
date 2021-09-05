@@ -35,8 +35,11 @@ const Dashboard = () => {
         .get('https://inventorylab.herokuapp.com/borrower/')
         .then((res) => {
             const data = res.data;
-            setDataTable1(data.data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
-            setData(data.data);
+            const desc = data.data
+                .sort((a, b) => a.dateRequest - b.dateRequest)
+                .reverse();
+            setDataTable1(desc.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+            setData(desc);
             setIsLoading(false);
         })
         .catch((err) => {

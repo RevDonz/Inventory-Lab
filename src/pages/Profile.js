@@ -6,6 +6,7 @@ import {
     Label,
 } from '@windmill/react-ui';
 import axios from 'axios';
+import { UserIMG } from '../assets';
 
 const Profile = (props) => {
     const [fullname, setFullname] = useState('');
@@ -55,8 +56,8 @@ const Profile = (props) => {
                 <div className=' grid mb-8'>
                     <img
                         className='align-middle rounded-full h-24 w-24 flex items-center justify-center justify-self-center my-4'
-                        src='https://cdn-icons-png.flaticon.com/512/709/709722.png'
-                        alt=''
+                        src={UserIMG}
+                        alt={UserIMG}
                         aria-hidden='true'
                     />
                     <h1 className="justify-self-center font-bold text-2xl">Akun Saya</h1>
@@ -85,14 +86,6 @@ const Profile = (props) => {
                                     value={NIM}
                                 />
                             </Label>
-                            {/* <Label>
-                                <Input
-                                    disabled
-                                    className='mt-1'
-                                    value={password}
-                                    type= 'password'
-                                />
-                            </Label> */}
                             <Label>
                                 <Input
                                     disabled
