@@ -244,6 +244,10 @@ const Register = () => {
     {
       id: 31,
       name: 'D3 Perhotelan'
+    },
+    {
+      id: 32,
+      name: 'S1 Rekayasa Perangkat Lunak'
     }
   ]
   
@@ -291,7 +295,7 @@ const Register = () => {
                   })}
               </select>
 
-              <input className="w-full py-3 lg:py-3 lg:w-1/5 focus:ring-blue-300 focus:border-blue-300 border-1 border-gray-300 rounded-lg lg:rounded-l-none my-4 font-semibold" type="text" name="year" placeholder="Angkatan"
+              <input className="w-full py-3 lg:py-3 lg:w-1/5 focus:ring-blue-300 focus:border-blue-300 border-1 border-gray-300 rounded-lg lg:rounded-l-none my-4 font-semibold bg-white" type="text" name="year" placeholder="Angkatan"
               value={year} onChange={(e) => setYear(e.target.value)}/> <br/>
               <input className="w-full py-3 lg:py-3 lg:w-3/5 focus:ring-blue-300 focus:border-blue-300 border-1 border-gray-300 rounded-lg my-4 font-semibold" type="number" name="phoneNumber" placeholder="Nomor Handphone"
               value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/> <br/>
