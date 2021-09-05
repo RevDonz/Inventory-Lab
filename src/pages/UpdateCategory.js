@@ -6,6 +6,7 @@ import {
     Label,
 } from '@windmill/react-ui';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Alert, PageTitle, SectionTitle } from '../components';
@@ -13,6 +14,7 @@ import { Alert, PageTitle, SectionTitle } from '../components';
 const UpdateCategory = (props) => {
     const [categoryName, setCategoryName] = useState('');
     const history = useHistory();
+    const accesstoken = localStorage.getItem('token');
 
     useEffect(() => {
         const id = props.match.params.id
@@ -29,6 +31,13 @@ const UpdateCategory = (props) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
+        Swal.fire({
+            title: 'Loading',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        })
 
         const data = new URLSearchParams();
         data.append('categoryName', categoryName);
@@ -36,9 +45,12 @@ const UpdateCategory = (props) => {
         const id = props.match.params.id
         axios
             .post(
-                `https://inventorylab.herokuapp.com/category/updateCategory/${id}`, data
-            )
-            .then(result => Alert(result.data.code, result.data.message, 'item'))
+                `https://inventorylab.herokuapp.com/category/updateCategory/${id}`, data, {
+                    headers: {
+                        'Authorization': `token ${accesstoken}`
+                    }
+                })
+            .then(result => Alert(result, 'category'))
             .catch((err) => {
                 console.log(err);
             });

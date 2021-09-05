@@ -9,6 +9,7 @@ import {
     Select,
 } from '@windmill/react-ui';
 import { useHistory, withRouter } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { Alert, PageTitle, SectionTitle } from '../components';
 
 const UpdateItem = (props) => {
@@ -64,6 +65,13 @@ const UpdateItem = (props) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
+        Swal.fire({
+            title: 'Loading',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        })
         
         const items = new URLSearchParams();
         items.append('itemName', itemName);

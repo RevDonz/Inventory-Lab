@@ -77,6 +77,13 @@ const ListItems = () => {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Loading',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
                 axios.delete(`https://inventorylab.herokuapp.com/items/deleteItem/${id}`, {
                     headers: {
                         'Authorization' : `token ${accesstoken}`

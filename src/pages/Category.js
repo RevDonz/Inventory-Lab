@@ -40,8 +40,7 @@ const Category = () => {
         .then((res) => {
             const data = res.data;
             const desc = data.data
-                    .sort((a, b) => a - b)
-                    .reverse();
+                    .sort((a,b) => (a.categoryName > b.categoryName) ? 1 : ((b.categoryName > a.categoryName) ? -1 : 0));
             setDataCategory(desc);
             setDataTable1(desc.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
             setIsLoading(false)
@@ -73,6 +72,13 @@ const Category = () => {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Loading',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
                 axios
                     .delete(`https://inventorylab.herokuapp.com/category/deleteCategory/${id}`, {
                         headers: {
