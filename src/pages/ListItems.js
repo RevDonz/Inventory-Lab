@@ -42,8 +42,12 @@ const ListItems = () => {
             .get('https://inventorylab.herokuapp.com/items')
             .then((res) => {
                 const data = res.data;
-                setDataTable1(data.data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
-                setData(data.data);
+                console.log(data.data)
+                const desc = data.data
+                    .sort((a, b) => a.itemCode - b.itemCode)
+                    .reverse();
+                setDataTable1(desc.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+                setData(desc);
                 setIsLoading(false);
             })
             .catch((err) => {

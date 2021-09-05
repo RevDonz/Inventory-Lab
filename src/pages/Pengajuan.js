@@ -220,7 +220,7 @@ const Pengajuan = (props) => {
                                     <Label className='pt-3'>
                                         <span>Upload file</span>
                                         <Input
-                                            className='mt-1'
+                                            className='mt-1 p-1 bg-white border'
                                             type="file"
                                             placeholder="Link Google Drive KTP/KTM Aktif"
                                             onChange={(e) =>

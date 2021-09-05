@@ -39,14 +39,17 @@ const Category = () => {
         )
         .then((res) => {
             const data = res.data;
-            setDataCategory(data.data);
-            setDataTable1(data.data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+            const desc = data.data
+                    .sort((a,b) => (a.categoryName > b.categoryName) ? 1 : ((b.categoryName > a.categoryName) ? -1 : 0));
+            setDataCategory(desc);
+            setDataTable1(desc.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
             setIsLoading(false)
         })
         .catch((err) => {
             console.log(err)
         })
     };
+    
     useEffect(() => {
         setDataTable1(dataCategory.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
         // eslint-disable-next-line react-hooks/exhaustive-deps

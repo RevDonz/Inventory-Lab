@@ -13,6 +13,7 @@ import { Alert, PageTitle, SectionTitle } from '../components';
 const UpdateCategory = (props) => {
     const [categoryName, setCategoryName] = useState('');
     const history = useHistory();
+    const accesstoken = localStorage.getItem('token');
 
     useEffect(() => {
         const id = props.match.params.id
@@ -36,8 +37,11 @@ const UpdateCategory = (props) => {
         const id = props.match.params.id
         axios
             .post(
-                `https://inventorylab.herokuapp.com/category/updateCategory/${id}`, data
-            )
+                `https://inventorylab.herokuapp.com/category/updateCategory/${id}`, data, {
+                    headers: {
+                        'Authorization': `token ${accesstoken}`
+                    }
+                })
             .then(result => Alert(result.data.code, result.data.message, 'item'))
             .catch((err) => {
                 console.log(err);

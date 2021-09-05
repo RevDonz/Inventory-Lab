@@ -5,7 +5,7 @@ const Alert = (hasil, type) => {
     if (type === 'auth') {
         Swal.fire({
             icon: hasil.status === 400 ? 'error' : 'success',
-            title: hasil.status === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            title: hasil.status === 400 ? 'Gagal!' : 'Berhasil!',
             text: hasil.data.message,
             confirmButtonText: 'OK',
             allowOutsideClick: false,
@@ -21,7 +21,7 @@ const Alert = (hasil, type) => {
     } else if (type === 'item') {
         Swal.fire({
             icon: hasil.data.code === 400 ? 'error' : 'success',
-            title: hasil.data.code === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            title: hasil.data.code === 400 ? 'Gagal!' : 'Berhasil!',
             text: hasil.data.message,
             confirmButtonText: 'OK',
         }).then((result) => {
@@ -32,7 +32,7 @@ const Alert = (hasil, type) => {
     } else if (type === 'category') {
         Swal.fire({
             icon: hasil.data.code === 400 ? 'error' : 'success',
-            title: hasil.data.code === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            title: hasil.data.code === 400 ? 'Gagal!' : 'Berhasil!',
             text: hasil.data.message,
             confirmButtonText: 'OK',
         }).then((result) => {
@@ -43,7 +43,7 @@ const Alert = (hasil, type) => {
     } else if (type === 'user') {
         Swal.fire({
             icon: hasil.data.code === 400 ? 'error' : 'success',
-            title: hasil.data.code === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            title: hasil.data.code === 400 ? 'Gagal!' : 'Berhasil!',
             text: hasil.data.message,
             confirmButtonText: 'OK',
         }).then((result) => {
@@ -54,7 +54,7 @@ const Alert = (hasil, type) => {
     } else if (type === 'pinjam') {
         Swal.fire({
             icon: hasil.data.code === 400 ? 'error' : 'success',
-            title: hasil.data.code === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            title: hasil.data.code === 400 ? 'Gagal!' : 'Berhasil!',
             text: hasil.data.message,
             confirmButtonText: 'OK',
         }).then((result) => {
@@ -62,6 +62,13 @@ const Alert = (hasil, type) => {
                 window.location.href = `/app/user/riwayatPeminjaman`;
             }
         });
+    } else if (type === 'action') {
+        Swal.fire({
+            icon: hasil.data.code === 400 ? 'error' : 'success',
+            title: hasil.data.code === 400 ? 'Gagal!' : 'Berhasil!',
+            text: hasil.data.message,
+            confirmButtonText: 'OK',
+        })
     }
 };
 
