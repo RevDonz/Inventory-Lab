@@ -11,6 +11,7 @@
     <a href="https://inventory-lab.netlify.app/">View Demo</a>
     <p>Email : guestaccount@gmail.com</p>
     <p>Password : guest123</p>
+    <p>Or you can register an account and login then</p>
   </p>
 </p>
 
