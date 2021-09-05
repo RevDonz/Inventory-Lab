@@ -14,11 +14,11 @@
 
 ### Built With
 
--   [ReactJS](https://reactjs.org)
--   [TailwindCSS](https://tailwindcss.com)
 -   [MongoDB](https://www.mongodb.com/)
 -   [ExpressJS](https://expressjs.com/)
+-   [ReactJS](https://reactjs.org)
 -   [NodeJS](https://nodejs.org/en/)
+-   [TailwindCSS](https://tailwindcss.com)
 
 <!-- GETTING STARTED -->
 
