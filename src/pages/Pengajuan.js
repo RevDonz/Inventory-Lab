@@ -127,7 +127,7 @@ const Pengajuan = (props) => {
                 <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
                     <div className="grid grid-cols-1 gap-y-10 gap-x-6 lg:grid-cols-2 xl:grid-cols-3">
                         <div className="">
-                                <div className="bg-gray-700 rounded-2xl px-4 py-3"> 
+                                <div className="bg-white rounded-2xl px-4 py-3"> 
                                     <div className="group">
                                         <div className="w-full aspect-w-1 aspect-h-1 overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
                                             <img
@@ -137,7 +137,7 @@ const Pengajuan = (props) => {
                                             />
                                         </div>
                                         <div className="flex justify-center my-2">
-                                            <p className="font-normal text-gray-300 text-xs py-2">{itemInBorrow} Dipinjam<span className="px-2">{itemAmount - itemInBorrow} Tersisa</span> </p>    
+                                            <p className="font-normal text-gray-500 text-xs py-2">{itemInBorrow} Dipinjam<span className="px-2">{itemAmount - itemInBorrow} Tersisa</span> </p>    
                                         </div>
                                     </div>
                                 </div>
