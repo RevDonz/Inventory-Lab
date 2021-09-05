@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PageTitle, SectionTitle } from '../components';
+import { PageTitle, SectionTitle, LoadingUser } from '../components';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { saly } from '../assets';
@@ -8,6 +8,7 @@ const DashboardUser = () => {
     const [data, setData] = useState([]);
     const [dataMax, setDataMax] = useState([]);
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState(true)
 
     const getItem = async () => {
         const response = await axios.get(
@@ -30,6 +31,7 @@ const DashboardUser = () => {
             .reverse();
         // console.log(desc)
         setDataMax(desc[0]);
+        setIsLoading(false)
     };
 
     const getCategory = async (id) => {
@@ -50,36 +52,39 @@ const DashboardUser = () => {
             <SectionTitle>Barang Yang Paling Di Cari</SectionTitle>
 
             <div className='flex justify-center space-x-3 items-stretch'>
-                <div className='border bg-white w-2/3 rounded-md flex items-center'>
-                    <div className='flex flex-col w-1/2 md:w-2/3 pl-5'>
-                        <h1 className='md:font-semibold text-sm md:text-xl'>
-                            {dataMax.itemName}
-                        </h1>
-                        <div className='flex flex-col mb-2 md:flex-row md:space-x-2 font-normal text-gray-700 text-xs md:text-sm py-2'>
-                            <p>
-                                {dataMax.itemAmount - dataMax.itemInBorrow}{' '}
-                                Tersisa
-                            </p>
+                {isLoading ? <LoadingUser /> : (
+                    <div className='border bg-white w-2/3 rounded-md flex items-center'>
+                        <div className='flex flex-col w-1/2 md:w-2/3 pl-5'>
+                            <h1 className='md:font-semibold text-sm md:text-xl'>
+                                {dataMax.itemName}
+                            </h1>
+                            <div className='flex flex-col mb-2 md:flex-row md:space-x-2 font-normal text-gray-700 text-xs md:text-sm py-2'>
+                                <p>
+                                    {dataMax.itemAmount - dataMax.itemInBorrow}{' '}
+                                    Tersisa
+                                </p>
+                            </div>
+                            <div className=''>
+                                <Link
+                                    to={`/app/user/pengajuan/${dataMax._id}`}
+                                    className='hover:bg-indigo-800 bg-indigo-700 text-white text-sm px-2 py-1 md:px-3 md:py-2 rounded-md'
+                                >
+                                    Pinjam
+                                </Link>
+                            </div>
                         </div>
-                        <div className=''>
-                            <Link
-                                to={`/app/user/pengajuan/${dataMax._id}`}
-                                className='hover:bg-indigo-800 bg-indigo-700 text-white text-sm px-2 py-1 md:px-3 md:py-2 rounded-md'
-                            >
-                                Pinjam
-                            </Link>
+                        <div className='w-1/3'>
+                            <div className='items-center justify-center flex'>
+                                <img
+                                    className='rounded-md w-full h-full'
+                                    src={dataMax.itemPicture}
+                                    alt={dataMax.itemName}
+                                />
+                            </div>
                         </div>
                     </div>
-                    <div className='w-1/3'>
-                        <div className='items-center justify-center flex'>
-                            <img
-                                className='rounded-md w-full h-full'
-                                src={dataMax.itemPicture}
-                                alt={dataMax.itemName}
-                            />
-                        </div>
-                    </div>
-                </div>
+                )}
+
                 <div className='border bg-gray-700 w-1/2 md:w-1/3 rounded-md'>
                     <div className="flex flex-col">
                         <h1 className='text-white text-center text-xs md:text-lg pt-3'>

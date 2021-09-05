@@ -33,9 +33,11 @@ import { ReactComponent as UserIcon } from './user.svg'
 import { ReactComponent as Refresh } from './refresh.svg'
 import { ReactComponent as SettingIcon } from './setting.svg'
 import { ReactComponent as ProfilleIcon } from './profille.svg'
+import { ReactComponent as EyeIcon } from './eye.svg'
 
 export {
   ButtonsIcon,
+  EyeIcon,
   DocumentAdd,
   UserIcon,
   Refresh,

@@ -10,7 +10,7 @@ import {
     TableFooter,
     Pagination,
 } from '@windmill/react-ui';
-import { EditIcon, TrashIcon } from '../icons';
+import { EditIcon, EyeIcon, TrashIcon } from '../icons';
 import { PageTitle, SectionTitle } from '../components';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -19,22 +19,22 @@ import { useHistory } from 'react-router-dom';
 const ListItems = () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const history = useHistory()
+    const history = useHistory();
     const accesstoken = localStorage.getItem('token');
 
     // setup pages control for every table
-    const [pageTable1, setPageTable1] = useState(1)
+    const [pageTable1, setPageTable1] = useState(1);
 
     // setup data for every table
-    const [dataTable1, setDataTable1] = useState([])
+    const [dataTable1, setDataTable1] = useState([]);
 
     // pagination setup
-    const resultsPerPage = 7
-    const totalResults = data.length
+    const resultsPerPage = 7;
+    const totalResults = data.length;
 
     // pagination change control
     function onPageChangeTable1(p) {
-        setPageTable1(p)
+        setPageTable1(p);
     }
 
     const getItem = () => {
@@ -42,23 +42,33 @@ const ListItems = () => {
             .get('https://inventorylab.herokuapp.com/items')
             .then((res) => {
                 const data = res.data;
-                console.log(data.data)
+                console.log(data.data);
                 const desc = data.data
                     .sort((a, b) => a.itemCode - b.itemCode)
                     .reverse();
-                setDataTable1(desc.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+                setDataTable1(
+                    desc.slice(
+                        (pageTable1 - 1) * resultsPerPage,
+                        pageTable1 * resultsPerPage
+                    )
+                );
                 setData(desc);
                 setIsLoading(false);
             })
             .catch((err) => {
                 console.log(err);
-            })
+            });
     };
 
     useEffect(() => {
-        setDataTable1(data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+        setDataTable1(
+            data.slice(
+                (pageTable1 - 1) * resultsPerPage,
+                pageTable1 * resultsPerPage
+            )
+        );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageTable1])
+    }, [pageTable1]);
 
     useEffect(() => {
         getItem();
@@ -81,31 +91,43 @@ const ListItems = () => {
                     title: 'Loading',
                     allowOutsideClick: false,
                     didOpen: () => {
-                        Swal.showLoading()
-                    }
-                })
-                axios.delete(`https://inventorylab.herokuapp.com/items/deleteItem/${id}`, {
-                    headers: {
-                        'Authorization' : `token ${accesstoken}`
-                    }
-                })
+                        Swal.showLoading();
+                    },
+                });
+                axios
+                    .delete(
+                        `https://inventorylab.herokuapp.com/items/deleteItem/${id}`,
+                        {
+                            headers: {
+                                Authorization: `token ${accesstoken}`,
+                            },
+                        }
+                    )
                     .then((res) => {
                         Swal.fire(
                             'Deleted!',
                             'Your file has been deleted.',
                             'success'
-                            );
-                            getItem();
-                        })
-                        .catch((err) => console.log('err:', err));
-                    }
-            });
+                        );
+                        getItem();
+                    })
+                    .catch((err) => console.log('err:', err));
+            }
+        });
     };
+
+    const handlePict = (pict) => {
+        Swal.fire({
+            imageUrl: pict,
+            imageWidth: 400,
+            imageAlt: 'Custom image',
+        });
+    }
 
     const Spinner = () => {
         return (
             <TableRow>
-                <TableCell colSpan={6} className='text-center'>
+                <TableCell colSpan={7} className='text-center'>
                     Memuat Data...
                 </TableCell>
             </TableRow>
@@ -124,45 +146,79 @@ const ListItems = () => {
                             <TableCell>Nama Barang</TableCell>
                             <TableCell>Kode Barang</TableCell>
                             <TableCell>Kategori Barang</TableCell>
-                            <TableCell>Jumlah Barang</TableCell>
-                            <TableCell>Jumlah Barang Dipinjam</TableCell>
-                            <TableCell>Aksi</TableCell>
+                            <TableCell className='text-center'>
+                                Jumlah Barang
+                            </TableCell>
+                            <TableCell className='text-center'>
+                                Jumlah Barang Dipinjam
+                            </TableCell>
+                            <TableCell className='text-center'>
+                                Gambar
+                            </TableCell>
+                            <TableCell className='text-center'>Aksi</TableCell>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                    {isLoading ? <Spinner /> : dataTable1.map((item, i) => {
-                            return (
-                                <TableRow key={i}>
-                                    <TableCell>{item.itemName}</TableCell>
-                                    <TableCell>{item.itemCode}</TableCell>
-                                    <TableCell>
-                                        {item.detailCategory[0].categoryName}
-                                    </TableCell>
-                                    <TableCell>{item.itemAmount}</TableCell>
-                                    <TableCell>{item.itemInBorrow}</TableCell>
-                                    <TableCell>
-                                        <div className='flex items-center space-x-4'>
+                        {isLoading ? (
+                            <Spinner />
+                        ) : (
+                            dataTable1.map((item, i) => {
+                                return (
+                                    <TableRow key={i}>
+                                        <TableCell>{item.itemName}</TableCell>
+                                        <TableCell>{item.itemCode}</TableCell>
+                                        <TableCell>
+                                            {
+                                                item.detailCategory[0]
+                                                    .categoryName
+                                            }
+                                        </TableCell>
+                                        <TableCell className='text-center'>
+                                            {item.itemAmount}
+                                        </TableCell>
+                                        <TableCell className='text-center'>
+                                            {item.itemInBorrow}
+                                        </TableCell>
+                                        <TableCell className='text-center'>
                                             <Button
+                                                className=''
                                                 layout='link'
-                                                icon={EditIcon}
-                                                aria-label='Edit'
-                                                onClick = {() =>
-                                                    history.push(`/app/updateitem/${item._id}`)}
-                                            />
-                                            <Button
-                                                className='text-red-500'
-                                                layout='link'
-                                                icon={TrashIcon}
-                                                aria-label='Delete'
+                                                icon={EyeIcon}
+                                                aria-label='Detail'
                                                 onClick={() =>
-                                                    handleDeletePost(item._id)
+                                                    handlePict(item.itemPicture)
                                                 }
                                             />
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        })}
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className='flex items-center space-x-4 justify-center'>
+                                                <Button
+                                                    layout='link'
+                                                    icon={EditIcon}
+                                                    aria-label='Edit'
+                                                    onClick={() =>
+                                                        history.push(
+                                                            `/app/updateitem/${item._id}`
+                                                        )
+                                                    }
+                                                />
+                                                <Button
+                                                    className='text-red-500'
+                                                    layout='link'
+                                                    icon={TrashIcon}
+                                                    aria-label='Delete'
+                                                    onClick={() =>
+                                                        handleDeletePost(
+                                                            item._id
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })
+                        )}
                     </TableBody>
                 </Table>
                 <TableFooter>
@@ -170,7 +226,7 @@ const ListItems = () => {
                         totalResults={totalResults}
                         resultsPerPage={resultsPerPage}
                         onChange={onPageChangeTable1}
-                        label="Table navigation"
+                        label='Table navigation'
                     />
                 </TableFooter>
             </TableContainer>

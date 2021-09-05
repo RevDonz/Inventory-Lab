@@ -30,6 +30,7 @@ const Dashboard = () => {
     const onPageChangeTable1 = (p) => {
         setPageTable1(p);
     };
+    
 
     const getItem = () => {
         axios
@@ -73,6 +74,15 @@ const Dashboard = () => {
         );
     };
 
+    const alertLoad = () => {
+        Swal.fire({
+            title: 'Loading',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+    }
     const headers = {
         headers: {
             Authorization: `token ${accesstoken}`,
@@ -82,7 +92,7 @@ const Dashboard = () => {
     const Accepting = (id) => {
         const data = new URLSearchParams();
         data.append('status', 'Accepted');
-
+        alertLoad()
         axios
             .post(
                 `https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`,
@@ -99,7 +109,7 @@ const Dashboard = () => {
     const Rejecting = (id) => {
         const data = new URLSearchParams();
         data.append('status', 'Rejected');
-
+        alertLoad()
         axios
             .post(
                 `https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`,
@@ -116,7 +126,7 @@ const Dashboard = () => {
     const Returning = (id) => {
         const data = new URLSearchParams();
         data.append('status', 'Returned');
-
+        alertLoad()
         axios
             .post(
                 `https://inventorylab.herokuapp.com/borrower/changeStatus/${id}`,

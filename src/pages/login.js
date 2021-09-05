@@ -75,9 +75,6 @@ const Login = () => {
                                 </button>
                             </div>
                             <div className="pt-5">
-                                {/* {loginStatus && (
-                                    <a href="/" className="text-gray-700 font-medium hover:text-gray-800">Login berhasil</a>
-                                )} */}
                             </div>
                             <div className="pt-5">
                                 <a href="/register" className="text-gray-700 font-medium hover:text-gray-800">Dont Have account?</a>

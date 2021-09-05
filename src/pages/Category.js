@@ -112,13 +112,13 @@ const Category = () => {
             <PageTitle>Kategori</PageTitle>
             <SectionTitle>Tabel daftar kategori</SectionTitle>
 
-            <TableContainer>
+            <TableContainer className="w-1/2">
                 <Table>
                     <TableHeader>
                         <TableRow>
                             <TableCell>No</TableCell>
                             <TableCell>Nama Kategori</TableCell>
-                            <TableCell>Aksi</TableCell>
+                            <TableCell className='text-center'>Aksi</TableCell>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -127,8 +127,8 @@ const Category = () => {
                                 <TableRow key={category._id}>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{category.categoryName}</TableCell>
-                                    <TableCell>
-                                        <div className='flex items-center space-x-4'>
+                                    <TableCell className='text-center'>
+                                        <div className='flex items-center justify-center space-x-4'>
                                             <Button
                                                 layout='link'
                                                 icon={EditIcon}

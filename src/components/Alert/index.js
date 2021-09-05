@@ -62,13 +62,17 @@ const Alert = (hasil, type) => {
                 window.location.href = `/app/user/riwayatPeminjaman`;
             }
         });
-    } else if (type === 'action') {
+    } else if (type === 'regis') {
         Swal.fire({
-            icon: hasil.data.code === 400 ? 'error' : 'success',
-            title: hasil.data.code === 400 ? 'Gagal!' : 'Berhasil!',
-            text: hasil.data.message,
+            icon: hasil.code === 400 ? 'error' : 'success',
+            title: hasil.code === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            text: hasil.message,
             confirmButtonText: 'OK',
-        })
+        }).then((result) => {
+            if (result.isConfirmed && hasil.code === 200) {
+                window.location.href = `/login`;
+            }
+        });
     }
 };
 
