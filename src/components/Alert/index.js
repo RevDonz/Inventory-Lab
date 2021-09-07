@@ -65,7 +65,18 @@ const Alert = (hasil, type) => {
     } else if (type === 'regis') {
         Swal.fire({
             icon: hasil.code === 400 ? 'error' : 'success',
-            title: hasil.code === 400 ? 'Wadidaw Gagal' : 'Yeey Berhasil',
+            title: hasil.code === 400 ? 'Gagal' : 'Berhasil',
+            text: hasil.message,
+            confirmButtonText: 'OK',
+        }).then((result) => {
+            if (result.isConfirmed && hasil.code === 200) {
+                window.location.href = `/login`;
+            }
+        });
+    } else if (type === 'action') {
+        Swal.fire({
+            icon: hasil.code === 400 ? 'error' : 'success',
+            title: hasil.code === 400 ? 'Gagal' : 'Berhasil',
             text: hasil.message,
             confirmButtonText: 'OK',
         }).then((result) => {
