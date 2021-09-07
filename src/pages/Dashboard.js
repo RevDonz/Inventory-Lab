@@ -101,6 +101,7 @@ const Dashboard = () => {
             )
             .then((result) => {
                 Alert(result, 'action');
+                setIsLoading(false);
                 getItem();
             })
             .catch((err) => console.log(err));
@@ -118,6 +119,7 @@ const Dashboard = () => {
             )
             .then((result) => {
                 Alert(result, 'action');
+                setIsLoading(false);    
                 getItem();
             })
             .catch((err) => console.log(err));
@@ -134,6 +136,7 @@ const Dashboard = () => {
                 headers
             )
             .then((result) => {
+                setIsLoading(false);
                 Alert(result, 'action');
                 getItem();
             })
