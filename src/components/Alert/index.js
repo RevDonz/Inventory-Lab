@@ -79,11 +79,7 @@ const Alert = (hasil, type) => {
             title: hasil.code === 400 ? 'Gagal' : 'Berhasil',
             text: hasil.message,
             confirmButtonText: 'OK',
-        }).then((result) => {
-            if (result.isConfirmed && hasil.code === 200) {
-                window.location.href = `/login`;
-            }
-        });
+        })
     }
 };
 
